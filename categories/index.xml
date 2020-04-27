@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on Jeremy Mathevet</title>
+    <link>http://blog.mathevet.xyz/categories/</link>
+    <description>Recent content in Categories on Jeremy Mathevet</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-uk</language>
+    
+	<atom:link href="http://blog.mathevet.xyz/categories/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Software</title>
+      <link>http://blog.mathevet.xyz/categories/software/</link>
+      <pubDate>Thu, 18 Aug 2011 17:01:00 +0000</pubDate>
+      
+      <guid>http://blog.mathevet.xyz/categories/software/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>System</title>
+      <link>http://blog.mathevet.xyz/categories/system/</link>
+      <pubDate>Fri, 07 Feb 2014 12:53:24 +0000</pubDate>
+      
+      <guid>http://blog.mathevet.xyz/categories/system/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

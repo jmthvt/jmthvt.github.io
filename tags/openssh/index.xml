@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Openssh on Jeremy Mathevet</title>
+    <link>http://blog.mathevet.xyz/tags/openssh/</link>
+    <description>Recent content in Openssh on Jeremy Mathevet</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-uk</language>
+    <lastBuildDate>Fri, 07 Feb 2014 12:53:24 +0000</lastBuildDate>
+    
+	<atom:link href="http://blog.mathevet.xyz/tags/openssh/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>SSH: RSA/DSA authentication</title>
+      <link>http://blog.mathevet.xyz/ssh-rsadsa-authentication/</link>
+      <pubDate>Fri, 07 Feb 2014 12:53:24 +0000</pubDate>
+      
+      <guid>http://blog.mathevet.xyz/ssh-rsadsa-authentication/</guid>
+      <description>Password authentication is good but can be dangerous, because it is weak against brute force attacks. There are some mechanisms which allow to mitigate this treat. There are also safer authentication mechanisms for SSH, like public key auhtentication.
+We&amp;rsquo;re going to create a key pair from our client, a public and a private. We send the public key to the server. Thus, when the client tries to connect, the server communicates by encrypting communications with the public key.</description>
+    </item>
+    
+  </channel>
+</rss>

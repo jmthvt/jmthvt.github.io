@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Jeremy Mathevet</title>
+    <link>http://blog.mathevet.xyz/tags/</link>
+    <description>Recent content in Tags on Jeremy Mathevet</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-uk</language>
+    <lastBuildDate>Fri, 07 Feb 2014 12:53:24 +0000</lastBuildDate>
+    
+	<atom:link href="http://blog.mathevet.xyz/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Gnu/Linux</title>
+      <link>http://blog.mathevet.xyz/tags/gnu/linux/</link>
+      <pubDate>Fri, 07 Feb 2014 12:53:24 +0000</pubDate>
+      
+      <guid>http://blog.mathevet.xyz/tags/gnu/linux/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Openssh</title>
+      <link>http://blog.mathevet.xyz/tags/openssh/</link>
+      <pubDate>Fri, 07 Feb 2014 12:53:24 +0000</pubDate>
+      
+      <guid>http://blog.mathevet.xyz/tags/openssh/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Security</title>
+      <link>http://blog.mathevet.xyz/tags/security/</link>
+      <pubDate>Fri, 07 Feb 2014 12:53:24 +0000</pubDate>
+      
+      <guid>http://blog.mathevet.xyz/tags/security/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Ssh</title>
+      <link>http://blog.mathevet.xyz/tags/ssh/</link>
+      <pubDate>Fri, 07 Feb 2014 12:53:24 +0000</pubDate>
+      
+      <guid>http://blog.mathevet.xyz/tags/ssh/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

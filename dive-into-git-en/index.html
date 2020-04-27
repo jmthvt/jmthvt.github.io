@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="Jeyg">
+<meta name="description" content="Git is a decentralized system control system (VCS) created by Linus Torvalds. This is a very powerful and popular tool. It is used for the Linux kernel development (and many other famous projects). It is so appreciated that the kernel developers are now wondering how they survived without it when it did not exist.
+With so much praise, I wanted to test this tool. It&amp;rsquo;s not difficult to tame, however, the way it works is a bit different than other VCS (especially SVN, that I had already used), mainly because of the decentralization that characterizes Git." />
+<meta name="keywords" content="" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="http://blog.mathevet.xyz/dive-into-git-en/" />
+
+
+    <title>
+        
+            Dive into Git :: Jeremy Mathevet 
+        
+    </title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.1/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="/main.min.b68186a5842a9505e4f29180b86081b391cd3fcb5f11f101faf63956a3b7ec4e.css">
+
+
+
+
+
+
+
+<meta itemprop="name" content="Dive into Git">
+<meta itemprop="description" content="Git is a decentralized system control system (VCS) created by Linus Torvalds. This is a very powerful and popular tool. It is used for the Linux kernel development (and many other famous projects). It is so appreciated that the kernel developers are now wondering how they survived without it when it did not exist.
+With so much praise, I wanted to test this tool. It&rsquo;s not difficult to tame, however, the way it works is a bit different than other VCS (especially SVN, that I had already used), mainly because of the decentralization that characterizes Git.">
+
+
+<meta itemprop="datePublished" content="2011-08-18T17:01:00&#43;00:00" />
+<meta itemprop="dateModified" content="2011-08-18T17:01:00&#43;00:00" />
+<meta itemprop="wordCount" content="2344">
+
+
+
+<meta itemprop="keywords" content="" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Dive into Git"/>
+<meta name="twitter:description" content="Git is a decentralized system control system (VCS) created by Linus Torvalds. This is a very powerful and popular tool. It is used for the Linux kernel development (and many other famous projects). It is so appreciated that the kernel developers are now wondering how they survived without it when it did not exist.
+With so much praise, I wanted to test this tool. It&rsquo;s not difficult to tame, however, the way it works is a bit different than other VCS (especially SVN, that I had already used), mainly because of the decentralization that characterizes Git."/>
+
+
+
+
+
+    <meta property="article:section" content="Software" />
+
+
+
+    <meta property="article:published_time" content="2011-08-18 17:01:00 &#43;0000 &#43;0000" />
+
+
+
+
+
+
+
+
+    </head>
+
+    <body class="dark-theme">
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="http://blog.mathevet.xyz" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">></span>
+            <span class="logo__text">hello</span>
+            <span class="logo__cursor" style=
+                  "
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+
+            <span class="theme-toggle unselectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+</span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+            
+            </p>
+        </div>
+
+        <article>
+            <h2 class="post-title"><a href="http://blog.mathevet.xyz/dive-into-git-en/">Dive into Git</a></h2>
+
+            
+
+            <div class="post-content">
+                
+
+<p><a href="http://jeyg.info/wp-content/uploads/2011/08/git-logo3.png" title="git-logo3"><img class="alignleft size-full wp-image-2358" title="git-logo3" alt="" src="http://jeyg.info/wp-content/uploads/2011/08/git-logo3.png" width="115" height="205" /></a> Git is a decentralized system control system (VCS) created by Linus Torvalds. This is a very powerful and popular tool. It is used for the Linux kernel development (and many other famous projects). It is so appreciated that the kernel developers are now wondering how they survived without it when it did not exist.</p>
+
+<p>With so much praise, I wanted to test this tool. It&rsquo;s not difficult to tame, however, the way it works is a bit different than other VCS (especially SVN, that I had already used), mainly because of the decentralization that characterizes Git.</p>
+
+<p>Indeed, while most management software versions require a central server to which everyone connects to send and receive changes, Git allows each user to have a local repository that can synchronize with other users. Moreover, it&rsquo;s completely possible to combine this decentralization with a master server, in order to have a repository that everybody can reach, just like classic centralized VCS.</p>
+
+<h1 id="why-git-is-better-than-the-others">Why Git is better than the others</h1>
+
+<p>A web page explains it very well: <a href="http://whygitisbetterthanx.com/">http://whygitisbetterthanx.com/</a>. In summary:</p>
+
+<ul>
+<li>Git is fast</li>
+<li>Its distributed architecture (no central server, so can work offline)</li>
+<li>Branches management simple and fast</li>
+<li><a href="https://github.com/">Github</a></li>
+</ul>
+
+<h1 id="understand-git">Understand Git</h1>
+
+<p>The principle of functioning is relatively simple. Git allows you to take snapshots of your project files. Simply indicate which files to back up, and then perform the backup (this is called a commit). When you commit, Git writes a manifest describing how your project files look like at this moment. This allows not to save the whole project directory each time.</p>
+
+<p>Here&rsquo;s how to use Git basically.</p>
+
+<h1 id="create-and-retrieve-repositories">Create and retrieve repositories</h1>
+
+<p>The first thing to do to use Git is to have a Git repository. Two ways: either create or retrieve it.</p>
+
+<p>**Create a repository: <span style="font-size: large;">git init</span></p>
+
+<p>**</p>
+
+<p>To create a repository, simply run the command <strong>git init</strong> in the desired directory.</p>
+
+<div class="codecolorer-container text vibrant" style="overflow:auto;white-space:nowrap;width:585px;">
+  <div class="text codecolorer">
+    $ cd fake-project<br /> $ ls<br /> README hello.sh<br /> $ git init<br /> Initialized empty Git repository in ~/fake-project/.git/
+  </div>
+</div>
+
+<p><strong>Get a repository: <span style="font-size: large;">git clone</span></strong></p>
+
+<p>You can get a Git repository via the Internet, with the command <strong>git clone [URL]</strong>. This means that you copy the files from the repository locally, but also the history of commits, branches, etc..</p>
+
+<div class="codecolorer-container text vibrant" style="overflow:auto;white-space:nowrap;width:585px;">
+  <div class="text codecolorer">
+    $ git clone git://github.com/octocat/Hello-World.git
+  </div>
+</div>
+
+<h1 id="managing-snapshots">Managing Snapshots</h1>
+
+<p>Before discussing the commands, you should first understand that a file can have four states:</p>
+
+<ul>
+<li><p><strong>Unversioned</strong></p>
+
+<p>Git ignores this file.</p></li>
+
+<li><p><strong>In Staging area</strong></p>
+
+<p>The file or file changes will be saved in the next commit.</p></li>
+
+<li><p><strong>Revised</strong></p>
+
+<p>The file has changed since the last commit, but it is not in the staging area, and therefore will not be updated in the next commit.</p></li>
+
+<li><p><strong>Committed</strong></p>
+
+<p>The file is saved and has not been modified since.</p></li>
+</ul>
+
+<p>In summary, we will use <strong><em>git add</em></strong> to put one or more files in the staging area, <em><strong>git status</strong></em> and <em><strong>git diff</strong></em> to see the state and what changes have been made (or not) to files, and finally <em><strong>git commit</strong></em> to save.</p>
+
+<p><strong>Add files in the <em>staging area</em>: <span style="font-size: large;">git add</span></strong></p>
+
+<p>Let&rsquo;s return to our <em>fake-project</em> example. A <em><strong>git status</strong></em> shows us the files state of the repository.</p>
+
+<div class="codecolorer-container text vibrant" style="overflow:auto;white-space:nowrap;width:585px;">
+  <div class="text codecolorer">
+    $ git status -s<br /> ?? README<br /> ?? hello.sh
+  </div>
+</div>
+
+<p>Question marks indicate that the files are not versioned. To put them in the staging area, we use <em><strong>git add</strong></em>.</p>
+
+<div class="codecolorer-container text vibrant" style="overflow:auto;white-space:nowrap;width:585px;">
+  <div class="text codecolorer">
+    $ git add README hello.sh
+  </div>
+</div>
+
+<p>or</p>
+
+<div class="codecolorer-container text vibrant" style="overflow:auto;white-space:nowrap;width:585px;">
+  <div class="text codecolorer">
+    $ git add .
+  </div>
+</div>
+
+<p>to add all the files from the repository (recursive mode).</p>
+
+<p>A <em>git status</em> confirms that the files are ready to be committed:</p>
+
+<div class="codecolorer-container text vibrant" style="overflow:auto;white-space:nowrap;width:585px;">
+  <div class="text codecolorer">
+    $ git status -s<br /> A  README<br /> A  hello.sh
+  </div>
+</div>
+
+<p>An important thing to understand: when the files will be committed, they will be in the state they were when the last <em>git add</em> was performed. So, if a file changes after <em>git add</em>, these changes will not be included in the Git snapshot. We should launch a <em>git add</em> again to save the latest file version.</p>
+
+<p><strong>See the files state of the repository: <span style="font-size: large;">git status</span></strong></p>
+
+<p>As we saw earlier, <em><strong>git status</strong></em> shows whether the files are ready to be committed, have been modified or deleted.</p>
+
+<div class="codecolorer-container text vibrant" style="overflow:auto;white-space:nowrap;width:585px;">
+  <div class="text codecolorer">
+    $ vim README<br /> $ git status<br /> # On branch master<br /> #<br /> # Initial commit<br /> #<br /> # Changes to be committed:<br /> # (use "git rm --cached ..." to unstage)<br /> #<br /> # new file: README<br /> # new file: hello.sh<br /> #<br /> # Changed but not updated:<br /> # (use "git add ..." to update what will be committed)<br /> # (use "git checkout -- ..." to discard changes in working directory)<br /> #<br /> # modified: README<br /> #
+  </div>
+</div>
+
+<p>or with -s, for a shorter output:</p>
+
+<div class="codecolorer-container text vibrant" style="overflow:auto;white-space:nowrap;width:585px;">
+  <div class="text codecolorer">
+    $ git status -s<br /> AM README<br /> A  hello.sh
+  </div>
+</div>
+
+<p><strong>View differences : <span style="font-size: large;">git diff</span></strong></p>
+
+<p>The <em><strong>git diff</strong></em> command can be used in several ways. Without parameters, <em><strong>git diff</strong></em> gives the difference between what is in staging area and what have been changed afterwards.</p>
+
+<div class="codecolorer-container text vibrant" style="overflow:auto;white-space:nowrap;width:585px;">
+  <div class="text codecolorer">
+    $ vim README<br /> $ git status -s<br /> AM README<br /> A hello.sh<br /> $ git diff<br /> diff --git a/README b/README<br /> index 8b13789..6a4238f 100644<br /> --- a/README<br /> +++ b/README<br /> @@ -1 +1 @@<br /> -<br /> +blablabla
+  </div>
+</div>
+
+<p>The <em><strong>&ndash;cached</strong></em> parameter shows the changes made when moved to the staging area.</p>
+
+<div class="codecolorer-container text vibrant" style="overflow:auto;white-space:nowrap;width:585px;">
+  <div class="text codecolorer">
+    $ git status -s<br /> AM README<br /> A hello.sh<br /> $ git add .<br /> $ git diff<br /> $<br /> $ git diff --cached<br /> diff --git a/README b/README<br /> new file mode 100644<br /> index 0000000..6a4238f<br /> --- /dev/null<br /> +++ b/README<br /> @@ -0,0 +1 @@<br /> +blablabla<br /> diff --git a/hello.sh b/hello.sh<br /> new file mode 100644<br /> index 0000000..e69de29
+  </div>
+</div>
+
+<p>The <em><strong>git diff HEAD</strong></em> command allows to know all the changes since the last commit, when the file is in staging area or simply modified.</p>
+
+<p><strong>Create a snapshot of the <em>staging area</em>: <span style="font-size: large;">git commit</span></strong></p>
+
+<p>Now that we have our files in staging area, we can save them using the <em><strong>git commit</strong></em> command. Before that, we give our name and mail, they will be recorded during the commit.</p>
+
+<div class="codecolorer-container text vibrant" style="overflow:auto;white-space:nowrap;width:585px;">
+  <div class="text codecolorer">
+    $ git config --global user.name 'Your Name'<br /> $ git config --global user.email you@yourdomain.com
+  </div>
+</div>
+
+<p>We can now commit. We provide a message which describes the commit with the <em><strong>-m</strong></em> option.</p>
+
+<div class="codecolorer-container text vibrant" style="overflow:auto;white-space:nowrap;width:585px;">
+  <div class="text codecolorer">
+    $ git status -s<br /> A README<br /> A hello.sh<br /> $ git commit -m 'my first commit'<br /> [master (root-commit) cba1144] my first commit<br /> 1 files changed, 1 insertions(+), 0 deletions(-)<br /> create mode 100644 README<br /> create mode 100644 hello.sh
+  </div>
+</div>
+
+<p>And that&rsquo;s that! The staging area have been saved and cleaned. A <em><strong>git status</strong></em> confirms it.</p>
+
+<div class="codecolorer-container text vibrant" style="overflow:auto;white-space:nowrap;width:585px;">
+  <div class="text codecolorer">
+    $ git status<br /> # On branch master<br /> nothing to commit (working directory clean)
+  </div>
+</div>
+
+<p>A little diagram that summarizes what happened:</p>
+
+<p><a href="http://jeyg.info/wp-content/uploads/2011/08/git1.png" title="git-commit-1"><img class="aligncenter size-full wp-image-2283" title="git-commit-1" alt="" src="http://jeyg.info/wp-content/uploads/2011/08/git1.png" width="336" height="194" srcset="http://jeyg.info/wp-content/uploads/2011/08/git1.png 336w, http://jeyg.info/wp-content/uploads/2011/08/git1-300x173.png 300w" sizes="(max-width: 336px) 100vw, 336px" /></a></p>
+
+<p>A <em><strong>git commit -a</strong></em> allows you to commit all modified or deleted files without going through the <em>git add</em> step. This command does not commit new unversioned files, you need to add them at least once in staging area with <em>git add</em> in order to directly commit later.</p>
+
+<div class="codecolorer-container text vibrant" style="overflow:auto;white-space:nowrap;width:585px;">
+  <div class="text codecolorer">
+    $ vim README<br /> $ commit -am 'My second commit'<br /> [master 8151463] My second commit<br /> 1 files changed, 2 insertions(+), 0 deletions(-)
+  </div>
+</div>
+
+<p>By this way, we skip the &ldquo;staging step&rdquo; to jump directly to the snapshot.</p>
+
+<p style="text-align: center;">
+  <a title="git2" href="http://jeyg.info/wp-content/uploads/2011/08/git2.png"><img class="aligncenter size-full wp-image-2286" title="git-commit-2" alt="" src="http://jeyg.info/wp-content/uploads/2011/08/git2.png" width="338" height="185" srcset="http://jeyg.info/wp-content/uploads/2011/08/git2.png 338w, http://jeyg.info/wp-content/uploads/2011/08/git2-300x164.png 300w" sizes="(max-width: 338px) 100vw, 338px" /></a>
+</p>
+
+<p style="text-align: left;">
+  <strong>Undo: <span style="font-size: large;">git reset HEAD</span></strong>
+</p>
+
+<p>It is possible to remove a file from the staging area with the <em><strong>git reset HEAD</strong></em> command.</p>
+
+<div class="codecolorer-container text vibrant" style="overflow:auto;white-space:nowrap;width:585px;">
+  <div class="text codecolorer">
+    $ git status -s<br /> M README<br /> $ git add README<br /> $ git status -s<br /> M README<br /> $ git reset HEAD -- README<br /> Unstaged changes after reset:<br /> M README
+  </div>
+</div>
+
+<p>To cancel the last commit: <em><strong>git reset HEAD^</strong></em></p>
+
+<p><strong>Manage files: <span style="font-size: large;">git rm et git mv</span></strong></p>
+
+<p>The git rm command allows to delete a file from your Git repository. The file is literally removed from the working directory the index. The &ndash;cached option allows to delete the file from the index only. The file will become unversioned, and therefore, will no longer be managed by Git.</p>
+
+<div class="codecolorer-container text vibrant" style="overflow:auto;white-space:nowrap;width:585px;">
+  <div class="text codecolorer">
+    $ git rm --cached README<br /> rm 'README'<br /> $ ls<br /> hello.sh README<br /> git status -s<br /> D README<br /> ?? README<br /> $ git commit -m 'bye README'<br /> [master a870e51] bye README<br /> 0 files changed, 0 insertions(+), 0 deletions(-)<br /> delete mode 100644 README<br /> $ git status -s<br /> ?? README
+  </div>
+</div>
+
+<p><em><strong>git mv</strong></em> renames a file and updates the Git index accordingly.</p>
+
+<div class="codecolorer-container text vibrant" style="overflow:auto;white-space:nowrap;width:585px;">
+  <div class="text codecolorer">
+    $ git mv oldname newname
+  </div>
+</div>
+
+<p>est l&rsquo;équivalent de</p>
+
+<div class="codecolorer-container text vibrant" style="overflow:auto;white-space:nowrap;width:585px;">
+  <div class="text codecolorer">
+    $ mv oldname newname<br /> $ git add newname<br /> $ git rm oldname
+  </div>
+</div>
+
+<h1 id="branches">Branches</h1>
+
+<p>We approach a big strength of Git: its branches management. Forget most of the nightmares of others VCS, branches are here quite simple to manage. For those who do not know the principle, branches allow you to create ramifications of your project. Imagine you want to add feature to your project. Commit the changes directly in the core branch will make your software unstable until you have not completed the development of this new feature. To work around this problem, you can create a test branch, which will be a copy of your main branch, then make and test your changes without altering the main branch. Once the testing branch seems stable, you can merge the code with your main branch.</p>
+
+<p>An excellent link to properly design the architecture of your branches: <a href="http://nvie.com/posts/a-successful-git-branching-model/.">http://nvie.com/posts/a-successful-git-branching-model/</a>.</p>
+
+<p><span style="font-size: large;"><strong><span style="font-size: small;">Branches management</span> git branch and git checkout</strong></span></p>
+
+<p>Let&rsquo;s start by making an inventory: <em><strong>git branch</strong></em> to find out on which branch we are working:</p>
+
+<div class="codecolorer-container text vibrant" style="overflow:auto;white-space:nowrap;width:585px;">
+  <div class="text codecolorer">
+    $ git branch<br /> * master
+  </div>
+</div>
+
+<p>We have a branch called <em>master</em>. It&rsquo;s preceded by a star, which means that we currently use it. It was created by default by <em>git init</em>.</p>
+
+<p>Let&rsquo;s create a branch with <em><strong>git branch [name]</strong></em>, and then move on this new one with <em><strong>git checkout [name]</strong></em>.</p>
+
+<div class="codecolorer-container text vibrant" style="overflow:auto;white-space:nowrap;width:585px;">
+  <div class="text codecolorer">
+    $ git branch testing<br /> $ git branch<br /> * master<br /> testing<br /> $ git checkout testing<br /> Switched to branch 'testing'<br /> $ git branch<br /> master<br /> * testing
+  </div>
+</div>
+
+<blockquote>
+<p>There is a command that combines the branch creation and the move: <em><strong>git checkout -b [name]</strong></em></p>
+</blockquote>
+
+<p>The testing branch has been created. This is a copy of the last commit to the master branch. Although identical so far, our branches are now separated: all commit on one will not be passed to the other.</p>
+
+<p>To delete a branch, <em><strong>git branch -d [name]</strong></em>.</p>
+
+<blockquote>
+<p>You can&rsquo;t delete a branch if you&rsquo;re currently on it.</p>
+</blockquote>
+
+<div class="codecolorer-container text vibrant" style="overflow:auto;white-space:nowrap;width:585px;">
+  <div class="text codecolorer">
+    $ git branch<br /> * master<br /> testing<br /> $ git branch -d testing<br /> Deleted branch testing (was a870e51).
+  </div>
+</div>
+
+<p><strong>Merge branches: <span style="font-size: large;">git merge</span></strong></p>
+
+<p>Branches are isolated, which allows you to make changes to one without affecting the other. What if we decide to incorporate changes from one branch into another? This is what we do with <strong>git merge [branch]</strong>, which allows to merge the current branch with a specified branch.</p>
+
+<p>An example where we create a file that we commit in the testing branch, before merge it in the master branch:</p>
+
+<div class="codecolorer-container text vibrant" style="overflow:auto;white-space:nowrap;width:585px;">
+  <div class="text codecolorer">
+    $ git branch<br /> * master<br /> $ git checkout -b testing<br /> Switched to a new branch 'testing'<br /> $ ls<br /> hello.sh README<br /> $ git branch<br /> master<br /> * testing<br /> $ touch trololo<br /> $ git add trololo<br /> $ git commit -m 'trololo commit'<br /> [testing e49b586] trololo commit<br /> 0 files changed, 0 insertions(+), 0 deletions(-)<br /> create mode 100644 trololo<br /> $ ls<br /> hello.sh README trololo<br /> $ git checkout master<br /> Switched to branch 'master'<br /> $ git merge testing<br /> Updating a870e51..e49b586<br /> Fast-forward<br /> 0 files changed, 0 insertions(+), 0 deletions(-)<br /> create mode 100644 trololo
+  </div>
+</div>
+
+<p>Most of the time, Git merges your branches without any problem. But, if the same block of code in a file is changed on the two branches, it will cause a conflict. In this case, we have to resolve this conflict by hand, in the file. Once done, a <em><strong>git add</strong></em> followed by a <em><strong>git commit</strong></em> will be needed before repeating the <em><strong>git merge</strong></em>.</p>
+
+<p><strong>Branch informations : <span style="font-size: large;">git log</span></strong></p>
+
+<p>To trace the history of commits and merge a branch, we have <em><strong>git log</strong></em>.</p>
+
+<div class="codecolorer-container text vibrant" style="overflow:auto;white-space:nowrap;width:585px;">
+  <div class="text codecolorer">
+    $ git log<br /> commit e49b586f5cd44e053f3491094e484c160cd3b052<br /> Author: jeyg<br /> Date: Wed Aug 16 20:00:14 2011 +0200<br /> <br /> trololo commit<br /> <br /> commit a870e513b9a2fdb8c6f0940b237dea59b240c5be<br /> Author: jeyg<br /> Date: Wed Aug 16 18:59:31 2011 +0200<br /> <br /> bye README
+  </div>
+</div>
+
+<h1 id="project-sharing">Project sharing</h1>
+
+<p>As already mentioned, Git is based on a decentralized architecture. Thus, any Git repository can be both client and server, which is very useful when working offline. That said, it is also interesting to have a Git repository accessible by a team in order to have a common basis, which everyone can retrieve and modify locally, to finally pass the changes to the common repository.</p>
+
+<p><strong>Manage repository aliases : <span style="font-size: large;">git remote</span></strong></p>
+
+<p>In order to not to type the repository URL each time we need to access it, Git has an alias system. <em><strong>git remote</strong></em> displays the list of saved Git repositories for a repository. By default, if you cloned yours, an <em>orgin</em></p>
+
+<p>alias have been automatically created. <em><strong>git remote add [alias] [URL]</strong></em> is used to add an alias, <em><strong>git remote rm [alias]</strong></em> to remove.</p>
+
+<div class="codecolorer-container text vibrant" style="overflow:auto;white-space:nowrap;width:585px;">
+  <div class="text codecolorer">
+    $ git clone http://android.git.kernel.org/platform/external/iptables<br /> Cloning into iptables...<br /> remote: Counting objects: 617, done.<br /> remote: Compressing objects: 100% (347/347), done.<br /> remote: Total 617 (delta 285), reused 576 (delta 263)<br /> Receiving objects: 100% (617/617), 351.46 KiB | 436 KiB/s, done.<br /> Resolving deltas: 100% (285/285), done.<br /> $ cd iptables<br /> $ git remote<br /> origin<br /> $ git remote -v<br /> origin http://android.git.kernel.org/platform/external/iptables (fetch)<br /> origin http://android.git.kernel.org/platform/external/iptables (push)
+  </div>
+</div>
+
+<div class="codecolorer-container text vibrant" style="overflow:auto;white-space:nowrap;width:585px;">
+  <div class="text codecolorer">
+    $ git remote add bob git://github.com/bob<br /> $ git remote<br /> bob<br /> origin
+  </div>
+</div>
+
+<div class="codecolorer-container text vibrant" style="overflow:auto;white-space:nowrap;width:585px;">
+  <div class="text codecolorer">
+    $ git remote -v<br /> bob git://github.com/bob (fetch)<br /> bob git://github.com/bob (push)<br /> origin http://android.git.kernel.org/platform/external/iptables (fetch)<br /> origin http://android.git.kernel.org/platform/external/iptables (push)
+  </div>
+</div>
+
+<div class="codecolorer-container text vibrant" style="overflow:auto;white-space:nowrap;width:585px;">
+  <div class="text codecolorer">
+    $ git remote rm bob<br /> $ git remote<br /> origin
+  </div>
+</div>
+
+<p><strong>Update local branches from the remote repository: <span style="font-size: large;">git fetch, git pull</span></strong></p>
+
+<p>You have cloned a repository, you can commit anything you want locally. Meanwhile, a developer commits a new feature on the remote repository. Your work is not lost: you can now get the changes via a <em><strong>git fetch [alias]</strong></em>, and then merge via a <em><strong>git merge [alias]/[branche]</strong></em>. The <em><strong>git pull [alias]</strong></em> command allows to go faster: it performs a <em>fetch</em> followed immediately by a <em>merge</em>.</p>
+
+<p><strong>Send your branches to the remote repository: <span style="font-size: large;">git push</span></strong></p>
+
+<p>Conversely, to send branches to the remote repository, use the <em><strong>git push [alias] [branche]</strong></em> command. If the branch you are trying to send already exists on the remote server, it will be updated, if it does not exist, it will be created.</p>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>We just finished our Git discovery. I hope I gave you&rsquo;ll want to get started. For my part, I am fully satisfied to have lost a few hours to get familiar with this software. I think it would be now very difficult for me to use again a classic centralized CVS like SVN, Git is so convenient!</p>
+
+<p>Some resources to go further:</p>
+
+<ul>
+<li><a href="http://gitref.org">Gitref.org</a></li>
+<li>The Pro Git Book</li>
+<li><a href="http://www.alexgirard.com/git-book/index.html" target="_blank">The Git Community Book</a></li>
+<li><a href="http://www-cs-students.stanford.edu/~blynn/gitmagic/intl/fr/ch01.html">Git Magic</a></li>
+<li>The Git of Git : git://git.kernel.org/pub/scm/git/git.git</li>
+</ul>
+
+            </div>
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+  		</div>
+    </main>
+
+            </div>
+
+            
+                <footer class="footer">
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>&copy; 2020</span>
+            
+                <span><a href="http://blog.mathevet.xyz">Jeremy Mathevet</a></span>
+            
+            <span></span>
+            <span> <a href="http://blog.mathevet.xyz/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></span>
+        </div>
+    </div>
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>Powered by <a href="http://gohugo.io">Hugo</a></span>
+            <span>Made with &#10084; by <a href="https://github.com/rhazdon">Djordje Atlialp</a></span>
+        </div>
+    </div>
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+
+<script type="text/javascript" src="/bundle.min.d889f909e0536e07868fcaacee7d4b3f9ff14ad7ab1b29cf4c9eefd395beb291dcd983e13b8663ffa20f90fe98e41467de128a97ad45cf86738ec9a46df5ec1b.js" integrity="sha512-2In5CeBTbgeGj8qs7n1LP5/xSterGynPTJ7v05W&#43;spHc2YPhO4Zj/6IPkP6Y5BRn3hKKl61Fz4ZzjsmkbfXsGw=="></script>
+
+
+
+    </body>
+</html>
