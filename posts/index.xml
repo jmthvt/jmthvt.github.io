@@ -485,13 +485,13 @@ origin
 
 <p><strong>Update local branches from the remote repository: <span style="font-size: large;">git fetch, git pull</span></strong></p>
 
-<p>You have cloned a repository, you can commit anything you want locally. Meanwhile, a developer commits a new feature on the remote repository. Your work is not lost: you can now get the changes via a <em><strong>git fetch [alias]</strong></em>, and then merge via a <em><strong>git merge [alias]/[branche]</strong></em>. The <em><strong>git pull [alias]</strong></em> command allows to go faster: it performs a <em>fetch</em> followed immediately by a <em>merge</em>.</p>
+<p>You have cloned a repository, you can commit anything you want locally. Meanwhile, a developer commits a new feature on the remote repository. Your work is not lost: you can now get the changes via a <em><strong>git fetch [alias]</strong></em>, and then merge via a <em><strong>git merge [alias]/[branch]</strong></em>. The <em><strong>git pull [alias]</strong></em> command allows to go faster: it performs a <em>fetch</em> followed immediately by a <em>merge</em>.</p>
 
 <p><strong>Send your branches to the remote repository: <span style="font-size: large;">git push</span></strong></p>
 
 <p>Conversely, to send branches to the remote repository, use the <em><strong>git push [alias] [branche]</strong></em> command. If the branch you are trying to send already exists on the remote server, it will be updated, if it does not exist, it will be created.</p>
 
-<h1 id="conclusion">Conclusion</h1>
+<h1 id="wrap-up">Wrap-up</h1>
 
 <p>We just finished our Git discovery. I hope I gave you&rsquo;ll want to get started. For my part, I am fully satisfied to have lost a few hours to get familiar with this software. I think it would be now very difficult for me to use again a classic centralized CVS like SVN, Git is so convenient!</p>
 
