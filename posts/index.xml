@@ -117,6 +117,75 @@ Identity added: /home/jean-pierre/.ssh/id_dsa (/home/jean-pierre/.ssh/id_dsa)
         </item>
         
         <item>
+            <title>Manage your iptables rules. Properly.</title>
+            <link>http://blog.mathevet.xyz/manage-your-iptables-rules-properly/</link>
+            <pubDate>Mon, 25 Nov 2013 15:53:55 +0000</pubDate>
+            
+            <guid>http://blog.mathevet.xyz/manage-your-iptables-rules-properly/</guid>
+            <description>Debian based I regularly see sysadmins saving their iptables rules in an init script. It works, but it&amp;rsquo;s not the most elegant way to do it. I prefer personally to save the existing rules with the iptables-save command. This command sends the result on the standard output, so let&amp;rsquo;s redirect it to a file.
+# iptables-save &amp;gt; /etc/iptables  Interesting option: -c displays how many times the rule has been applied (on bytes and on packets).</description>
+            <content type="html"><![CDATA[
+
+<h2 id="debian-based">Debian based</h2>
+
+<p>I regularly see sysadmins saving their iptables rules in an init script. It works, but it&rsquo;s not the most elegant way to do it. I prefer personally to save the existing rules with the iptables-save command. This command sends the result on the standard output, so let&rsquo;s redirect it to a file.</p>
+
+<pre><code># iptables-save &gt; /etc/iptables
+</code></pre>
+
+<p>Interesting option: -c displays how many times the rule has been applied (on bytes and on packets).</p>
+
+<p>In order to load the rules, simply use the iptables-restore command with the previously saved file in the standard input:</p>
+
+<pre><code># iptables-restore &lt; /etc/iptables
+</code></pre>
+
+<p>Add -c to take the counters in account (if you saved them, bien sur). If any rules are already loaded, you don&rsquo;t even have to flush them, the command does it for you by default (-n to keep them).</p>
+
+<p>To automatically restore the rules on startup, we could create an init script. I prefer to launch the restore directly from the network interface, as a pre-up command. It allows to avoid any forgetting when you flush your rules, then bring your interface up. Moreover, you gain the ability to create dedicated rules for each interfaces. If your rules are independent from your interfaces, you can still launch the restore as a pre-up command for the local loop.</p>
+
+<p>/etc/network/interfaces</p>
+
+<pre><code>iface eth0 inet static
+    pre-up iptables-restore &lt; /etc/iptables
+    address 543.454.233.42
+    netmask 255.255.255.0
+    gateway 543.454.233.254
+auto eth0
+</code></pre>
+
+<p>For those who have seen: yes, I&rsquo;ve invented a new class of IP addresses.</p>
+
+<h2 id="red-hat-based">Red Hat based</h2>
+
+<p>Same principle, but the way to do it is slightly different. To save the rules, you can use the iptables service:</p>
+
+<pre><code># service iptables save
+</code></pre>
+
+<p>The rules are saved in the /etc/sysconfig/iptables file by default. This file is read when the iptables service is launched.</p>
+
+<h2 id="avoid-locking-out-debian-only">Avoid locking out (Debian only)</h2>
+
+<p>Be honest. Who has never been locked out when modifying firewall policies or rules. I must say that it happened to me. The failure in all its splendour.</p>
+
+<p>In order to avoid this, there is a simple tool: iptables-apply. This command will apply the rules file given as a parameter, then ask for the user confirmation. If the user doesn&rsquo;t answer before the timeout, iptables-apply undoes the change.</p>
+
+<pre><code># iptables-apply /etc/iptables
+[ ok ] Stopping authentication failure monitor: fail2ban.
+Applying new ruleset... done.
+Can you establish NEW connections to the machine? (y/N) apparently not...
+Timeout. Something happened (or did not). Better play it safe...
+Reverting to old ruleset... done.
+</code></pre>
+
+<p>Convenient, isn&rsquo;t it?</p>
+
+<p>If you do know others good practices concerning the managenent of iptables rules, feel free to share them in the comments.</p>
+]]></content>
+        </item>
+        
+        <item>
             <title>Dive into Git</title>
             <link>http://blog.mathevet.xyz/dive-into-git-en/</link>
             <pubDate>Thu, 18 Aug 2011 17:01:00 +0000</pubDate>

@@ -31,5 +31,15 @@ You can communicate via port 22? Do you have an SSH server that could access the
 We&amp;rsquo;re going to create a key pair from our client, a public and a private. We send the public key to the server. Thus, when the client tries to connect, the server communicates by encrypting communications with the public key.</description>
     </item>
     
+    <item>
+      <title>Manage your iptables rules. Properly.</title>
+      <link>http://blog.mathevet.xyz/manage-your-iptables-rules-properly/</link>
+      <pubDate>Mon, 25 Nov 2013 15:53:55 +0000</pubDate>
+      
+      <guid>http://blog.mathevet.xyz/manage-your-iptables-rules-properly/</guid>
+      <description>Debian based I regularly see sysadmins saving their iptables rules in an init script. It works, but it&amp;rsquo;s not the most elegant way to do it. I prefer personally to save the existing rules with the iptables-save command. This command sends the result on the standard output, so let&amp;rsquo;s redirect it to a file.
+# iptables-save &amp;gt; /etc/iptables  Interesting option: -c displays how many times the rule has been applied (on bytes and on packets).</description>
+    </item>
+    
   </channel>
 </rss>

@@ -13,12 +13,23 @@
   </url>
   
   <url>
+    <loc>http://blog.mathevet.xyz/manage-your-iptables-rules-properly/</loc>
+    <lastmod>2013-11-25T15:53:55+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.mathevet.xyz/dive-into-git-en/</loc>
     <lastmod>2011-08-18T17:01:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>http://blog.mathevet.xyz/categories/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.mathevet.xyz/tags/debian/</loc>
+    <lastmod>2013-11-25T15:53:55+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -31,6 +42,12 @@
   <url>
     <loc>http://blog.mathevet.xyz/tags/gnu/linux/</loc>
     <lastmod>2014-02-07T12:53:24+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.mathevet.xyz/tags/iptables/</loc>
+    <lastmod>2013-11-25T15:53:55+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -65,6 +82,12 @@
   </url>
   
   <url>
+    <loc>http://blog.mathevet.xyz/tags/red-hat/</loc>
+    <lastmod>2013-11-25T15:53:55+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>http://blog.mathevet.xyz/tags/security/</loc>
     <lastmod>2014-02-07T12:53:24+00:00</lastmod>
     <priority>0</priority>
@@ -90,7 +113,7 @@
   
   <url>
     <loc>http://blog.mathevet.xyz/tags/</loc>
-    <lastmod>2015-05-26T19:49:58+00:00</lastmod>
+    <lastmod>2013-11-25T15:53:55+00:00</lastmod>
     <priority>0</priority>
   </url>
   
