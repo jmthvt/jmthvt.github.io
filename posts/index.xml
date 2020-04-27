@@ -194,14 +194,14 @@ Reverting to old ruleset... done.
             <description>Here is a prensetation about Puppet, written by me. It briefly discusses the configuration managers, before looking in more detail Puppet, its installation based on Debian, its initial configuration and its declarative language. This medium is intended for beginners in configuration management, who want to discover Puppet.
 This support is made available under a Creative Commons BY licence.
 Download &amp;ldquo;Getting started with Puppet&amp;rdquo; in PDF.
- </description>
+  Getting started with Puppet  from jeyg</description>
             <content type="html"><![CDATA[<p>Here is a prensetation about Puppet, written by me. It briefly discusses the configuration managers, before looking in more detail Puppet, its installation based on Debian, its initial configuration and its declarative language. This medium is intended for beginners in  configuration management, who want to discover Puppet.</p>
 
 <p>This support is made available under a <a href="https://creativecommons.org/licenses/by/3.0/deed.en">Creative Commons BY</a> licence.</p>
 
 <p><a href="/pdf/Getting-started-with-Puppet.pdf">Download &ldquo;Getting started with Puppet&rdquo; in PDF.</a></p>
 
-<iframe src="https://www.slideshare.net/slideshow/embed_code/14581014?hostedIn=slideshare&page=upload" height="400" width="476" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+<p><iframe src="//www.slideshare.net/slideshow/embed_code/key/IWRYfblcaByacK" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/jeyg/getting-started-with-puppet-14581014" title="Getting started with Puppet" target="_blank">Getting started with Puppet</a> </strong> from <strong><a href="https://www.slideshare.net/jeyg" target="_blank">jeyg</a></strong> </div></p>
 ]]></content>
         </item>
         
