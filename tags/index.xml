@@ -6,10 +6,19 @@
     <description>Recent content in Tags on Jeremy Mathevet</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-uk</language>
-    <lastBuildDate>Mon, 25 Nov 2013 15:53:55 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Oct 2012 00:50:57 +0000</lastBuildDate>
     
 	<atom:link href="http://blog.mathevet.xyz/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Configuration Management</title>
+      <link>http://blog.mathevet.xyz/tags/configuration-management/</link>
+      <pubDate>Thu, 04 Oct 2012 00:50:57 +0000</pubDate>
+      
+      <guid>http://blog.mathevet.xyz/tags/configuration-management/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Debian</title>
@@ -17,6 +26,15 @@
       <pubDate>Mon, 25 Nov 2013 15:53:55 +0000</pubDate>
       
       <guid>http://blog.mathevet.xyz/tags/debian/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Devops</title>
+      <link>http://blog.mathevet.xyz/tags/devops/</link>
+      <pubDate>Thu, 04 Oct 2012 00:50:57 +0000</pubDate>
+      
+      <guid>http://blog.mathevet.xyz/tags/devops/</guid>
       <description></description>
     </item>
     
@@ -53,6 +71,15 @@
       <pubDate>Tue, 26 May 2015 19:49:58 +0000</pubDate>
       
       <guid>http://blog.mathevet.xyz/tags/openssh/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Presentation</title>
+      <link>http://blog.mathevet.xyz/tags/presentation/</link>
+      <pubDate>Thu, 04 Oct 2012 00:50:57 +0000</pubDate>
+      
+      <guid>http://blog.mathevet.xyz/tags/presentation/</guid>
       <description></description>
     </item>
     

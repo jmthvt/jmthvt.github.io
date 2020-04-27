@@ -18,6 +18,11 @@
   </url>
   
   <url>
+    <loc>http://blog.mathevet.xyz/presentation-getting-started-with-puppet/</loc>
+    <lastmod>2012-10-04T00:50:57+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.mathevet.xyz/dive-into-git-en/</loc>
     <lastmod>2011-08-18T17:01:00+00:00</lastmod>
   </url>
@@ -28,8 +33,20 @@
   </url>
   
   <url>
+    <loc>http://blog.mathevet.xyz/tags/configuration-management/</loc>
+    <lastmod>2012-10-04T00:50:57+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>http://blog.mathevet.xyz/tags/debian/</loc>
     <lastmod>2013-11-25T15:53:55+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.mathevet.xyz/tags/devops/</loc>
+    <lastmod>2012-10-04T00:50:57+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -70,6 +87,12 @@
   </url>
   
   <url>
+    <loc>http://blog.mathevet.xyz/tags/presentation/</loc>
+    <lastmod>2012-10-04T00:50:57+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>http://blog.mathevet.xyz/tags/proxy/</loc>
     <lastmod>2015-05-26T19:49:58+00:00</lastmod>
     <priority>0</priority>
@@ -95,7 +118,7 @@
   
   <url>
     <loc>http://blog.mathevet.xyz/categories/software/</loc>
-    <lastmod>2011-08-18T17:01:00+00:00</lastmod>
+    <lastmod>2012-10-04T00:50:57+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -113,7 +136,7 @@
   
   <url>
     <loc>http://blog.mathevet.xyz/tags/</loc>
-    <lastmod>2013-11-25T15:53:55+00:00</lastmod>
+    <lastmod>2012-10-04T00:50:57+00:00</lastmod>
     <priority>0</priority>
   </url>
   

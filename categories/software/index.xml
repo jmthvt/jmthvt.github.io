@@ -6,10 +6,22 @@
     <description>Recent content in Software on Jeremy Mathevet</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-uk</language>
-    <lastBuildDate>Thu, 18 Aug 2011 17:01:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Oct 2012 00:50:57 +0000</lastBuildDate>
     
 	<atom:link href="http://blog.mathevet.xyz/categories/software/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Presentation: Getting Started with Puppet</title>
+      <link>http://blog.mathevet.xyz/presentation-getting-started-with-puppet/</link>
+      <pubDate>Thu, 04 Oct 2012 00:50:57 +0000</pubDate>
+      
+      <guid>http://blog.mathevet.xyz/presentation-getting-started-with-puppet/</guid>
+      <description>Here is a prensetation about Puppet, written by me. It briefly discusses the configuration managers, before looking in more detail Puppet, its installation based on Debian, its initial configuration and its declarative language. This medium is intended for beginners in configuration management, who want to discover Puppet.
+This support is made available under a Creative Commons BY licence.
+Download &amp;ldquo;Getting started with Puppet&amp;rdquo; in PDF.
+ </description>
+    </item>
     
     <item>
       <title>Dive into Git</title>
