@@ -6,10 +6,20 @@
     <description>Recent content in System on Jeremy Mathevet</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-uk</language>
-    <lastBuildDate>Fri, 07 Feb 2014 12:53:24 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 26 May 2015 19:49:58 +0000</lastBuildDate>
     
 	<atom:link href="http://blog.mathevet.xyz/categories/system/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>SOCKS proxy via an SSH tunnel</title>
+      <link>http://blog.mathevet.xyz/socks-proxy-via-an-ssh-tunnel/</link>
+      <pubDate>Tue, 26 May 2015 19:49:58 +0000</pubDate>
+      
+      <guid>http://blog.mathevet.xyz/socks-proxy-via-an-ssh-tunnel/</guid>
+      <description>You are behind a restrictive firewall and you aspire to more freedom? You need to access an Intranet website located in a different environment than yours? You are far from your home country, and can&amp;rsquo;t live one minute more without your favourite TV shows, that you can&amp;rsquo;t watch because of the localisation restrictions?
+You can communicate via port 22? Do you have an SSH server that could access the content you want?</description>
+    </item>
     
     <item>
       <title>SSH: RSA/DSA authentication</title>
