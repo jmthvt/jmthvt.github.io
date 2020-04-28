@@ -29,7 +29,7 @@
 
 <p>Within this secure Termina VM, a container is span up via the <a href="https://en.wikipedia.org/wiki/LXC">LXD</a> runtime. By default, it is a Debian container named <em>Penguin</em>. This container is where the end user is running commands/apps.</p>
 
-<p>It sounds like quite a complex setup, but the Chrome OS engineers have made the whole thing very easy to use: you don&rsquo;t have to worry about all the internals, just launch the Terminal app: it automatically spins ups Termina, followed by Penguin, and displays a prompt.</p>
+<p>It sounds like quite a complex setup, but the Chrome OS engineers have made the whole thing very easy to use.You don&rsquo;t have to worry about all the internals, just launch the Terminal app: it automatically spins ups Termina, followed by Penguin, and displays a prompt.</p>
 
 <p>This way we&rsquo;ve got our Linux environment running isolated from the rest of Chrome OS. There is however the abolity to access the Linux filesystem, sitting within Termina, from Chrome OS. And vice versa: you can mount Chrome OS folders into Termina. All via the Files app.</p>
 
