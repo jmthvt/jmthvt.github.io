@@ -133,15 +133,15 @@
             <div class="post-content">
                 
 
-<p>As you might or might not be aware, Chrome OS has the ability to run Linux apps. Since Chrome OS is built on top of Linux, the historical approach, <a href="https://github.com/dnschneid/crouton">Crouton</a>, was based on chroot. It allows to seggregate a full files system and run from it using the Chrome OS kernel. This means no performance penalty since there is a direct access to the hardware, unlike virtualization. However, this native hardware access has always been a security flaw for Chrome OS, where everything is normally sandboxed and locked (including the file system). This is why Crouton can only be installed and run in <a href="https://chromium.googlesource.com/chromiumos/docs/+/master/developer_mode.md">developer mode</a>, which disables OS boot verification and may void warranty. Oh, and switching to developer mode is not a light operation: it wipes your device.</p>
+<p>As you might or might not be aware, Chrome OS has the ability to run Linux apps. Since Chrome OS is built on top of Linux, the historical approach, <a href="https://github.com/dnschneid/crouton" target="_blank">Crouton</a>, was based on chroot. It allows to seggregate a full files system and run from it using the Chrome OS kernel. This means no performance penalty since there is a direct access to the hardware, unlike virtualization. However, this native hardware access has always been a security flaw for Chrome OS, where everything is normally sandboxed and locked (including the file system). This is why Crouton can only be installed and run in <a href="https://chromium.googlesource.com/chromiumos/docs/+/master/developer_mode.md" target="_blank">developer mode</a>, which disables OS boot verification and may void warranty. Oh, and switching to developer mode is not a light operation: it wipes your device.</p>
 
-<p>Nowadays, most developers rely on Unix based tools. Not having a way to run Linux commands that complies with Chrome OS security was becoming more and more of an issue. That&rsquo;s probably why Google started to work on the <a href="https://chromium.googlesource.com/chromiumos/docs/+/master/containers_and_vms.md">Crostini</a> Project.</p>
+<p>Nowadays, most developers rely on Unix based tools. Not having a way to run Linux commands that complies with Chrome OS security was becoming more and more of an issue. That&rsquo;s probably why Google started to work on the <a href="https://chromium.googlesource.com/chromiumos/docs/+/master/containers_and_vms.md" target="_blank">Crostini</a> Project.</p>
 
-<p>Crostini isolates the Linux environment in a Virtual Machine (VM). A custom VM monitor, <a href="https://opensource.google/projects/crosvm">crosvm</a>, relies on KVM under the hood for running the VM. The image, named <a href="https://chromium.googlesource.com/chromiumos/overlays/board-overlays/+/master/project-termina/">Termina</a>, is a light linux image, intended to boot very fast and start containers.</p>
+<p>Crostini isolates the Linux environment in a Virtual Machine (VM). A custom VM monitor, <a href="https://opensource.google/projects/crosvm" target="_blank">crosvm</a>, relies on KVM under the hood for running the VM. The image, named <a href="https://chromium.googlesource.com/chromiumos/overlays/board-overlays/+/master/project-termina/" target="_blank">Termina</a>, is a light linux image, intended to boot very fast and start containers.</p>
 
 <p>Because yes, the Termina VM only is a sandbox for containers: it doesn&rsquo;t access to the hardware directly, it does access to the hardware exposed and sandboxed by <em>crosvm</em>.</p>
 
-<p>Within this secure Termina VM, a container is span up via the <a href="https://en.wikipedia.org/wiki/LXC">LXD</a> runtime. By default, it is a Debian container named <em>Penguin</em>. This container is where the end user is running commands/apps.</p>
+<p>Within this secure Termina VM, a container is span up via the <a href="https://en.wikipedia.org/wiki/LXC" target="_blank">LXD</a> runtime. By default, it is a Debian container named <em>Penguin</em>. This container is where the end user is running commands/apps.</p>
 
 <p>It sounds like quite a complex setup, but the Chrome OS engineers have made the whole thing very easy to use.You don&rsquo;t have to worry about all the internals, just launch the Terminal app: it automatically spins ups Termina, followed by Penguin, and displays a prompt.</p>
 
@@ -149,7 +149,7 @@
 
 <h2 id="resources">Resources</h2>
 
-<p>I skipped a lot of architecture details for the sake of simplifcation, but if you&rsquo;re interested I recommend the <a href="https://chromium.googlesource.com/chromiumos/docs/+/master/containers_and_vms.md">Crostini technical documentation</a>, you can find a lot of exciting details there.</p>
+<p>I skipped a lot of architecture details for the sake of simplifcation, but if you&rsquo;re interested I recommend the <a href="https://chromium.googlesource.com/chromiumos/docs/+/master/containers_and_vms.md" target="_blank">Crostini technical documentation</a>, you can find a lot of exciting details there.</p>
 
 <p>I also recommend to have a look at the following keynote from Google I/O 2019. They go through some bits of the Crostini architecture, and even show how to play with the VM and containers in the end.</p>
 
