@@ -39,7 +39,7 @@
 
 <meta itemprop="datePublished" content="2020-04-28T11:11:28&#43;08:00" />
 <meta itemprop="dateModified" content="2020-04-28T11:11:28&#43;08:00" />
-<meta itemprop="wordCount" content="440">
+<meta itemprop="wordCount" content="438">
 
 
 
@@ -135,7 +135,7 @@
 
 <p>As you might or might not be aware, Chrome OS has the ability to run Linux apps. Since Chrome OS is built on top of Linux, the historical approach, <a href="https://github.com/dnschneid/crouton">Crouton</a>, was based on chroot. It allows to seggregate a full files system and run from it using the Chrome OS kernel. This means no performance penalty since there is a direct access to the hardware, unlike virtualization. However, this native hardware access has always been a security flaw for Chrome OS, where everything is normally sandboxed and locked (including the file system). This is why Crouton can only be installed and run in <a href="https://chromium.googlesource.com/chromiumos/docs/+/master/developer_mode.md">developer mode</a>, which disables OS boot verification and may void warranty. Oh, and switching to developer mode is not a light operation: it wipes your device.</p>
 
-<p>Nowadays, most of the developers rely on Unix based tools. Not having a way to run Linux commands that complies with Chrome OS security was becoming more and more of an issue. That&rsquo;s probably why Google started to work on the <a href="https://chromium.googlesource.com/chromiumos/docs/+/master/containers_and_vms.md">Crostini</a> Project.</p>
+<p>Nowadays, most developers rely on Unix based tools. Not having a way to run Linux commands that complies with Chrome OS security was becoming more and more of an issue. That&rsquo;s probably why Google started to work on the <a href="https://chromium.googlesource.com/chromiumos/docs/+/master/containers_and_vms.md">Crostini</a> Project.</p>
 
 <p>Crostini isolates the Linux environment in a Virtual Machine (VM). A custom VM monitor, <a href="https://opensource.google/projects/crosvm">crosvm</a>, relies on KVM under the hood for running the VM. The image, named <a href="https://chromium.googlesource.com/chromiumos/overlays/board-overlays/+/master/project-termina/">Termina</a>, is a light linux image, intended to boot very fast and start containers.</p>
 
@@ -169,7 +169,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="http://blog.mathevet.xyz/tags/chrome-os">Chrome OS</a></span><span class="tag"><a href="http://blog.mathevet.xyz/tags/crostini">Crostini</a></span><span class="tag"><a href="http://blog.mathevet.xyz/tags/linux">Linux</a></span>
                 </p>
 
-            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>440 Words</p>
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>438 Words</p>
 
             <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-04-28 11:11 &#43;0800</p>
         </div>
