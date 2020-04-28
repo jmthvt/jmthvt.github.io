@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Security on Jeremy Mathevet</title>
-    <link>http://blog.mathevet.xyz/tags/security/</link>
+    <link>https://blog.mathevet.xyz/tags/security/</link>
     <description>Recent content in Security on Jeremy Mathevet</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-uk</language>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
     <lastBuildDate>Fri, 07 Feb 2014 12:53:24 +0000</lastBuildDate>
     
-	<atom:link href="http://blog.mathevet.xyz/tags/security/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://blog.mathevet.xyz/tags/security/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>SSH: RSA/DSA authentication</title>
-      <link>http://blog.mathevet.xyz/ssh-rsadsa-authentication/</link>
+      <link>https://blog.mathevet.xyz/ssh-rsadsa-authentication/</link>
       <pubDate>Fri, 07 Feb 2014 12:53:24 +0000</pubDate>
       
-      <guid>http://blog.mathevet.xyz/ssh-rsadsa-authentication/</guid>
+      <guid>https://blog.mathevet.xyz/ssh-rsadsa-authentication/</guid>
       <description>Password authentication is good but can be dangerous, because it is weak against brute force attacks. There are some mechanisms which allow to mitigate this treat. There are also safer authentication mechanisms for SSH, like public key auhtentication.
 We&amp;rsquo;re going to create a key pair from our client, a public and a private. We send the public key to the server. Thus, when the client tries to connect, the server communicates by encrypting communications with the public key.</description>
     </item>

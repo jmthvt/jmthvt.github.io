@@ -2,61 +2,61 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Jeremy Mathevet</title>
-    <link>http://blog.mathevet.xyz/</link>
+    <link>https://blog.mathevet.xyz/</link>
     <description>Recent content on Jeremy Mathevet</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-uk</language>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
     <lastBuildDate>Tue, 28 Apr 2020 11:11:28 +0800</lastBuildDate>
     
-	<atom:link href="http://blog.mathevet.xyz/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://blog.mathevet.xyz/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Chrome OS Crostini</title>
-      <link>http://blog.mathevet.xyz/posts/chrome-os-crostini/</link>
+      <link>https://blog.mathevet.xyz/posts/chrome-os-crostini/</link>
       <pubDate>Tue, 28 Apr 2020 11:11:28 +0800</pubDate>
       
-      <guid>http://blog.mathevet.xyz/posts/chrome-os-crostini/</guid>
+      <guid>https://blog.mathevet.xyz/posts/chrome-os-crostini/</guid>
       <description>As you might or might not be aware, Chrome OS has the ability to run Linux apps. Since Chrome OS is built on top of Linux, the historical approach, Crouton, was based on chroot. It allows to seggregate a full files system and run from it using the Chrome OS kernel. This means no performance penalty since there is a direct access to the hardware, unlike virtualization. However, this native hardware access has always been a security flaw for Chrome OS, where everything is normally sandboxed and locked (including the file system).</description>
     </item>
     
     <item>
       <title>SOCKS proxy via an SSH tunnel</title>
-      <link>http://blog.mathevet.xyz/socks-proxy-via-an-ssh-tunnel/</link>
+      <link>https://blog.mathevet.xyz/socks-proxy-via-an-ssh-tunnel/</link>
       <pubDate>Tue, 26 May 2015 19:49:58 +0000</pubDate>
       
-      <guid>http://blog.mathevet.xyz/socks-proxy-via-an-ssh-tunnel/</guid>
+      <guid>https://blog.mathevet.xyz/socks-proxy-via-an-ssh-tunnel/</guid>
       <description>You are behind a restrictive firewall and you aspire to more freedom? You need to access an Intranet website located in a different environment than yours? You are far from your home country, and can&amp;rsquo;t live one minute more without your favourite TV shows, that you can&amp;rsquo;t watch because of the localisation restrictions?
 You can communicate via port 22? Do you have an SSH server that could access the content you want?</description>
     </item>
     
     <item>
       <title>SSH: RSA/DSA authentication</title>
-      <link>http://blog.mathevet.xyz/ssh-rsadsa-authentication/</link>
+      <link>https://blog.mathevet.xyz/ssh-rsadsa-authentication/</link>
       <pubDate>Fri, 07 Feb 2014 12:53:24 +0000</pubDate>
       
-      <guid>http://blog.mathevet.xyz/ssh-rsadsa-authentication/</guid>
+      <guid>https://blog.mathevet.xyz/ssh-rsadsa-authentication/</guid>
       <description>Password authentication is good but can be dangerous, because it is weak against brute force attacks. There are some mechanisms which allow to mitigate this treat. There are also safer authentication mechanisms for SSH, like public key auhtentication.
 We&amp;rsquo;re going to create a key pair from our client, a public and a private. We send the public key to the server. Thus, when the client tries to connect, the server communicates by encrypting communications with the public key.</description>
     </item>
     
     <item>
       <title>Manage your iptables rules. Properly.</title>
-      <link>http://blog.mathevet.xyz/manage-your-iptables-rules-properly/</link>
+      <link>https://blog.mathevet.xyz/manage-your-iptables-rules-properly/</link>
       <pubDate>Mon, 25 Nov 2013 15:53:55 +0000</pubDate>
       
-      <guid>http://blog.mathevet.xyz/manage-your-iptables-rules-properly/</guid>
+      <guid>https://blog.mathevet.xyz/manage-your-iptables-rules-properly/</guid>
       <description>Debian based I regularly see sysadmins saving their iptables rules in an init script. It works, but it&amp;rsquo;s not the most elegant way to do it. I prefer personally to save the existing rules with the iptables-save command. This command sends the result on the standard output, so let&amp;rsquo;s redirect it to a file.
 # iptables-save &amp;gt; /etc/iptables  Interesting option: -c displays how many times the rule has been applied (on bytes and on packets).</description>
     </item>
     
     <item>
       <title>Presentation: Getting Started with Puppet</title>
-      <link>http://blog.mathevet.xyz/presentation-getting-started-with-puppet/</link>
+      <link>https://blog.mathevet.xyz/presentation-getting-started-with-puppet/</link>
       <pubDate>Thu, 04 Oct 2012 00:50:57 +0000</pubDate>
       
-      <guid>http://blog.mathevet.xyz/presentation-getting-started-with-puppet/</guid>
+      <guid>https://blog.mathevet.xyz/presentation-getting-started-with-puppet/</guid>
       <description>Here is a prensetation about Puppet, written by me. It briefly discusses the configuration managers, before looking in more detail Puppet, its installation based on Debian, its initial configuration and its declarative language. This medium is intended for beginners in configuration management, who want to discover Puppet.
 This support is made available under a Creative Commons BY licence.
 Download &amp;ldquo;Getting started with Puppet&amp;rdquo; in PDF.
@@ -65,10 +65,10 @@ Download &amp;ldquo;Getting started with Puppet&amp;rdquo; in PDF.
     
     <item>
       <title>Dive into Git</title>
-      <link>http://blog.mathevet.xyz/dive-into-git-en/</link>
+      <link>https://blog.mathevet.xyz/dive-into-git-en/</link>
       <pubDate>Thu, 18 Aug 2011 17:01:00 +0000</pubDate>
       
-      <guid>http://blog.mathevet.xyz/dive-into-git-en/</guid>
+      <guid>https://blog.mathevet.xyz/dive-into-git-en/</guid>
       <description>Git is a decentralized system control system (VCS) created by Linus Torvalds. This is a very powerful and popular tool. It is used for the Linux kernel development (and many other famous projects). It is so appreciated that the kernel developers are now wondering how they survived without it when it did not exist.
 With so much praise, I wanted to test this tool. It&amp;rsquo;s not difficult to tame, however, the way it works is a bit different than other VCS (especially SVN, that I had already used), mainly because of the decentralization that characterizes Git.</description>
     </item>

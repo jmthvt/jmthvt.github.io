@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Chrome Os on Jeremy Mathevet</title>
-    <link>http://blog.mathevet.xyz/tags/chrome-os/</link>
+    <link>https://blog.mathevet.xyz/tags/chrome-os/</link>
     <description>Recent content in Chrome Os on Jeremy Mathevet</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-uk</language>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
     <lastBuildDate>Tue, 28 Apr 2020 11:11:28 +0800</lastBuildDate>
     
-	<atom:link href="http://blog.mathevet.xyz/tags/chrome-os/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://blog.mathevet.xyz/tags/chrome-os/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Chrome OS Crostini</title>
-      <link>http://blog.mathevet.xyz/posts/chrome-os-crostini/</link>
+      <link>https://blog.mathevet.xyz/posts/chrome-os-crostini/</link>
       <pubDate>Tue, 28 Apr 2020 11:11:28 +0800</pubDate>
       
-      <guid>http://blog.mathevet.xyz/posts/chrome-os-crostini/</guid>
+      <guid>https://blog.mathevet.xyz/posts/chrome-os-crostini/</guid>
       <description>As you might or might not be aware, Chrome OS has the ability to run Linux apps. Since Chrome OS is built on top of Linux, the historical approach, Crouton, was based on chroot. It allows to seggregate a full files system and run from it using the Chrome OS kernel. This means no performance penalty since there is a direct access to the hardware, unlike virtualization. However, this native hardware access has always been a security flaw for Chrome OS, where everything is normally sandboxed and locked (including the file system).</description>
     </item>
     

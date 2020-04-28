@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Software on Jeremy Mathevet</title>
-    <link>http://blog.mathevet.xyz/categories/software/</link>
+    <link>https://blog.mathevet.xyz/categories/software/</link>
     <description>Recent content in Software on Jeremy Mathevet</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-uk</language>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
     <lastBuildDate>Thu, 04 Oct 2012 00:50:57 +0000</lastBuildDate>
     
-	<atom:link href="http://blog.mathevet.xyz/categories/software/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://blog.mathevet.xyz/categories/software/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Presentation: Getting Started with Puppet</title>
-      <link>http://blog.mathevet.xyz/presentation-getting-started-with-puppet/</link>
+      <link>https://blog.mathevet.xyz/presentation-getting-started-with-puppet/</link>
       <pubDate>Thu, 04 Oct 2012 00:50:57 +0000</pubDate>
       
-      <guid>http://blog.mathevet.xyz/presentation-getting-started-with-puppet/</guid>
+      <guid>https://blog.mathevet.xyz/presentation-getting-started-with-puppet/</guid>
       <description>Here is a prensetation about Puppet, written by me. It briefly discusses the configuration managers, before looking in more detail Puppet, its installation based on Debian, its initial configuration and its declarative language. This medium is intended for beginners in configuration management, who want to discover Puppet.
 This support is made available under a Creative Commons BY licence.
 Download &amp;ldquo;Getting started with Puppet&amp;rdquo; in PDF.
@@ -26,10 +26,10 @@ Download &amp;ldquo;Getting started with Puppet&amp;rdquo; in PDF.
     
     <item>
       <title>Dive into Git</title>
-      <link>http://blog.mathevet.xyz/dive-into-git-en/</link>
+      <link>https://blog.mathevet.xyz/dive-into-git-en/</link>
       <pubDate>Thu, 18 Aug 2011 17:01:00 +0000</pubDate>
       
-      <guid>http://blog.mathevet.xyz/dive-into-git-en/</guid>
+      <guid>https://blog.mathevet.xyz/dive-into-git-en/</guid>
       <description>Git is a decentralized system control system (VCS) created by Linus Torvalds. This is a very powerful and popular tool. It is used for the Linux kernel development (and many other famous projects). It is so appreciated that the kernel developers are now wondering how they survived without it when it did not exist.
 With so much praise, I wanted to test this tool. It&amp;rsquo;s not difficult to tame, however, the way it works is a bit different than other VCS (especially SVN, that I had already used), mainly because of the decentralization that characterizes Git.</description>
     </item>

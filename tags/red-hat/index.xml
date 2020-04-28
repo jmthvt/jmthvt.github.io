@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Red Hat on Jeremy Mathevet</title>
-    <link>http://blog.mathevet.xyz/tags/red-hat/</link>
+    <link>https://blog.mathevet.xyz/tags/red-hat/</link>
     <description>Recent content in Red Hat on Jeremy Mathevet</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-uk</language>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
     <lastBuildDate>Mon, 25 Nov 2013 15:53:55 +0000</lastBuildDate>
     
-	<atom:link href="http://blog.mathevet.xyz/tags/red-hat/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://blog.mathevet.xyz/tags/red-hat/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Manage your iptables rules. Properly.</title>
-      <link>http://blog.mathevet.xyz/manage-your-iptables-rules-properly/</link>
+      <link>https://blog.mathevet.xyz/manage-your-iptables-rules-properly/</link>
       <pubDate>Mon, 25 Nov 2013 15:53:55 +0000</pubDate>
       
-      <guid>http://blog.mathevet.xyz/manage-your-iptables-rules-properly/</guid>
+      <guid>https://blog.mathevet.xyz/manage-your-iptables-rules-properly/</guid>
       <description>Debian based I regularly see sysadmins saving their iptables rules in an init script. It works, but it&amp;rsquo;s not the most elegant way to do it. I prefer personally to save the existing rules with the iptables-save command. This command sends the result on the standard output, so let&amp;rsquo;s redirect it to a file.
 # iptables-save &amp;gt; /etc/iptables  Interesting option: -c displays how many times the rule has been applied (on bytes and on packets).</description>
     </item>
