@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-uk</language>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-    <lastBuildDate>Thu, 04 Oct 2012 00:50:57 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 28 Apr 2020 11:11:28 +0800</lastBuildDate>
     
 	<atom:link href="http://blog.mathevet.xyz/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Chrome Os</title>
+      <link>http://blog.mathevet.xyz/tags/chrome-os/</link>
+      <pubDate>Tue, 28 Apr 2020 11:11:28 +0800</pubDate>
+      
+      <guid>http://blog.mathevet.xyz/tags/chrome-os/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Configuration Management</title>
@@ -18,6 +27,15 @@
       <pubDate>Thu, 04 Oct 2012 00:50:57 +0000</pubDate>
       
       <guid>http://blog.mathevet.xyz/tags/configuration-management/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Crostini</title>
+      <link>http://blog.mathevet.xyz/tags/crostini/</link>
+      <pubDate>Tue, 28 Apr 2020 11:11:28 +0800</pubDate>
+      
+      <guid>http://blog.mathevet.xyz/tags/crostini/</guid>
       <description></description>
     </item>
     
@@ -63,6 +81,15 @@
       <pubDate>Mon, 25 Nov 2013 15:53:55 +0000</pubDate>
       
       <guid>http://blog.mathevet.xyz/tags/iptables/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Linux</title>
+      <link>http://blog.mathevet.xyz/tags/linux/</link>
+      <pubDate>Tue, 28 Apr 2020 11:11:28 +0800</pubDate>
+      
+      <guid>http://blog.mathevet.xyz/tags/linux/</guid>
       <description></description>
     </item>
     

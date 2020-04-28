@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="Jeremy Mathevet">
+<meta name="description" content="As you might or might not be aware, Chrome OS has the ability to run Linux apps. Since Chrome OS is built on top of Linux, the historical approach, Crouton, was based on chroot. It allows to seggregate a full files system and run from it using the Chrome OS kernel. This means no performance penalty since there is a direct access to the hardware, unlike virtualization. However, this native hardware access has always been a security flaw for Chrome OS, where everything is normally sandboxed and locked (including the file system)." />
+<meta name="keywords" content=", Chrome OS, Crostini, Linux" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="http://blog.mathevet.xyz/posts/chrome-os-crostini/" />
+
+
+    <title>
+        
+            Chrome OS Crostini :: Jeremy Mathevet  — Cloud &amp; Software with love
+        
+    </title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.1/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="/main.min.b68186a5842a9505e4f29180b86081b391cd3fcb5f11f101faf63956a3b7ec4e.css">
+
+
+
+
+
+
+
+<meta itemprop="name" content="Chrome OS Crostini">
+<meta itemprop="description" content="As you might or might not be aware, Chrome OS has the ability to run Linux apps. Since Chrome OS is built on top of Linux, the historical approach, Crouton, was based on chroot. It allows to seggregate a full files system and run from it using the Chrome OS kernel. This means no performance penalty since there is a direct access to the hardware, unlike virtualization. However, this native hardware access has always been a security flaw for Chrome OS, where everything is normally sandboxed and locked (including the file system).">
+
+
+<meta itemprop="datePublished" content="2020-04-28T11:11:28&#43;08:00" />
+<meta itemprop="dateModified" content="2020-04-28T11:11:28&#43;08:00" />
+<meta itemprop="wordCount" content="440">
+
+
+
+<meta itemprop="keywords" content="Chrome OS,Crostini,Linux," />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Chrome OS Crostini"/>
+<meta name="twitter:description" content="As you might or might not be aware, Chrome OS has the ability to run Linux apps. Since Chrome OS is built on top of Linux, the historical approach, Crouton, was based on chroot. It allows to seggregate a full files system and run from it using the Chrome OS kernel. This means no performance penalty since there is a direct access to the hardware, unlike virtualization. However, this native hardware access has always been a security flaw for Chrome OS, where everything is normally sandboxed and locked (including the file system)."/>
+
+
+
+
+
+
+
+    <meta property="article:published_time" content="2020-04-28 11:11:28 &#43;0800 HKT" />
+
+
+
+
+
+
+
+
+    </head>
+
+    <body class="dark-theme">
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">></span>
+            <span class="logo__text">cd ~/</span>
+            <span class="logo__cursor" style=
+                  "
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="http://blog.mathevet.xyz/posts">Posts</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+
+            <span class="theme-toggle unselectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+</span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>3 minutes
+
+            
+
+            </p>
+        </div>
+
+        <article>
+            <h1 class="post-title">
+                <a href="http://blog.mathevet.xyz/posts/chrome-os-crostini/">Chrome OS Crostini</a>
+            </h1>
+
+            
+
+            <div class="post-content">
+                
+
+<p>As you might or might not be aware, Chrome OS has the ability to run Linux apps. Since Chrome OS is built on top of Linux, the historical approach, <a href="https://github.com/dnschneid/crouton">Crouton</a>, was based on chroot. It allows to seggregate a full files system and run from it using the Chrome OS kernel. This means no performance penalty since there is a direct access to the hardware, unlike virtualization. However, this native hardware access has always been a security flaw for Chrome OS, where everything is normally sandboxed and locked (including the file system). This is why Crouton can only be installed and run in <a href="https://chromium.googlesource.com/chromiumos/docs/+/master/developer_mode.md">developer mode</a>, which disables OS boot verification and may void warranty. Oh, and switching to developer mode is not a light operation: it wipes your device.</p>
+
+<p>Nowadays, most of the developers rely on Unix based tools. Not having a way to run Linux commands that complies with Chrome OS security was becoming more and more of an issue. That&rsquo;s probably why Google started to work on the <a href="https://chromium.googlesource.com/chromiumos/docs/+/master/containers_and_vms.md">Crostini</a> Project.</p>
+
+<p>Crostini isolates the Linux environment in a Virtual Machine (VM). A custom VM monitor, <a href="https://opensource.google/projects/crosvm">crosvm</a>, relies on KVM under the hood for running the VM. The image, named <a href="https://chromium.googlesource.com/chromiumos/overlays/board-overlays/+/master/project-termina/">Termina</a>, is a light linux image, intended to boot very fast and start containers.</p>
+
+<p>Because yes, the Termina VM only is a sandbox for containers: it doesn&rsquo;t access to the hardware directly, it does access to the hardware exposed and sandboxed by <em>crosvm</em>.</p>
+
+<p>Within this secure Termina VM, a container is span up via the <a href="https://en.wikipedia.org/wiki/LXC">LXD</a> runtime. By default, it is a Debian container named <em>Penguin</em>. This container is where the end user is running commands/apps.</p>
+
+<p>It sounds like quite a complex setup, but the Chrome OS engineers have made the whole thing very easy to use: you don&rsquo;t have to worry about all the internals, just launch the Terminal app: it automatically spins ups Termina, followed by Penguin, and displays a prompt.</p>
+
+<p>This way we&rsquo;ve got our Linux environment running isolated from the rest of Chrome OS. There is however the abolity to access the Linux filesystem, sitting within Termina, from Chrome OS. And vice versa: you can mount Chrome OS folders into Termina. All via the Files app.</p>
+
+<h2 id="resources">Resources</h2>
+
+<p>I skipped a lot of architecture details for the sake of simplifcation, but if you&rsquo;re interested I recommend the <a href="https://chromium.googlesource.com/chromiumos/docs/+/master/containers_and_vms.md">Crostini technical documentation</a>, you can find a lot of exciting details there.</p>
+
+<p>I also recommend to have a look at the following keynote from Google I/O 2019. They go through some bits of the Crostini architecture, and even show how to play with the VM and containers in the end.</p>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="//www.youtube.com/embed/pRlh8LX4kQI" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+            </div>
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="http://blog.mathevet.xyz/tags/chrome-os">Chrome OS</a></span><span class="tag"><a href="http://blog.mathevet.xyz/tags/crostini">Crostini</a></span><span class="tag"><a href="http://blog.mathevet.xyz/tags/linux">Linux</a></span>
+                </p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>440 Words</p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-04-28 11:11 &#43;0800</p>
+        </div>
+
+        
+            <div class="pagination">
+                <div class="pagination__title">
+                    <span class="pagination__title-h">Read other posts</span>
+                    <hr />
+                </div>
+
+                <div class="pagination__buttons">
+                    
+
+                    
+                        <span class="button next">
+                            <a href="http://blog.mathevet.xyz/socks-proxy-via-an-ssh-tunnel/">
+                                <span class="button__text">SOCKS proxy via an SSH tunnel</span>
+                                <span class="button__icon">→</span>
+                            </a>
+                        </span>
+                    
+                </div>
+            </div>
+        
+    </main>
+
+            </div>
+
+            
+                <footer class="footer">
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>&copy; 2020</span>
+            
+                <span><a href="http://blog.mathevet.xyz">Jeremy Mathevet</a></span>
+            
+            <span><a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></span>
+            <span> <a href="http://blog.mathevet.xyz/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></span>
+        </div>
+    </div>
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>Powered by <a href="http://gohugo.io">Hugo</a></span>
+            <span>Made with &#10084; by <a href="https://github.com/rhazdon">Djordje Atlialp</a></span>
+        </div>
+    </div>
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+
+<script type="text/javascript" src="/bundle.min.d889f909e0536e07868fcaacee7d4b3f9ff14ad7ab1b29cf4c9eefd395beb291dcd983e13b8663ffa20f90fe98e41467de128a97ad45cf86738ec9a46df5ec1b.js" integrity="sha512-2In5CeBTbgeGj8qs7n1LP5/xSterGynPTJ7v05W&#43;spHc2YPhO4Zj/6IPkP6Y5BRn3hKKl61Fz4ZzjsmkbfXsGw=="></script>
+
+
+
+    </body>
+</html>
