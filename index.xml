@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-uk</language>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-    <lastBuildDate>Tue, 28 Apr 2020 11:11:28 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 06 May 2020 11:23:32 +0800</lastBuildDate>
     
 	<atom:link href="https://blog.mathevet.xyz/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Create Your Own VPN in the Cloud</title>
+      <link>https://blog.mathevet.xyz/posts/create-your-own-vpn-in-the-cloud/</link>
+      <pubDate>Wed, 06 May 2020 11:23:32 +0800</pubDate>
+      
+      <guid>https://blog.mathevet.xyz/posts/create-your-own-vpn-in-the-cloud/</guid>
+      <description>For a lot of reasons, VPNs can be useful. Personally, as an expat, I am regularly facing geo-resctricted video content. It can be very frustrating at times. Subscribing to a VPN proivder could be a solution, however I always found it a bit expensive for my usage. Since I&amp;rsquo;m renting a dedicated server in France, I was using it for years as a SOCKS proxy, when needed. However, I now miss some contents from another country I lived in: the UK.</description>
+    </item>
     
     <item>
       <title>Chrome OS Crostini</title>

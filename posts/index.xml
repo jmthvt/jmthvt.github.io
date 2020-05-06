@@ -7,8 +7,130 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-uk</language>
         <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-        <lastBuildDate>Tue, 28 Apr 2020 11:11:28 +0800</lastBuildDate>
+        <lastBuildDate>Wed, 06 May 2020 11:23:32 +0800</lastBuildDate>
         <atom:link href="https://blog.mathevet.xyz/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>Create Your Own VPN in the Cloud</title>
+            <link>https://blog.mathevet.xyz/posts/create-your-own-vpn-in-the-cloud/</link>
+            <pubDate>Wed, 06 May 2020 11:23:32 +0800</pubDate>
+            
+            <guid>https://blog.mathevet.xyz/posts/create-your-own-vpn-in-the-cloud/</guid>
+            <description>For a lot of reasons, VPNs can be useful. Personally, as an expat, I am regularly facing geo-resctricted video content. It can be very frustrating at times. Subscribing to a VPN proivder could be a solution, however I always found it a bit expensive for my usage. Since I&amp;rsquo;m renting a dedicated server in France, I was using it for years as a SOCKS proxy, when needed. However, I now miss some contents from another country I lived in: the UK.</description>
+            <content type="html"><![CDATA[
+
+<p>For a lot of reasons, VPNs can be useful. Personally, as an expat, I am regularly facing geo-resctricted video content. It can be very frustrating at times. Subscribing to a VPN proivder could be a solution, however I always found it a bit expensive for my usage. Since I&rsquo;m renting a dedicated server in France, I was using it for years as a <a href="https://blog.mathevet.xyz/socks-proxy-via-an-ssh-tunnel/" target="_blank">SOCKS proxy</a>, when needed. However, I now miss some contents from another country I lived in: the UK. I haven&rsquo;t any server there I could hop to. In short, I needed a cheap VPN solution that I could use for time to time, with the ability to select the target location.</p>
+
+<p>It looks like public clouds fit perfectly those requirements! We can pay only on usage by creating/destroying our whole setup. With a bit of automation, let&rsquo;s see how to create our own VPN.</p>
+
+<blockquote>
+<p><em>Disclaimer</em>: This solution is by all mean not supposed to be as convenient to use as retailed VPNs. It is not a comprenhsive solution either. Finally, since we&rsquo;re dealing with public cloud, mind the billing! I obviously won&rsquo;t be responsible for any excessive bill you might encounter by following this post or using my templates.</p>
+</blockquote>
+
+<p>OK let&rsquo;s go! For this post I will use Kubernetes on Google Cloud (GCP). You can of course do something similar on AWS, but I chose to go on GCP because they give away <a href="https://cloud.google.com/kubernetes-engine/pricing#pricing_for_cluster_management" target="_blank">one zonal Kubernetes cluster (GKE) per billing account for free</a> (excluding the worker nodes cost).</p>
+
+<p>I kknow what you might think: <em>Wow, why using Kubernetes for a simple VPN used by a single user? It sounds overkill</em>.
+Well, it&rsquo;s true we don&rsquo;t <em>really</em> need Kubernetes here. But since we only pay the woker node, it makes it a no brainer solution for easily deploying containers. Which is even oversimplified by Helm. In one word, I chose to go with Kubernetes for one reason: simplicity.</p>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<p>You&rsquo;ll need the following tools on your machine:</p>
+
+<ul>
+<li>gcloud</li>
+<li>terraform</li>
+<li>kubectl</li>
+<li>helm</li>
+</ul>
+
+<p>I won&rsquo;t cover the install and setup of those tools here, please refer to their respective documentation.</p>
+
+<h2 id="set-up-the-gcp-project-infra-with-terraform">Set up the GCP project &amp; infra with Terraform</h2>
+
+<p>I wrote a small terraform template that creates a project, network and GKE cluster in GCP. You can get it on GitHub:
+<a href="https://github.com/jmthvt/ownVPN" target="_blank">jmthvt/ownVPN</a>.</p>
+
+<p>This template relies mainly on official (as in, supported by Hashicorp) modules from the <a href="https://registry.terraform.io/" target="_blank">terraform registry</a>.</p>
+
+<p>A few highlights:</p>
+
+<ul>
+<li>It spins everything up in us-central1 (one of the region where one zonal GKE per account is free). We could parametize the region to allow an easier switch. But currently that&rsquo;s harcoded.</li>
+<li>We&rsquo;re using a preemptible node for the GKE worker. That&rsquo;s a bit similar to AWS spot instances: cheaper instances than on-demand, but short-lived (up to 24 hours).</li>
+<li>The <code>g1-small</code> instance type is <em>very</em> small for GKE. So small we will need to lower the openVPN CPU request, later. Feel free to bump if you don&rsquo;t mind spending.</li>
+<li>One node and no autoscaling, again for saving money.</li>
+<li>In order to create the project, you&rsquo;ll need your billind account ID. You can get it with <code>gcloud alpha billing accounts list</code>.</li>
+<li>If you&rsquo;re using an organisation, you&rsquo;ll have to submit the org ID.</li>
+</ul>
+
+<p>OK, once you&rsquo;ve cloned the repo:</p>
+
+<pre><code>cd terraform/
+terraform init
+terraform plan
+terraform apply
+</code></pre>
+
+<p>After a moment, the ownvpn project and the infra should be provisionned.</p>
+
+<pre><code>Apply complete! Resources: 30 added, 0 changed, 0 destroyed.
+</code></pre>
+
+<h2 id="set-up-openvpn-on-kubernetes-with-helm">Set up OpenVPN on Kubernetes with Helm</h2>
+
+<p>Let&rsquo;s list the projects and switch to the new owvpn project.</p>
+
+<pre><code>gcloud projects list
+gcloud config set project &lt;PROJECT_ID&gt;
+</code></pre>
+
+<p>Let&rsquo;s jump onto the Kubernetes cluster:</p>
+
+<pre><code>gcloud container clusters get-credentials gke-1 --region us-central1
+</code></pre>
+
+<p>Quick check that we can indeed reach the Kubernetes API:</p>
+
+<pre><code>kubectl get nodes
+NAME                                        STATUS   ROLES    AGE   VERSION
+gke-gke-1-default-node-pool-fda1c71d-79dt   Ready    &lt;none&gt;   10m   v1.15.11-gke.11
+</code></pre>
+
+<p>Looks good, so let&rsquo;s add the helm stable repo and install the <a href="https://github.com/helm/charts/tree/master/stable/openvpn" target="_blank">OpenVPN chart</a>:</p>
+
+<pre><code>helm repo add stable http://storage.googleapis.com/kubernetes-charts
+helm install openvpn stable/openvpn --set resources.requests.cpu=100m --set ipForwardInitContainer=true
+</code></pre>
+
+<p>We have to lower the CPU request otherwise the pod couldn&rsquo;t spin up on our super small node.
+Once the chart is installed, wait a few more minutes to allow OpenVPN to generate certs/keys and the load balancer to be ready.</p>
+
+<p>Then, run the following in a shell:</p>
+
+<pre><code>POD_NAME=$(kubectl get pods --namespace &quot;default&quot; -l &quot;app=openvpn,release=openvpn&quot; -o jsonpath='{ .items[0].metadata.name }')
+SERVICE_NAME=$(kubectl get svc --namespace &quot;default&quot; -l &quot;app=openvpn,release=openvpn&quot; -o jsonpath='{ .items[0].metadata.name }')
+SERVICE_IP=$(kubectl get svc --namespace &quot;default&quot; &quot;$SERVICE_NAME&quot; -o go-template='{{ range $k, $v := (index .status.loadBalancer.ingress 0)}}{{ $v }}{{end}}')
+KEY_NAME=kubeVPN
+kubectl --namespace &quot;default&quot; exec -it &quot;$POD_NAME&quot; /etc/openvpn/setup/newClientCert.sh &quot;$KEY_NAME&quot; &quot;$SERVICE_IP&quot;
+kubectl --namespace &quot;default&quot; exec -it &quot;$POD_NAME&quot; cat &quot;/etc/openvpn/certs/pki/$KEY_NAME.ovpn&quot; &gt; &quot;$KEY_NAME.ovpn&quot;
+</code></pre>
+
+<p>You can now import the <code>kubeVPN.opvn</code> file in your OpenVPN client and connect!</p>
+
+<h2 id="wrap-up">Wrap-up</h2>
+
+<p>While it&rsquo;s been quite straightforward to get our own VPN in the cloud, it took quite some time to spin up. I haven&rsquo;t timed properly, but it took easily 10-15mn overall, mostly waiting for the infrastructure. If we want to gain some time next time, we could just downscale the node group to 0 instead of destroying the whole infra. Since the GKE cluster is free, we would end up paying nothing until we scale up the node pool again.</p>
+
+<p>Otherwise, do not forget to destroy the infra:</p>
+
+<pre><code>terraform destroy
+</code></pre>
+
+<p>I&rsquo;m well aware that a lot of things could be streamlined and enhanced to get the VPN up and running quicker. I might (or might not) improve things in the future, in which case I would ipdate this post. I also don&rsquo;t really know how much this will cost me. Due to my low usage I expect it to be very low, but due to how public cloud bill everything, it&rsquo;s quite tricky to estimate.</p>
+
+<p>It&rsquo;s pretty cool to be able to get this working though, that was fun!</p>
+]]></content>
+        </item>
         
         <item>
             <title>Chrome OS Crostini</title>
