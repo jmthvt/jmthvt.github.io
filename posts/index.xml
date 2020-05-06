@@ -24,10 +24,10 @@
 <p>It looks like public clouds fit perfectly those requirements! We can pay only on usage by creating/destroying our whole setup. With a bit of automation, let&rsquo;s see how to create our own VPN.</p>
 
 <blockquote>
-<p><em>Disclaimer</em>: This solution is by all mean not supposed to be as convenient to use as retailed VPNs. It is not a comprenhsive solution either. Finally, since we&rsquo;re dealing with public cloud, mind the billing! I obviously won&rsquo;t be responsible for any excessive bill you might encounter by following this post or using my templates.</p>
+<p><strong>Disclaimer</strong>: This solution is by all mean not supposed to be as convenient to use as retailed VPNs. It is not a comprenhsive solution either. Finally, since we&rsquo;re dealing with public cloud, mind the billing! I obviously won&rsquo;t be responsible for any excessive bill you might encounter by following this post or using my templates.</p>
 </blockquote>
 
-<p>OK let&rsquo;s go! For this post I will use Kubernetes on Google Cloud (GCP). You can of course do something similar on AWS, but I chose to go on GCP because they give away <a href="https://cloud.google.com/kubernetes-engine/pricing#pricing_for_cluster_management" target="_blank">one zonal Kubernetes cluster (GKE) per billing account for free</a> (excluding the worker nodes cost).</p>
+<p>OK let&rsquo;s go! For this post I will use Kubernetes on Google Cloud (GCP). You can of course do something similar on AWS, but I chose to go on GCP because they give away one zonal Kubernetes cluster (GKE) per billing account <a href="https://cloud.google.com/kubernetes-engine/pricing#pricing_for_cluster_management" target="_blank">for free</a> (excluding the worker nodes cost).</p>
 
 <p>I kknow what you might think: <em>Wow, why using Kubernetes for a simple VPN used by a single user? It sounds overkill</em>.
 Well, it&rsquo;s true we don&rsquo;t <em>really</em> need Kubernetes here. But since we only pay the woker node, it makes it a no brainer solution for easily deploying containers. Which is even oversimplified by Helm. In one word, I chose to go with Kubernetes for one reason: simplicity.</p>
@@ -55,9 +55,9 @@ Well, it&rsquo;s true we don&rsquo;t <em>really</em> need Kubernetes here. But s
 <p>A few highlights:</p>
 
 <ul>
-<li>It spins everything up in us-central1 (one of the region where one zonal GKE per account is free). We could parametize the region to allow an easier switch. But currently that&rsquo;s harcoded.</li>
+<li>It spins everything up in <code>us-central1</code> (one of the region where one zonal GKE per account is free). We could parametize the region to allow an easier switch. But currently that&rsquo;s harcoded.</li>
 <li>We&rsquo;re using a preemptible node for the GKE worker. That&rsquo;s a bit similar to AWS spot instances: cheaper instances than on-demand, but short-lived (up to 24 hours).</li>
-<li>The <code>g1-small</code> instance type is <em>very</em> small for GKE. So small we will need to lower the openVPN CPU request, later. Feel free to bump if you don&rsquo;t mind spending.</li>
+<li>The <code>g1-small</code> instance type is <strong>very</strong> small for GKE. So small we will need to lower the openVPN CPU request, later. Feel free to bump if you don&rsquo;t mind spending.</li>
 <li>One node and no autoscaling, again for saving money.</li>
 <li>In order to create the project, you&rsquo;ll need your billind account ID. You can get it with <code>gcloud alpha billing accounts list</code>.</li>
 <li>If you&rsquo;re using an organisation, you&rsquo;ll have to submit the org ID.</li>
