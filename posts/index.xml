@@ -24,12 +24,12 @@
 <p>It looks like public clouds fit perfectly those requirements! We can pay only on usage by creating/destroying our whole setup. With a bit of automation, let&rsquo;s see how to create our own VPN.</p>
 
 <blockquote>
-<p><strong>Disclaimer</strong>: This solution is by all mean not supposed to be as convenient to use as retailed VPNs. It is not a comprenhsive solution either. Finally, since we&rsquo;re dealing with public cloud, mind the billing! I obviously won&rsquo;t be responsible for any excessive bill you might encounter by following this post or using my templates.</p>
+<p><strong>Disclaimer</strong>: This solution is by all mean not supposed to be as convenient to use as retailed VPNs. It is not a comprehensive solution either. Finally, since we&rsquo;re dealing with public cloud, mind the billing! I obviously won&rsquo;t be responsible for any excessive bill you might encounter by following this post or using my templates.</p>
 </blockquote>
 
 <p>OK let&rsquo;s go! For this post I will use Kubernetes on Google Cloud (GCP). You can of course do something similar on AWS, but I chose to go on GCP because they give away one zonal Kubernetes cluster (GKE) per billing account <a href="https://cloud.google.com/kubernetes-engine/pricing#pricing_for_cluster_management" target="_blank">for free</a> (excluding the worker nodes cost).</p>
 
-<p>I kknow what you might think: <em>Wow, why using Kubernetes for a simple VPN used by a single user? It sounds overkill</em>.
+<p>I know what you might think: <em>Wow, why using Kubernetes for a simple VPN used by a single user? It sounds overkill</em>.
 Well, it&rsquo;s true we don&rsquo;t <em>really</em> need Kubernetes here. But since we only pay the woker node, it makes it a no brainer solution for easily deploying containers. Which is even oversimplified by Helm. In one word, I chose to go with Kubernetes for one reason: simplicity.</p>
 
 <h2 id="prerequisites">Prerequisites</h2>
