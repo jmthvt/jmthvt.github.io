@@ -14,10 +14,10 @@
     
     <item>
       <title>Dive into Git</title>
-      <link>https://blog.mathevet.xyz/posts/2011-08-18-dive-into-git-en/</link>
+      <link>https://blog.mathevet.xyz/posts/dive.into-git/</link>
       <pubDate>Thu, 18 Aug 2011 17:01:00 +0000</pubDate>
       
-      <guid>https://blog.mathevet.xyz/posts/2011-08-18-dive-into-git-en/</guid>
+      <guid>https://blog.mathevet.xyz/posts/dive.into-git/</guid>
       <description>Git is a decentralized system control system (VCS) created by Linus Torvalds. This is a very powerful and popular tool. It is used for the Linux kernel development (and many other famous projects). It is so appreciated that the kernel developers are now wondering how they survived without it when it did not exist.
 With so much praise, I wanted to test this tool. It&amp;rsquo;s not difficult to tame, however, the way it works is a bit different than other VCS (especially SVN, that I had already used), mainly because of the decentralization that characterizes Git.</description>
     </item>

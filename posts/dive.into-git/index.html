@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="Jeremy Mathevet">
+<meta name="description" content="Git is a decentralized system control system (VCS) created by Linus Torvalds. This is a very powerful and popular tool. It is used for the Linux kernel development (and many other famous projects). It is so appreciated that the kernel developers are now wondering how they survived without it when it did not exist.
+With so much praise, I wanted to test this tool. It&amp;rsquo;s not difficult to tame, however, the way it works is a bit different than other VCS (especially SVN, that I had already used), mainly because of the decentralization that characterizes Git." />
+<meta name="keywords" content=", git" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="https://blog.mathevet.xyz/posts/dive.into-git/" />
+
+
+    <title>
+        
+            Dive into Git :: Jeremy Mathevet  — Cloud &amp; Software with love
+        
+    </title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.1/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="/main.min.b68186a5842a9505e4f29180b86081b391cd3fcb5f11f101faf63956a3b7ec4e.css">
+
+
+
+
+
+
+
+<meta itemprop="name" content="Dive into Git">
+<meta itemprop="description" content="Git is a decentralized system control system (VCS) created by Linus Torvalds. This is a very powerful and popular tool. It is used for the Linux kernel development (and many other famous projects). It is so appreciated that the kernel developers are now wondering how they survived without it when it did not exist.
+With so much praise, I wanted to test this tool. It&rsquo;s not difficult to tame, however, the way it works is a bit different than other VCS (especially SVN, that I had already used), mainly because of the decentralization that characterizes Git.">
+
+
+<meta itemprop="datePublished" content="2011-08-18T17:01:00&#43;00:00" />
+<meta itemprop="dateModified" content="2011-08-18T17:01:00&#43;00:00" />
+<meta itemprop="wordCount" content="2273">
+
+
+
+<meta itemprop="keywords" content="git," />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Dive into Git"/>
+<meta name="twitter:description" content="Git is a decentralized system control system (VCS) created by Linus Torvalds. This is a very powerful and popular tool. It is used for the Linux kernel development (and many other famous projects). It is so appreciated that the kernel developers are now wondering how they survived without it when it did not exist.
+With so much praise, I wanted to test this tool. It&rsquo;s not difficult to tame, however, the way it works is a bit different than other VCS (especially SVN, that I had already used), mainly because of the decentralization that characterizes Git."/>
+
+
+
+
+
+
+
+    <meta property="article:published_time" content="2011-08-18 17:01:00 &#43;0000 &#43;0000" />
+
+
+
+
+
+
+
+
+    </head>
+
+    <body class="dark-theme">
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">></span>
+            <span class="logo__text">cd ~/</span>
+            <span class="logo__cursor" style=
+                  "
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="https://photo.mathevet.xyz">Photos</a></li><li><a href="https://blog.mathevet.xyz/posts">Posts</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+
+            <span class="theme-toggle unselectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+</span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>11 minutes
+
+            
+
+            </p>
+        </div>
+
+        <article>
+            <h1 class="post-title">
+                <a href="https://blog.mathevet.xyz/posts/dive.into-git/">Dive into Git</a>
+            </h1>
+
+            
+
+            <div class="post-content">
+                
+
+<p>Git is a decentralized system control system (VCS) created by Linus Torvalds. This is a very powerful and popular tool. It is used for the Linux kernel development (and many other famous projects). It is so appreciated that the kernel developers are now wondering how they survived without it when it did not exist.</p>
+
+<p>With so much praise, I wanted to test this tool. It&rsquo;s not difficult to tame, however, the way it works is a bit different than other VCS (especially SVN, that I had already used), mainly because of the decentralization that characterizes Git.</p>
+
+<p>Indeed, while most management software versions require a central server to which everyone connects to send and receive changes, Git allows each user to have a local repository that can synchronize with other users. Moreover, it&rsquo;s completely possible to combine this decentralization with a master server, in order to have a repository that everybody can reach, just like classic centralized VCS.</p>
+
+<h1 id="understanding-git">Understanding Git</h1>
+
+<p>Git allows to take snapshots of your project files. Specify which files to back up, and then perform the backup (this is called a commit). When you commit, Git writes a manifest describing how your files look like at this moment. This allows not to save the whole directory each time.</p>
+
+<p>Here&rsquo;s how to use Git basically.</p>
+
+<h1 id="create-and-retrieve-repositories">Create and retrieve repositories</h1>
+
+<p>The first thing to do to use Git is to have a Git repository. Two ways: either create or retrieve it.</p>
+
+<p>**Create a repository: <span style="font-size: large;">git init</span></p>
+
+<p>To create a repository, simply run the command <strong>git init</strong> in the desired directory.</p>
+
+<pre><code>$ cd fake-project
+$ ls
+README hello.sh
+$ git init
+Initialized empty Git repository in ~/fake-project/.git/
+</code></pre>
+
+<p><strong>Get a repository: <span style="font-size: large;">git clone</span></strong></p>
+
+<p>You can get a Git repository via the Internet, with the command <strong>git clone [URL]</strong>. This means that you copy the files from the repository locally, but also the history of commits, branches, etc..</p>
+
+<pre><code>$ git clone git://github.com/octocat/Hello-World.git
+</code></pre>
+
+<h1 id="managing-snapshots">Managing Snapshots</h1>
+
+<p>Before discussing the commands, you should first understand that a file can have four states:</p>
+
+<ul>
+<li><p><strong>Unversioned</strong></p>
+
+<p>Git ignores this file.</p></li>
+
+<li><p><strong>In Staging area</strong></p>
+
+<p>The file or file changes will be saved in the next commit.</p></li>
+
+<li><p><strong>Revised</strong></p>
+
+<p>The file has changed since the last commit, but it is not in the staging area, and therefore will not be updated in the next commit.</p></li>
+
+<li><p><strong>Committed</strong></p>
+
+<p>The file is saved and has not been modified since.</p></li>
+</ul>
+
+<p>In summary, we will use <strong><em>git add</em></strong> to put one or more files in the staging area, <em><strong>git status</strong></em> and <em><strong>git diff</strong></em> to see the state and what changes have been made (or not) to files, and finally <em><strong>git commit</strong></em> to save.</p>
+
+<p><strong>Add files in the <em>staging area</em>: <span style="font-size: large;">git add</span></strong></p>
+
+<p>Let&rsquo;s return to our <em>fake-project</em> example. A <em><strong>git status</strong></em> shows us the files state of the repository.</p>
+
+<pre><code>$ git status -s
+?? README
+?? hello.sh
+</code></pre>
+
+<p>Question marks indicate that the files are not versioned. To put them in the staging area, we use <em><strong>git add</strong></em>.</p>
+
+<pre><code>$ git add README hello.sh
+</code></pre>
+
+<p>or</p>
+
+<pre><code>$ git add .
+</code></pre>
+
+<p>to add all the files from the repository (recursive mode).</p>
+
+<p>A <em>git status</em> confirms that the files are ready to be committed:</p>
+
+<pre><code>$ git status -s
+A  README
+A  hello.sh
+</code></pre>
+
+<p>An important thing to understand: when the files will be committed, they will be in the state they were when the last <em>git add</em> was performed. So, if a file changes after <em>git add</em>, these changes will not be included in the Git snapshot. We should launch a <em>git add</em> again to save the latest file version.</p>
+
+<p><strong>See the files state of the repository: <span style="font-size: large;">git status</span></strong></p>
+
+<p>As we saw earlier, <em><strong>git status</strong></em> shows whether the files are ready to be committed, have been modified or deleted.</p>
+
+<pre><code>$ vim README
+$ git status
+# On branch master
+#
+# Initial commit
+#
+# Changes to be committed:
+# (use &quot;git rm --cached ...&quot; to unstage)
+#
+# new file: README
+# new file: hello.sh
+#
+# Changed but not updated:
+# (use &quot;git add ...&quot; to update what will be committed)
+# (use &quot;git checkout -- ...&quot; to discard changes in working directory)
+#
+# modified: README
+#
+</code></pre>
+
+<p>or with -s, for a shorter output:</p>
+
+<pre><code>$ git status -s
+AM README
+A  hello.sh
+</code></pre>
+
+<p><strong>View differences : <span style="font-size: large;">git diff</span></strong></p>
+
+<p>The <em><strong>git diff</strong></em> command can be used in several ways. Without parameters, <em><strong>git diff</strong></em> gives the difference between what is in staging area and what have been changed afterwards.</p>
+
+<pre><code>$ vim README
+$ git status -s
+AM README
+A hello.sh
+$ git diff
+diff --git a/README b/README
+index 8b13789..6a4238f 100644
+--- a/README
++++ b/README
+@@ -1 +1 @@
+-
++blablabla
+</code></pre>
+
+<p>The <em><strong>&ndash;cached</strong></em> parameter shows the changes made when moved to the staging area.</p>
+
+<pre><code>$ git status -s
+AM README
+A hello.sh
+$ git add .
+$ git diff
+$
+$ git diff --cached
+diff --git a/README b/README
+new file mode 100644
+index 0000000..6a4238f
+--- /dev/null
++++ b/README
+@@ -0,0 +1 @@
++blablabla
+diff --git a/hello.sh b/hello.sh
+new file mode 100644
+index 0000000..e69de29
+</code></pre>
+
+<p>The <em><strong>git diff HEAD</strong></em> command allows to know all the changes since the last commit, when the file is in staging area or simply modified.</p>
+
+<p><strong>Create a snapshot of the <em>staging area</em>: <span style="font-size: large;">git commit</span></strong></p>
+
+<p>Now that we have our files in staging area, we can save them using the <em><strong>git commit</strong></em> command. Before that, we give our name and mail, they will be recorded during the commit.</p>
+
+<pre><code>$ git config --global user.name 'Your Name'
+$ git config --global user.email you@yourdomain.com
+</code></pre>
+
+<p>We can now commit. We provide a message which describes the commit with the <em><strong>-m</strong></em> option.</p>
+
+<pre><code>$ git status -s
+A README
+A hello.sh
+$ git commit -m 'my first commit'
+[master (root-commit) cba1144] my first commit
+1 files changed, 1 insertions(+), 0 deletions(-)
+create mode 100644 README
+create mode 100644 hello.sh
+</code></pre>
+
+<p>And that&rsquo;s that! The staging area have been saved and cleaned. A <em><strong>git status</strong></em> confirms it.</p>
+
+<pre><code>$ git status
+# On branch master
+nothing to commit (working directory clean)
+</code></pre>
+
+<p>A little diagram that summarizes what happened:</p>
+
+<p><img src="/img/git1.png" alt="" title="git-commit-1" /></p>
+
+<p>A <em><strong>git commit -a</strong></em> allows you to commit all modified or deleted files without going through the <em>git add</em> step. This command does not commit new unversioned files, you need to add them at least once in staging area with <em>git add</em> in order to directly commit later.</p>
+
+<pre><code>$ vim README
+$ commit -am 'My second commit'
+[master 8151463] My second commit
+1 files changed, 2 insertions(+), 0 deletions(-)
+</code></pre>
+
+<p>This way, we skip the &ldquo;staging step&rdquo; to jump directly to the snapshot.</p>
+
+<p><img src="/img/git2.png" alt="" title="git-commit-1" /></p>
+
+<p style="text-align: left;">
+  <strong>Undo: <span style="font-size: large;">git reset HEAD</span></strong>
+</p>
+
+<p>It is possible to remove a file from the staging area with the <em><strong>git reset HEAD</strong></em> command.</p>
+
+<pre><code>$ git status -s
+M README
+$ git add README
+$ git status -s
+M README
+$ git reset HEAD -- README
+Unstaged changes after reset:
+M README
+</code></pre>
+
+<p>To cancel the last commit: <em><strong>git reset HEAD^</strong></em></p>
+
+<p><strong>Manage files: <span style="font-size: large;">git rm et git mv</span></strong></p>
+
+<p>The git rm command allows to delete a file from your Git repository. The file is literally removed from the working directory the index. The &ndash;cached option allows to delete the file from the index only. The file will become unversioned, and therefore, will no longer be managed by Git.</p>
+
+<pre><code>$ git rm --cached README
+rm 'README'
+$ ls
+hello.sh README
+git status -s
+D README
+?? README
+$ git commit -m 'bye README'
+[master a870e51] bye README
+0 files changed, 0 insertions(+), 0 deletions(-)
+delete mode 100644 README
+$ git status -s
+?? README
+</code></pre>
+
+<p><em><strong>git mv</strong></em> renames a file and updates the Git index accordingly.</p>
+
+<pre><code>$ git mv oldname newname
+</code></pre>
+
+<p>is the same as</p>
+
+<pre><code>$ mv oldname newname
+$ git add newname
+$ git rm oldname
+</code></pre>
+
+<h1 id="branches">Branches</h1>
+
+<p>We approach a big strength of Git: its branches management. Forget most of the nightmares of others VCS, branches are here quite simple to manage. For those who do not know the principle, branches allow you to create ramifications of your project. Imagine you want to add feature to your project. Commit the changes directly in the core branch will make your software unstable until you have not completed the development of this new feature. To work around this problem, you can create a test branch, which will be a copy of your main branch, then make and test your changes without altering the main branch. Once the testing branch seems stable, you can merge the code with your main branch.</p>
+
+<p><span style="font-size: large;"><strong><span style="font-size: small;">Branches management</span> git branch and git checkout</strong></span></p>
+
+<p>Let&rsquo;s start by making an inventory: <em><strong>git branch</strong></em> to find out on which branch we are working:</p>
+
+<pre><code>$ git branch
+* master
+</code></pre>
+
+<p>We have a branch called <em>master</em>. It&rsquo;s preceded by a star, which means that we currently use it. It was created by default by <em>git init</em>.</p>
+
+<p>Let&rsquo;s create a branch with <em><strong>git branch [name]</strong></em>, and then move on this new one with <em><strong>git checkout [name]</strong></em>.</p>
+
+<pre><code>$ git branch testing
+$ git branch
+* master
+testing
+$ git checkout testing
+Switched to branch 'testing'
+$ git branch
+master
+* testing
+</code></pre>
+
+<blockquote>
+<p>There is a command that combines the branch creation and the move: <em><strong>git checkout -b [name]</strong></em></p>
+</blockquote>
+
+<p>The testing branch has been created. This is a copy of the last commit to the master branch. Although identical so far, our branches are now separated: all commit on one will not be passed to the other.</p>
+
+<p>To delete a branch, <em><strong>git branch -d [name]</strong></em>.</p>
+
+<blockquote>
+<p>You can&rsquo;t delete a branch if you&rsquo;re currently on it.</p>
+</blockquote>
+
+<pre><code>$ git branch
+* master
+testing
+$ git branch -d testing
+Deleted branch testing (was a870e51).
+</code></pre>
+
+<p><strong>Merge branches: <span style="font-size: large;">git merge</span></strong></p>
+
+<p>Branches are isolated, which allows you to make changes to one without affecting the other. What if we decide to incorporate changes from one branch into another? This is what we do with <strong>git merge [branch]</strong>, which allows to merge the current branch with a specified branch.</p>
+
+<p>An example where we create a file that we commit in the testing branch, before merge it in the master branch:</p>
+
+<pre><code>$ git branch
+* master
+$ git checkout -b testing
+Switched to a new branch 'testing'
+$ ls
+hello.sh README
+$ git branch
+master
+* testing
+$ touch trololo
+$ git add trololo
+$ git commit -m 'trololo commit'
+[testing e49b586] trololo commit
+0 files changed, 0 insertions(+), 0 deletions(-)
+create mode 100644 trololo
+$ ls
+hello.sh README trololo
+$ git checkout master
+Switched to branch 'master'
+$ git merge testing
+Updating a870e51..e49b586
+Fast-forward
+0 files changed, 0 insertions(+), 0 deletions(-)
+create mode 100644 trololo
+</code></pre>
+
+<p>Most of the time, Git merges your branches without any problem. But, if the same block of code in a file is changed on the two branches, it will cause a conflict. In this case, we have to resolve this conflict by hand, in the file. Once done, a <em><strong>git add</strong></em> followed by a <em><strong>git commit</strong></em> will be needed before repeating the <em><strong>git merge</strong></em>.</p>
+
+<p><strong>Branch informations : <span style="font-size: large;">git log</span></strong></p>
+
+<p>To trace the history of commits and merge a branch, we have <em><strong>git log</strong></em>.</p>
+
+<pre><code>$ git log
+commit e49b586f5cd44e053f3491094e484c160cd3b052
+Author: jmathevet
+Date: Wed Aug 16 20:00:14 2011 +0200
+
+trololo commit
+
+commit a870e513b9a2fdb8c6f0940b237dea59b240c5be
+Author: jmathevet
+Date: Wed Aug 16 18:59:31 2011 +0200
+
+bye README
+</code></pre>
+
+<h1 id="project-sharing">Project sharing</h1>
+
+<p>As already mentioned, Git is based on a decentralized architecture. Thus, any Git repository can be both client and server, which is very useful when working offline. That said, it is also interesting to have a Git repository accessible by a team in order to have a common basis, which everyone can retrieve and modify locally, to finally pass the changes to the common repository.</p>
+
+<p><strong>Manage repository aliases : <span style="font-size: large;">git remote</span></strong></p>
+
+<p>In order to not to type the repository URL each time we need to access it, Git has an alias system. <em><strong>git remote</strong></em> displays the list of saved Git repositories for a repository. By default, if you cloned yours, an <em>orgin</em> alias has been automatically created. <em><strong>git remote add [alias] [URL]</strong></em> is used to add an alias, <em><strong>git remote rm [alias]</strong></em> to remove.</p>
+
+<pre><code>$ git clone http://android.git.kernel.org/platform/external/iptables
+Cloning into iptables...
+remote: Counting objects: 617, done.
+remote: Compressing objects: 100% (347/347), done.
+remote: Total 617 (delta 285), reused 576 (delta 263)
+Receiving objects: 100% (617/617), 351.46 KiB | 436 KiB/s, done.
+Resolving deltas: 100% (285/285), done.
+$ cd iptables
+$ git remote
+origin
+$ git remote -v
+origin http://android.git.kernel.org/platform/external/iptables (fetch)
+origin http://android.git.kernel.org/platform/external/iptables (push)
+</code></pre>
+
+<pre><code>$ git remote add bob git://github.com/bob
+$ git remote
+bob
+origin
+</code></pre>
+
+<pre><code>$ git remote -v
+bob git://github.com/bob (fetch)
+bob git://github.com/bob (push)
+origin http://android.git.kernel.org/platform/external/iptables (fetch)
+origin http://android.git.kernel.org/platform/external/iptables (push)
+</code></pre>
+
+<pre><code>$ git remote rm bob
+$ git remote
+origin
+</code></pre>
+
+<p><strong>Update local branches from the remote repository: <span style="font-size: large;">git fetch, git pull</span></strong></p>
+
+<p>You have cloned a repository, you can commit anything you want locally. Meanwhile, a developer commits a new feature on the remote repository. Your work is not lost: you can now get the changes via a <em><strong>git fetch [alias]</strong></em>, and then merge via a <em><strong>git merge [alias]/[branch]</strong></em>. The <em><strong>git pull [alias]</strong></em> command allows to go faster: it performs a <em>fetch</em> followed immediately by a <em>merge</em>.</p>
+
+<p><strong>Send your branches to the remote repository: <span style="font-size: large;">git push</span></strong></p>
+
+<p>Conversely, to send branches to the remote repository, use the <em><strong>git push [alias] [branche]</strong></em> command. If the branch you are trying to send already exists on the remote server, it will be updated, if it does not exist, it will be created.</p>
+
+<h1 id="wrap-up">Wrap-up</h1>
+
+<p>We just finished our Git discovery. I hope I gave you&rsquo;ll want to get started. For my part, I am fully satisfied to have lost a few hours to get familiar with this software. I think it would be now very difficult for me to use again a classic centralized CVS like SVN, Git is so convenient!</p>
+
+<p>Some resources to go further:</p>
+
+<ul>
+<li>The Pro Git Book</li>
+<li><a href="http://www-cs-students.stanford.edu/~blynn/gitmagic/intl/fr/ch01.html" target="_blank">Git Magic</a></li>
+</ul>
+
+            </div>
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://blog.mathevet.xyz/tags/git">git</a></span>
+                </p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>2273 Words</p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2011-08-19 01:01 &#43;0800</p>
+        </div>
+
+        
+            <div class="pagination">
+                <div class="pagination__title">
+                    <span class="pagination__title-h">Read other posts</span>
+                    <hr />
+                </div>
+
+                <div class="pagination__buttons">
+                    
+                        <span class="button previous">
+                            <a href="https://blog.mathevet.xyz/posts/presentation-getting-started-with-puppet/">
+                                <span class="button__icon">←</span>
+                                <span class="button__text">Presentation: Getting Started with Puppet</span>
+                            </a>
+                        </span>
+                    
+
+                    
+                </div>
+            </div>
+        
+    </main>
+
+            </div>
+
+            
+                <footer class="footer">
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>&copy; 2020</span>
+            
+                <span><a href="https://blog.mathevet.xyz">Jeremy Mathevet</a></span>
+            
+            <span><a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></span>
+            <span> <a href="https://blog.mathevet.xyz/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></span>
+        </div>
+    </div>
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>Powered by <a href="http://gohugo.io">Hugo</a></span>
+            <span>Made with &#10084; by <a href="https://github.com/rhazdon">Djordje Atlialp</a></span>
+        </div>
+    </div>
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+
+<script type="text/javascript" src="/bundle.min.d889f909e0536e07868fcaacee7d4b3f9ff14ad7ab1b29cf4c9eefd395beb291dcd983e13b8663ffa20f90fe98e41467de128a97ad45cf86738ec9a46df5ec1b.js" integrity="sha512-2In5CeBTbgeGj8qs7n1LP5/xSterGynPTJ7v05W&#43;spHc2YPhO4Zj/6IPkP6Y5BRn3hKKl61Fz4ZzjsmkbfXsGw=="></script>
+
+
+
+    </body>
+</html>
