@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Git on Jeremy Mathevet</title>
+    <link>https://blog.mathevet.xyz/tags/git/</link>
+    <description>Recent content in Git on Jeremy Mathevet</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-uk</language>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Thu, 18 Aug 2011 17:01:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog.mathevet.xyz/tags/git/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Dive into Git</title>
+      <link>https://blog.mathevet.xyz/posts/2011-08-18-dive-into-git-en/</link>
+      <pubDate>Thu, 18 Aug 2011 17:01:00 +0000</pubDate>
+      
+      <guid>https://blog.mathevet.xyz/posts/2011-08-18-dive-into-git-en/</guid>
+      <description>Git is a decentralized system control system (VCS) created by Linus Torvalds. This is a very powerful and popular tool. It is used for the Linux kernel development (and many other famous projects). It is so appreciated that the kernel developers are now wondering how they survived without it when it did not exist.
+With so much praise, I wanted to test this tool. It&amp;rsquo;s not difficult to tame, however, the way it works is a bit different than other VCS (especially SVN, that I had already used), mainly because of the decentralization that characterizes Git.</description>
+    </item>
+    
+  </channel>
+</rss>

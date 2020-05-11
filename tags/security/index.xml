@@ -14,10 +14,10 @@
     
     <item>
       <title>SSH: RSA/DSA authentication</title>
-      <link>https://blog.mathevet.xyz/ssh-rsadsa-authentication/</link>
+      <link>https://blog.mathevet.xyz/posts/2014-02-07-ssh-rsadsa-authentication/</link>
       <pubDate>Fri, 07 Feb 2014 12:53:24 +0000</pubDate>
       
-      <guid>https://blog.mathevet.xyz/ssh-rsadsa-authentication/</guid>
+      <guid>https://blog.mathevet.xyz/posts/2014-02-07-ssh-rsadsa-authentication/</guid>
       <description>Password authentication is good but can be dangerous, because it is weak against brute force attacks. There are some mechanisms which allow to mitigate this treat. There are also safer authentication mechanisms for SSH, like public key auhtentication.
 We&amp;rsquo;re going to create a key pair from our client, a public and a private. We send the public key to the server. Thus, when the client tries to connect, the server communicates by encrypting communications with the public key.</description>
     </item>

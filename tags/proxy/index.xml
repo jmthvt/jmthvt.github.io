@@ -14,10 +14,10 @@
     
     <item>
       <title>SOCKS proxy via an SSH tunnel</title>
-      <link>https://blog.mathevet.xyz/socks-proxy-via-an-ssh-tunnel/</link>
+      <link>https://blog.mathevet.xyz/posts/2015-05-26-socks-proxy-via-an-ssh-tunnel/</link>
       <pubDate>Tue, 26 May 2015 19:49:58 +0000</pubDate>
       
-      <guid>https://blog.mathevet.xyz/socks-proxy-via-an-ssh-tunnel/</guid>
+      <guid>https://blog.mathevet.xyz/posts/2015-05-26-socks-proxy-via-an-ssh-tunnel/</guid>
       <description>You are behind a restrictive firewall and you aspire to more freedom? You need to access an Intranet website located in a different environment than yours? You are far from your home country, and can&amp;rsquo;t live one minute more without your favourite TV shows, that you can&amp;rsquo;t watch because of the localisation restrictions?
 You can communicate via port 22? Do you have an SSH server that could access the content you want?</description>
     </item>

@@ -40,33 +40,6 @@
     </item>
     
     <item>
-      <title>Debian</title>
-      <link>https://blog.mathevet.xyz/tags/debian/</link>
-      <pubDate>Mon, 25 Nov 2013 15:53:55 +0000</pubDate>
-      
-      <guid>https://blog.mathevet.xyz/tags/debian/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Devops</title>
-      <link>https://blog.mathevet.xyz/tags/devops/</link>
-      <pubDate>Thu, 04 Oct 2012 00:50:57 +0000</pubDate>
-      
-      <guid>https://blog.mathevet.xyz/tags/devops/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Firefox</title>
-      <link>https://blog.mathevet.xyz/tags/firefox/</link>
-      <pubDate>Tue, 26 May 2015 19:49:58 +0000</pubDate>
-      
-      <guid>https://blog.mathevet.xyz/tags/firefox/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Gcp</title>
       <link>https://blog.mathevet.xyz/tags/gcp/</link>
       <pubDate>Wed, 06 May 2020 11:23:32 +0800</pubDate>
@@ -76,20 +49,20 @@
     </item>
     
     <item>
+      <title>Git</title>
+      <link>https://blog.mathevet.xyz/tags/git/</link>
+      <pubDate>Thu, 18 Aug 2011 17:01:00 +0000</pubDate>
+      
+      <guid>https://blog.mathevet.xyz/tags/git/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Gke</title>
       <link>https://blog.mathevet.xyz/tags/gke/</link>
       <pubDate>Wed, 06 May 2020 11:23:32 +0800</pubDate>
       
       <guid>https://blog.mathevet.xyz/tags/gke/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Gnu/Linux</title>
-      <link>https://blog.mathevet.xyz/tags/gnu/linux/</link>
-      <pubDate>Fri, 07 Feb 2014 12:53:24 +0000</pubDate>
-      
-      <guid>https://blog.mathevet.xyz/tags/gnu/linux/</guid>
       <description></description>
     </item>
     
@@ -139,15 +112,6 @@
     </item>
     
     <item>
-      <title>Presentation</title>
-      <link>https://blog.mathevet.xyz/tags/presentation/</link>
-      <pubDate>Thu, 04 Oct 2012 00:50:57 +0000</pubDate>
-      
-      <guid>https://blog.mathevet.xyz/tags/presentation/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Proxy</title>
       <link>https://blog.mathevet.xyz/tags/proxy/</link>
       <pubDate>Tue, 26 May 2015 19:49:58 +0000</pubDate>
@@ -162,15 +126,6 @@
       <pubDate>Tue, 26 May 2015 19:49:58 +0000</pubDate>
       
       <guid>https://blog.mathevet.xyz/tags/putty/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Red Hat</title>
-      <link>https://blog.mathevet.xyz/tags/red-hat/</link>
-      <pubDate>Mon, 25 Nov 2013 15:53:55 +0000</pubDate>
-      
-      <guid>https://blog.mathevet.xyz/tags/red-hat/</guid>
       <description></description>
     </item>
     

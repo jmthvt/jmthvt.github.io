@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="Jeremy Mathevet">
+<meta name="description" content="Debian based I regularly see sysadmins saving their iptables rules in an init script. It works, but it&amp;rsquo;s not the most elegant way to do it. I prefer personally to save the existing rules with the iptables-save command. This command sends the result on the standard output, so let&amp;rsquo;s redirect it to a file.
+# iptables-save &amp;gt; /etc/iptables  Interesting option: -c displays how many times the rule has been applied (on bytes and on packets)." />
+<meta name="keywords" content=", iptables" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="https://blog.mathevet.xyz/posts/2013-11-25-manage-your-iptables-rules-properly/" />
+
+
+    <title>
+        
+            Manage your iptables rules. Properly. :: Jeremy Mathevet  — Cloud &amp; Software with love
+        
+    </title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.1/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="/main.min.b68186a5842a9505e4f29180b86081b391cd3fcb5f11f101faf63956a3b7ec4e.css">
+
+
+
+
+
+
+
+<meta itemprop="name" content="Manage your iptables rules. Properly.">
+<meta itemprop="description" content="Debian based I regularly see sysadmins saving their iptables rules in an init script. It works, but it&rsquo;s not the most elegant way to do it. I prefer personally to save the existing rules with the iptables-save command. This command sends the result on the standard output, so let&rsquo;s redirect it to a file.
+# iptables-save &gt; /etc/iptables  Interesting option: -c displays how many times the rule has been applied (on bytes and on packets).">
+
+
+<meta itemprop="datePublished" content="2013-11-25T15:53:55&#43;00:00" />
+<meta itemprop="dateModified" content="2013-11-25T15:53:55&#43;00:00" />
+<meta itemprop="wordCount" content="433">
+
+
+
+<meta itemprop="keywords" content="iptables," />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Manage your iptables rules. Properly."/>
+<meta name="twitter:description" content="Debian based I regularly see sysadmins saving their iptables rules in an init script. It works, but it&rsquo;s not the most elegant way to do it. I prefer personally to save the existing rules with the iptables-save command. This command sends the result on the standard output, so let&rsquo;s redirect it to a file.
+# iptables-save &gt; /etc/iptables  Interesting option: -c displays how many times the rule has been applied (on bytes and on packets)."/>
+
+
+
+
+
+
+
+    <meta property="article:published_time" content="2013-11-25 15:53:55 &#43;0000 &#43;0000" />
+
+
+
+
+
+
+
+
+    </head>
+
+    <body class="dark-theme">
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">></span>
+            <span class="logo__text">cd ~/</span>
+            <span class="logo__cursor" style=
+                  "
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="https://photo.mathevet.xyz">Photos</a></li><li><a href="https://blog.mathevet.xyz/posts">Posts</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+
+            <span class="theme-toggle unselectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+</span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>3 minutes
+
+            
+
+            </p>
+        </div>
+
+        <article>
+            <h1 class="post-title">
+                <a href="https://blog.mathevet.xyz/posts/2013-11-25-manage-your-iptables-rules-properly/">Manage your iptables rules. Properly.</a>
+            </h1>
+
+            
+
+            <div class="post-content">
+                
+
+<h2 id="debian-based">Debian based</h2>
+
+<p>I regularly see sysadmins saving their iptables rules in an init script. It works, but it&rsquo;s not the most elegant way to do it. I prefer personally to save the existing rules with the iptables-save command. This command sends the result on the standard output, so let&rsquo;s redirect it to a file.</p>
+
+<pre><code># iptables-save &gt; /etc/iptables
+</code></pre>
+
+<p>Interesting option: -c displays how many times the rule has been applied (on bytes and on packets).</p>
+
+<p>In order to load the rules, simply use the iptables-restore command with the previously saved file in the standard input:</p>
+
+<pre><code># iptables-restore &lt; /etc/iptables
+</code></pre>
+
+<p>Add -c to take the counters in account (if you saved them, bien sur). If any rules are already loaded, you don&rsquo;t even have to flush them, the command does it for you by default (-n to keep them).</p>
+
+<p>To automatically restore the rules on startup, we could create an init script. I prefer to launch the restore directly from the network interface, as a pre-up command. It allows to avoid any forgetting when you flush your rules, then bring your interface up. Moreover, you gain the ability to create dedicated rules for each interfaces. If your rules are independent from your interfaces, you can still launch the restore as a pre-up command for the local loop.</p>
+
+<p>/etc/network/interfaces</p>
+
+<pre><code>iface eth0 inet static
+    pre-up iptables-restore &lt; /etc/iptables
+    address 543.454.233.42
+    netmask 255.255.255.0
+    gateway 543.454.233.254
+auto eth0
+</code></pre>
+
+<p>For those who have seen: yes, I&rsquo;ve invented a new class of IP addresses.</p>
+
+<h2 id="red-hat-based">Red Hat based</h2>
+
+<p>Same principle, but the way to do it is slightly different. To save the rules, you can use the iptables service:</p>
+
+<pre><code># service iptables save
+</code></pre>
+
+<p>The rules are saved in the /etc/sysconfig/iptables file by default. This file is read when the iptables service is launched.</p>
+
+<h2 id="avoid-locking-out-debian-only">Avoid locking out (Debian only)</h2>
+
+<p>Be honest. Who has never been locked out when modifying firewall policies or rules. I must say that it happened to me. The failure in all its splendour.</p>
+
+<p>In order to avoid this, there is a simple tool: iptables-apply. This command will apply the rules file given as a parameter, then ask for the user confirmation. If the user doesn&rsquo;t answer before the timeout, iptables-apply undoes the change.</p>
+
+<pre><code># iptables-apply /etc/iptables
+[ ok ] Stopping authentication failure monitor: fail2ban.
+Applying new ruleset... done.
+Can you establish NEW connections to the machine? (y/N) apparently not...
+Timeout. Something happened (or did not). Better play it safe...
+Reverting to old ruleset... done.
+</code></pre>
+
+<p>Convenient, isn&rsquo;t it?</p>
+
+<p>If you do know others good practices concerning the managenent of iptables rules, feel free to share them in the comments.</p>
+
+            </div>
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://blog.mathevet.xyz/tags/iptables">iptables</a></span>
+                </p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>433 Words</p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2013-11-25 23:53 &#43;0800</p>
+        </div>
+
+        
+            <div class="pagination">
+                <div class="pagination__title">
+                    <span class="pagination__title-h">Read other posts</span>
+                    <hr />
+                </div>
+
+                <div class="pagination__buttons">
+                    
+                        <span class="button previous">
+                            <a href="https://blog.mathevet.xyz/posts/2014-02-07-ssh-rsadsa-authentication/">
+                                <span class="button__icon">←</span>
+                                <span class="button__text">SSH: RSA/DSA authentication</span>
+                            </a>
+                        </span>
+                    
+
+                    
+                        <span class="button next">
+                            <a href="https://blog.mathevet.xyz/posts/2012-10-04-presentation-getting-started-with-puppet/">
+                                <span class="button__text">Presentation: Getting Started with Puppet</span>
+                                <span class="button__icon">→</span>
+                            </a>
+                        </span>
+                    
+                </div>
+            </div>
+        
+    </main>
+
+            </div>
+
+            
+                <footer class="footer">
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>&copy; 2020</span>
+            
+                <span><a href="https://blog.mathevet.xyz">Jeremy Mathevet</a></span>
+            
+            <span><a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></span>
+            <span> <a href="https://blog.mathevet.xyz/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></span>
+        </div>
+    </div>
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>Powered by <a href="http://gohugo.io">Hugo</a></span>
+            <span>Made with &#10084; by <a href="https://github.com/rhazdon">Djordje Atlialp</a></span>
+        </div>
+    </div>
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+
+<script type="text/javascript" src="/bundle.min.d889f909e0536e07868fcaacee7d4b3f9ff14ad7ab1b29cf4c9eefd395beb291dcd983e13b8663ffa20f90fe98e41467de128a97ad45cf86738ec9a46df5ec1b.js" integrity="sha512-2In5CeBTbgeGj8qs7n1LP5/xSterGynPTJ7v05W&#43;spHc2YPhO4Zj/6IPkP6Y5BRn3hKKl61Fz4ZzjsmkbfXsGw=="></script>
+
+
+
+    </body>
+</html>
