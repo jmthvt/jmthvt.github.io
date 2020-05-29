@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Jeremy Mathevet</title>
@@ -7,40 +7,13 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-uk</language>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-    <lastBuildDate>Tue, 28 Apr 2020 11:11:28 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 06 May 2020 11:23:32 +0800</lastBuildDate>
     
 	<atom:link href="https://blog.mathevet.xyz/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Chrome Os</title>
-      <link>https://blog.mathevet.xyz/tags/chrome-os/</link>
-      <pubDate>Tue, 28 Apr 2020 11:11:28 +0800</pubDate>
-      
-      <guid>https://blog.mathevet.xyz/tags/chrome-os/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Configuration Management</title>
-      <link>https://blog.mathevet.xyz/tags/configuration-management/</link>
-      <pubDate>Thu, 04 Oct 2012 00:50:57 +0000</pubDate>
-      
-      <guid>https://blog.mathevet.xyz/tags/configuration-management/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Crostini</title>
-      <link>https://blog.mathevet.xyz/tags/crostini/</link>
-      <pubDate>Tue, 28 Apr 2020 11:11:28 +0800</pubDate>
-      
-      <guid>https://blog.mathevet.xyz/tags/crostini/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Gcp</title>
+      <title>GCP</title>
       <link>https://blog.mathevet.xyz/tags/gcp/</link>
       <pubDate>Wed, 06 May 2020 11:23:32 +0800</pubDate>
       
@@ -49,16 +22,7 @@
     </item>
     
     <item>
-      <title>Git</title>
-      <link>https://blog.mathevet.xyz/tags/git/</link>
-      <pubDate>Thu, 18 Aug 2011 17:01:00 +0000</pubDate>
-      
-      <guid>https://blog.mathevet.xyz/tags/git/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Gke</title>
+      <title>GKE</title>
       <link>https://blog.mathevet.xyz/tags/gke/</link>
       <pubDate>Wed, 06 May 2020 11:23:32 +0800</pubDate>
       
@@ -76,11 +40,38 @@
     </item>
     
     <item>
-      <title>Iptables</title>
-      <link>https://blog.mathevet.xyz/tags/iptables/</link>
-      <pubDate>Mon, 25 Nov 2013 15:53:55 +0000</pubDate>
+      <title>OpenVPN</title>
+      <link>https://blog.mathevet.xyz/tags/openvpn/</link>
+      <pubDate>Wed, 06 May 2020 11:23:32 +0800</pubDate>
       
-      <guid>https://blog.mathevet.xyz/tags/iptables/</guid>
+      <guid>https://blog.mathevet.xyz/tags/openvpn/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Terraform</title>
+      <link>https://blog.mathevet.xyz/tags/terraform/</link>
+      <pubDate>Wed, 06 May 2020 11:23:32 +0800</pubDate>
+      
+      <guid>https://blog.mathevet.xyz/tags/terraform/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Chrome OS</title>
+      <link>https://blog.mathevet.xyz/tags/chrome-os/</link>
+      <pubDate>Tue, 28 Apr 2020 11:11:28 +0800</pubDate>
+      
+      <guid>https://blog.mathevet.xyz/tags/chrome-os/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Crostini</title>
+      <link>https://blog.mathevet.xyz/tags/crostini/</link>
+      <pubDate>Tue, 28 Apr 2020 11:11:28 +0800</pubDate>
+      
+      <guid>https://blog.mathevet.xyz/tags/crostini/</guid>
       <description></description>
     </item>
     
@@ -94,7 +85,7 @@
     </item>
     
     <item>
-      <title>Openssh</title>
+      <title>OpenSSH</title>
       <link>https://blog.mathevet.xyz/tags/openssh/</link>
       <pubDate>Tue, 26 May 2015 19:49:58 +0000</pubDate>
       
@@ -103,16 +94,7 @@
     </item>
     
     <item>
-      <title>Openvpn</title>
-      <link>https://blog.mathevet.xyz/tags/openvpn/</link>
-      <pubDate>Wed, 06 May 2020 11:23:32 +0800</pubDate>
-      
-      <guid>https://blog.mathevet.xyz/tags/openvpn/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Proxy</title>
+      <title>proxy</title>
       <link>https://blog.mathevet.xyz/tags/proxy/</link>
       <pubDate>Tue, 26 May 2015 19:49:58 +0000</pubDate>
       
@@ -121,11 +103,20 @@
     </item>
     
     <item>
-      <title>Putty</title>
+      <title>putty</title>
       <link>https://blog.mathevet.xyz/tags/putty/</link>
       <pubDate>Tue, 26 May 2015 19:49:58 +0000</pubDate>
       
       <guid>https://blog.mathevet.xyz/tags/putty/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>SSH</title>
+      <link>https://blog.mathevet.xyz/tags/ssh/</link>
+      <pubDate>Tue, 26 May 2015 19:49:58 +0000</pubDate>
+      
+      <guid>https://blog.mathevet.xyz/tags/ssh/</guid>
       <description></description>
     </item>
     
@@ -139,20 +130,29 @@
     </item>
     
     <item>
-      <title>Ssh</title>
-      <link>https://blog.mathevet.xyz/tags/ssh/</link>
-      <pubDate>Tue, 26 May 2015 19:49:58 +0000</pubDate>
+      <title>iptables</title>
+      <link>https://blog.mathevet.xyz/tags/iptables/</link>
+      <pubDate>Mon, 25 Nov 2013 15:53:55 +0000</pubDate>
       
-      <guid>https://blog.mathevet.xyz/tags/ssh/</guid>
+      <guid>https://blog.mathevet.xyz/tags/iptables/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Terraform</title>
-      <link>https://blog.mathevet.xyz/tags/terraform/</link>
-      <pubDate>Wed, 06 May 2020 11:23:32 +0800</pubDate>
+      <title>Configuration Management</title>
+      <link>https://blog.mathevet.xyz/tags/configuration-management/</link>
+      <pubDate>Thu, 04 Oct 2012 00:50:57 +0000</pubDate>
       
-      <guid>https://blog.mathevet.xyz/tags/terraform/</guid>
+      <guid>https://blog.mathevet.xyz/tags/configuration-management/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>git</title>
+      <link>https://blog.mathevet.xyz/tags/git/</link>
+      <pubDate>Thu, 18 Aug 2011 17:01:00 +0000</pubDate>
+      
+      <guid>https://blog.mathevet.xyz/tags/git/</guid>
       <description></description>
     </item>
     

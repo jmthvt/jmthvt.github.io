@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Posts on Jeremy Mathevet</title>
@@ -17,43 +16,28 @@
             
             <guid>https://blog.mathevet.xyz/posts/create-your-own-vpn-in-the-cloud/</guid>
             <description>For a lot of reasons, VPNs can be useful. Personally, as an expat, I am regularly facing geo-resctricted video content. It can be very frustrating at times. Subscribing to a VPN provider could be a solution, however I always found it a bit expensive for my usage. Since I&amp;rsquo;m renting a dedicated server in France, I was using it for years as a SOCKS proxy, when needed. However, I now miss some contents from another country I lived in: the UK.</description>
-            <content type="html"><![CDATA[
-
-<p>For a lot of reasons, VPNs can be useful. Personally, as an expat, I am regularly facing geo-resctricted video content. It can be very frustrating at times. Subscribing to a VPN provider could be a solution, however I always found it a bit expensive for my usage. Since I&rsquo;m renting a dedicated server in France, I was using it for years as a <a href="https://blog.mathevet.xyz/posts/socks-proxy-via-an-ssh-tunnel/" target="_blank">SOCKS proxy</a>, when needed. However, I now miss some contents from another country I lived in: the UK. I haven&rsquo;t any server there I could hop to. In short, I need a cheap VPN solution that I could use for time to time, with the ability to select the target location.</p>
-
+            <content type="html"><![CDATA[<p>For a lot of reasons, VPNs can be useful. Personally, as an expat, I am regularly facing geo-resctricted video content. It can be very frustrating at times. Subscribing to a VPN provider could be a solution, however I always found it a bit expensive for my usage. Since I&rsquo;m renting a dedicated server in France, I was using it for years as a <a href="https://blog.mathevet.xyz/posts/socks-proxy-via-an-ssh-tunnel/">SOCKS proxy</a>, when needed. However, I now miss some contents from another country I lived in: the UK. I haven&rsquo;t any server there I could hop to. In short, I need a cheap VPN solution that I could use for time to time, with the ability to select the target location.</p>
 <p>It looks like public clouds fit perfectly those requirements! We can pay only on usage by creating/destroying our whole setup. With a bit of automation, let&rsquo;s see how to create our own VPN.</p>
-
 <blockquote>
 <p><strong>Disclaimer</strong>: This solution is by all mean not supposed to be as convenient to use as retailed VPNs. It is not a comprehensive solution either. Finally, since we&rsquo;re dealing with public cloud, mind the billing! I obviously won&rsquo;t be responsible for any excessive bill you might encounter by following this post or using my templates.</p>
 </blockquote>
-
-<p>OK let&rsquo;s go! For this post I will use Kubernetes on Google Cloud (GCP). You can of course do something similar on AWS, but I chose to go on GCP because they give away one zonal Kubernetes cluster (GKE) per billing account <a href="https://cloud.google.com/kubernetes-engine/pricing#pricing_for_cluster_management" target="_blank">for free</a> (excluding the worker nodes cost).</p>
-
+<p>OK let&rsquo;s go! For this post I will use Kubernetes on Google Cloud (GCP). You can of course do something similar on AWS, but I chose to go on GCP because they give away one zonal Kubernetes cluster (GKE) per billing account <a href="https://cloud.google.com/kubernetes-engine/pricing#pricing_for_cluster_management">for free</a> (excluding the worker nodes cost).</p>
 <p>I know what you might think: <em>Wow, why using Kubernetes for a simple VPN used by a single user? It sounds overkill</em>.
 Well, it&rsquo;s true we don&rsquo;t <em>really</em> need Kubernetes here. But since we only pay the woker node, it makes it a no brainer solution for easily deploying containers. Which is even oversimplified by Helm. In one word, I chose to go with Kubernetes for one reason: simplicity.</p>
-
 <h2 id="prerequisites">Prerequisites</h2>
-
 <p>You&rsquo;ll need the following tools on your machine:</p>
-
 <ul>
 <li>gcloud</li>
 <li>terraform</li>
 <li>kubectl</li>
 <li>helm</li>
 </ul>
-
 <p>I won&rsquo;t cover the install and setup of those tools here, please refer to their respective documentation.</p>
-
-<h2 id="set-up-the-gcp-project-infra-with-terraform">Set up the GCP project &amp; infra with Terraform</h2>
-
+<h2 id="set-up-the-gcp-project--infra-with-terraform">Set up the GCP project &amp; infra with Terraform</h2>
 <p>I wrote a small terraform template that creates a project, network and GKE cluster in GCP. You can get it on GitHub:
-<a href="https://github.com/jmthvt/ownVPN" target="_blank">jmthvt/ownVPN</a>.</p>
-
-<p>This template relies mainly on official (as in, supported by Hashicorp) modules from the <a href="https://registry.terraform.io/" target="_blank">terraform registry</a>.</p>
-
+<a href="https://github.com/jmthvt/ownVPN">jmthvt/ownVPN</a>.</p>
+<p>This template relies mainly on official (as in, supported by Hashicorp) modules from the <a href="https://registry.terraform.io/">terraform registry</a>.</p>
 <p>A few highlights:</p>
-
 <ul>
 <li>It spins everything up in <code>us-central1</code> (one of the region where one zonal GKE per account is free). We could parametize the region to allow an easier switch. But currently that&rsquo;s harcoded.</li>
 <li>We&rsquo;re using a preemptible node for the GKE worker. That&rsquo;s a bit similar to AWS spot instances: cheaper instances than on-demand, but short-lived (up to 24 hours).</li>
@@ -62,72 +46,41 @@ Well, it&rsquo;s true we don&rsquo;t <em>really</em> need Kubernetes here. But s
 <li>In order to create the project, you&rsquo;ll need your billind account ID. You can get it with <code>gcloud alpha billing accounts list</code>.</li>
 <li>If you&rsquo;re using an organisation, you&rsquo;ll have to submit the org ID.</li>
 </ul>
-
 <p>OK, once you&rsquo;ve cloned the repo:</p>
-
 <pre><code>cd terraform/
 terraform init
 terraform plan
 terraform apply
-</code></pre>
-
-<p>After a moment, the ownvpn project and the infra should be provisionned.</p>
-
+</code></pre><p>After a moment, the ownvpn project and the infra should be provisionned.</p>
 <pre><code>Apply complete! Resources: 30 added, 0 changed, 0 destroyed.
-</code></pre>
-
-<h2 id="set-up-openvpn-on-kubernetes-with-helm">Set up OpenVPN on Kubernetes with Helm</h2>
-
+</code></pre><h2 id="set-up-openvpn-on-kubernetes-with-helm">Set up OpenVPN on Kubernetes with Helm</h2>
 <p>Let&rsquo;s list the projects and switch to the new owvpn project.</p>
-
 <pre><code>gcloud projects list
 gcloud config set project &lt;PROJECT_ID&gt;
-</code></pre>
-
-<p>Let&rsquo;s jump onto the Kubernetes cluster:</p>
-
+</code></pre><p>Let&rsquo;s jump onto the Kubernetes cluster:</p>
 <pre><code>gcloud container clusters get-credentials gke-1 --region us-central1
-</code></pre>
-
-<p>Quick check that we can indeed reach the Kubernetes API:</p>
-
+</code></pre><p>Quick check that we can indeed reach the Kubernetes API:</p>
 <pre><code>kubectl get nodes
 NAME                                        STATUS   ROLES    AGE   VERSION
 gke-gke-1-default-node-pool-fda1c71d-79dt   Ready    &lt;none&gt;   10m   v1.15.11-gke.11
-</code></pre>
-
-<p>Looks good, so let&rsquo;s add the helm stable repo and install the <a href="https://github.com/helm/charts/tree/master/stable/openvpn" target="_blank">OpenVPN chart</a>:</p>
-
+</code></pre><p>Looks good, so let&rsquo;s add the helm stable repo and install the <a href="https://github.com/helm/charts/tree/master/stable/openvpn">OpenVPN chart</a>:</p>
 <pre><code>helm repo add stable http://storage.googleapis.com/kubernetes-charts
 helm install openvpn stable/openvpn --set resources.requests.cpu=100m --set ipForwardInitContainer=true
-</code></pre>
-
-<p>We have to lower the CPU request otherwise the pod couldn&rsquo;t spin up on our super small node.
+</code></pre><p>We have to lower the CPU request otherwise the pod couldn&rsquo;t spin up on our super small node.
 Once the chart is installed, wait a few more minutes to allow OpenVPN to generate certs/keys and the load balancer to be ready.</p>
-
 <p>Then, run the following in a shell:</p>
-
 <pre><code>POD_NAME=$(kubectl get pods --namespace &quot;default&quot; -l &quot;app=openvpn,release=openvpn&quot; -o jsonpath='{ .items[0].metadata.name }')
 SERVICE_NAME=$(kubectl get svc --namespace &quot;default&quot; -l &quot;app=openvpn,release=openvpn&quot; -o jsonpath='{ .items[0].metadata.name }')
 SERVICE_IP=$(kubectl get svc --namespace &quot;default&quot; &quot;$SERVICE_NAME&quot; -o go-template='{{ range $k, $v := (index .status.loadBalancer.ingress 0)}}{{ $v }}{{end}}')
 KEY_NAME=kubeVPN
 kubectl --namespace &quot;default&quot; exec -it &quot;$POD_NAME&quot; /etc/openvpn/setup/newClientCert.sh &quot;$KEY_NAME&quot; &quot;$SERVICE_IP&quot;
 kubectl --namespace &quot;default&quot; exec -it &quot;$POD_NAME&quot; cat &quot;/etc/openvpn/certs/pki/$KEY_NAME.ovpn&quot; &gt; &quot;$KEY_NAME.ovpn&quot;
-</code></pre>
-
-<p>You can now import the <code>kubeVPN.opvn</code> file in your OpenVPN client and connect!</p>
-
+</code></pre><p>You can now import the <code>kubeVPN.opvn</code> file in your OpenVPN client and connect!</p>
 <h2 id="wrap-up">Wrap-up</h2>
-
 <p>While it&rsquo;s been quite straightforward to get our own VPN in the cloud, it took quite some time to spin up. I haven&rsquo;t timed properly, but it took easily 10-15mn overall, mostly waiting for the infrastructure. If we want to gain some time next time, we could just downscale the node group to 0 instead of destroying the whole infra. Since the GKE cluster is free, we would end up paying nothing until we scale up the node pool again.</p>
-
 <p>Otherwise, do not forget to destroy the infra:</p>
-
 <pre><code>terraform destroy
-</code></pre>
-
-<p>I&rsquo;m well aware that a lot of things could be streamlined and enhanced to get the VPN up and running quicker. I might (or might not) improve things in the future, in which case I would ipdate this post. I also don&rsquo;t really know how much this will cost me. Due to my low usage I expect it to be very low, but due to how public cloud bill everything, it&rsquo;s quite tricky to estimate.</p>
-
+</code></pre><p>I&rsquo;m well aware that a lot of things could be streamlined and enhanced to get the VPN up and running quicker. I might (or might not) improve things in the future, in which case I would ipdate this post. I also don&rsquo;t really know how much this will cost me. Due to my low usage I expect it to be very low, but due to how public cloud bill everything, it&rsquo;s quite tricky to estimate.</p>
 <p>It&rsquo;s pretty cool to be able to get this working though, that was fun!</p>
 ]]></content>
         </item>
@@ -139,31 +92,19 @@ kubectl --namespace &quot;default&quot; exec -it &quot;$POD_NAME&quot; cat &quot
             
             <guid>https://blog.mathevet.xyz/posts/chrome-os-crostini/</guid>
             <description>As you might or might not be aware, Chrome OS has the ability to run Linux apps. Since Chrome OS is built on top of Linux, the historical approach, Crouton, was based on chroot. It allows to seggregate a full files system and run from it using the Chrome OS kernel. This means no performance penalty since there is a direct access to the hardware, unlike virtualization. However, this native hardware access has always been a security flaw for Chrome OS, where everything is normally sandboxed and locked (including the file system).</description>
-            <content type="html"><![CDATA[
-
-<p>As you might or might not be aware, Chrome OS has the ability to run Linux apps. Since Chrome OS is built on top of Linux, the historical approach, <a href="https://github.com/dnschneid/crouton" target="_blank">Crouton</a>, was based on chroot. It allows to seggregate a full files system and run from it using the Chrome OS kernel. This means no performance penalty since there is a direct access to the hardware, unlike virtualization. However, this native hardware access has always been a security flaw for Chrome OS, where everything is normally sandboxed and locked (including the file system). This is why Crouton can only be installed and run in <a href="https://chromium.googlesource.com/chromiumos/docs/+/master/developer_mode.md" target="_blank">developer mode</a>, which disables OS boot verification and may void warranty. Oh, and switching to developer mode is not a light operation: it wipes your device.</p>
-
-<p>Nowadays, most developers rely on Unix based tools. Not having a way to run Linux commands that complies with Chrome OS security was becoming more and more of an issue. That&rsquo;s probably why Google started to work on the <a href="https://chromium.googlesource.com/chromiumos/docs/+/master/containers_and_vms.md" target="_blank">Crostini</a> Project.</p>
-
-<p>Crostini isolates the Linux environment in a Virtual Machine (VM). A custom VM monitor, <a href="https://opensource.google/projects/crosvm" target="_blank">crosvm</a>, relies on KVM under the hood for running the VM. The image, named <a href="https://chromium.googlesource.com/chromiumos/overlays/board-overlays/+/master/project-termina/" target="_blank">Termina</a>, is a light linux image, intended to boot very fast and start containers.</p>
-
+            <content type="html"><![CDATA[<p>As you might or might not be aware, Chrome OS has the ability to run Linux apps. Since Chrome OS is built on top of Linux, the historical approach, <a href="https://github.com/dnschneid/crouton">Crouton</a>, was based on chroot. It allows to seggregate a full files system and run from it using the Chrome OS kernel. This means no performance penalty since there is a direct access to the hardware, unlike virtualization. However, this native hardware access has always been a security flaw for Chrome OS, where everything is normally sandboxed and locked (including the file system). This is why Crouton can only be installed and run in <a href="https://chromium.googlesource.com/chromiumos/docs/+/master/developer_mode.md">developer mode</a>, which disables OS boot verification and may void warranty. Oh, and switching to developer mode is not a light operation: it wipes your device.</p>
+<p>Nowadays, most developers rely on Unix based tools. Not having a way to run Linux commands that complies with Chrome OS security was becoming more and more of an issue. That&rsquo;s probably why Google started to work on the <a href="https://chromium.googlesource.com/chromiumos/docs/+/master/containers_and_vms.md">Crostini</a> Project.</p>
+<p>Crostini isolates the Linux environment in a Virtual Machine (VM). A custom VM monitor, <a href="https://opensource.google/projects/crosvm">crosvm</a>, relies on KVM under the hood for running the VM. The image, named <a href="https://chromium.googlesource.com/chromiumos/overlays/board-overlays/+/master/project-termina/">Termina</a>, is a light linux image, intended to boot very fast and start containers.</p>
 <p>Because yes, the Termina VM only is a sandbox for containers: it doesn&rsquo;t access to the hardware directly, it does access to the hardware exposed and sandboxed by <em>crosvm</em>.</p>
-
-<p>Within this secure Termina VM, a container is span up via the <a href="https://en.wikipedia.org/wiki/LXC" target="_blank">LXD</a> runtime. By default, it is a Debian container named <em>Penguin</em>. This container is where the end user is running commands/apps.</p>
-
+<p>Within this secure Termina VM, a container is span up via the <a href="https://en.wikipedia.org/wiki/LXC">LXD</a> runtime. By default, it is a Debian container named <em>Penguin</em>. This container is where the end user is running commands/apps.</p>
 <p>It sounds like quite a complex setup, but the Chrome OS engineers have made the whole thing very easy to use. You don&rsquo;t have to worry about all the internals, just launch the Terminal app: it automatically spins ups Termina, followed by Penguin, and displays a prompt.</p>
-
 <p>This way we&rsquo;ve got our Linux environment running isolated from the rest of Chrome OS. There is however the abolity to access the Linux filesystem, sitting within Termina, from Chrome OS. And vice versa: you can mount Chrome OS folders into Termina. All via the Files app.</p>
-
 <h2 id="resources">Resources</h2>
-
-<p>I skipped a lot of architecture details for the sake of simplifcation, but if you&rsquo;re interested I recommend the <a href="https://chromium.googlesource.com/chromiumos/docs/+/master/containers_and_vms.md" target="_blank">Crostini technical documentation</a>, you can find a lot of exciting details there.</p>
-
+<p>I skipped a lot of architecture details for the sake of simplifcation, but if you&rsquo;re interested I recommend the <a href="https://chromium.googlesource.com/chromiumos/docs/+/master/containers_and_vms.md">Crostini technical documentation</a>, you can find a lot of exciting details there.</p>
 <p>I also recommend to have a look at the following keynote from Google I/O 2019. They go through some bits of the Crostini architecture, and even show how to play with the VM and containers in the end.</p>
 
-
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="//www.youtube.com/embed/pRlh8LX4kQI" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+  <iframe src="https://www.youtube.com/embed/pRlh8LX4kQI" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
 
 ]]></content>
@@ -178,27 +119,16 @@ kubectl --namespace &quot;default&quot; exec -it &quot;$POD_NAME&quot; cat &quot
             <description>You are behind a restrictive firewall and you aspire to more freedom? You need to access an Intranet website located in a different environment than yours? You are far from your home country, and can&amp;rsquo;t live one minute more without your favourite TV shows, that you can&amp;rsquo;t watch because of the localisation restrictions?
 You can communicate via port 22? Do you have an SSH server that could access the content you want?</description>
             <content type="html"><![CDATA[<p>You are behind a restrictive firewall and you aspire to more freedom? You need to access an Intranet website located in a different environment than yours? You are far from your home country, and can&rsquo;t live one minute more without your favourite TV shows, that you can&rsquo;t watch because of the localisation restrictions?</p>
-
 <p>You can communicate via port 22? Do you have an SSH server that could access the content you want? Then, you can use an SSH client as a SOCKS proxy and redirect the requests via an SSH tunnel. From Linux, connect like this:</p>
-
 <pre><code>$ ssh -D 1080 user@host
-</code></pre>
-
-<p>If you are on Windows, you can use Putty. Enter the IP address (or the name) of your remote host, then go to Connection &gt; SSH &gt; Tunnels and reproduce this:</p>
-
-<p><img src="/img/putty-socks1.png" alt="putty-socks1" /></p>
-
+</code></pre><p>If you are on Windows, you can use Putty. Enter the IP address (or the name) of your remote host, then go to Connection &gt; SSH &gt; Tunnels and reproduce this:</p>
+<p><img src="/img/putty-socks1.png" alt="putty-socks1"></p>
 <p>Click on Add.</p>
-
-<p><img src="/img/putty-socks2.png" alt="putty-socks2" /></p>
-
+<p><img src="/img/putty-socks2.png" alt="putty-socks2"></p>
 <p>Then, enter the proxy parameter on your browser or system.
 For instance, on Firefox:</p>
-
-<p><img src="/img/firefox-socks.png" alt="firefox-socks1" /></p>
-
-<p><img src="/img/firefox-socks2.png" alt="firefox-socks2" /></p>
-
+<p><img src="/img/firefox-socks.png" alt="firefox-socks1"></p>
+<p><img src="/img/firefox-socks2.png" alt="firefox-socks2"></p>
 <p>Et voilà! You are connecting through your SOCKS proxy created via your SSH connection. This took you 15 seconds, and will save your life at least many times.</p>
 ]]></content>
         </item>
@@ -212,25 +142,17 @@ For instance, on Firefox:</p>
             <description>Password authentication is good but can be dangerous, because it is weak against brute force attacks. There are some mechanisms which allow to mitigate this treat. There are also safer authentication mechanisms for SSH, like public key auhtentication.
 We&amp;rsquo;re going to create a key pair from our client, a public and a private. We send the public key to the server. Thus, when the client tries to connect, the server communicates by encrypting communications with the public key.</description>
             <content type="html"><![CDATA[<p>Password authentication is good but can be dangerous, because it is weak against brute force attacks. There are some mechanisms which allow to mitigate this treat. There are also safer authentication mechanisms for SSH, like public key auhtentication.</p>
-
 <p>We&rsquo;re going to create a key pair from our client, a public and a private. We send the public key to the server. Thus, when the client tries to connect, the server communicates by encrypting communications with the public key. Only the client owning the private key will be able to understand messages from the server and initiate the connection.</p>
-
 <blockquote>
 <p><strong>Note:</strong> Asymmetric encryption is only used for authentication. Once the conenction is established, the server generates a secret key which is sent to the client. This transmission is encrypted with the public key. The secret key is then used to encrypt all communications for the session, in order to save resources. Indeed, asymmetric encryption consumes a lot more resources than symmetric encryption.</p>
 </blockquote>
-
 <p>Before anything else, we verify the SSH server configuration:</p>
-
 <blockquote>
 <p>/etc/ssh/sshd_config</p>
 </blockquote>
-
 <pre><code>RSAAuthentication yes
 PubkeyAuthentication yes
-</code></pre>
-
-<p>Then we have the creation of the key pair on the client. The following comnands must be launched as the user you want to be on the server.</p>
-
+</code></pre><p>Then we have the creation of the key pair on the client. The following comnands must be launched as the user you want to be on the server.</p>
 <pre><code>$ ssh-keygen -t rsa
 Generating public/private rsa key pair.
 Enter file in which to save the key (/home/jean-pierre/.ssh/id_rsa):
@@ -240,38 +162,22 @@ Your identification has been saved in /home/jean-pierre/.ssh/id_rsa.
 Your public key has been saved in /home/jean-pierre/.ssh/id_rsa.pub.
 The key fingerprint is:
 5d:c9:d4:c6:3a:8d:0b:10:33:32:9c:53:55:a1:d0:61 jean-pierre@velo
-</code></pre>
-
-<p>You can generate DSA keys using -t dsa.</p>
-
+</code></pre><p>You can generate DSA keys using -t dsa.</p>
 <p>I recommend to enter a passphrase: it is used to encrypt (symmetric encryption) the private key, which adds an additional security layer.</p>
-
 <p>We now just need to send the public key, either on your own if you can, or contact the server administrator. If you have the hand on the server, there are two ways to do it:</p>
-
 <ul>
 <li>The <strong>ssh-copy-id</strong> command</li>
 <li>Manual copy</li>
 </ul>
-
 <p>ssh-copy-id, which must be launched from the client, copies the public key specified as parameter (-i) into the <strong>~/.ssh/authorized_keys</strong> file on the server.</p>
-
 <pre><code>$ ssh-copy-id -i id_rsa.pub [user@]host
-</code></pre>
-
-<p>After that, you should be able to connect via the public key. If you didn&rsquo;t type any passphrase during the keys generation, no password will be asked. Otherwise, the passprhrase of the private key will be needed. Typing this passphrase at each conenction can be unpleasant. Fortunately, here comes the SSH agent, which will keep the key in memory for you.</p>
-
+</code></pre><p>After that, you should be able to connect via the public key. If you didn&rsquo;t type any passphrase during the keys generation, no password will be asked. Otherwise, the passprhrase of the private key will be needed. Typing this passphrase at each conenction can be unpleasant. Fortunately, here comes the SSH agent, which will keep the key in memory for you.</p>
 <pre><code>$ ssh-agent
-</code></pre>
-
-<p>ssh-agent displays environment vairables you have to declare. So here you go. Then:</p>
-
+</code></pre><p>ssh-agent displays environment vairables you have to declare. So here you go. Then:</p>
 <pre><code>$ ssh-add
 Enter passphrase for /home/jean-pierre/.ssh/id_dsa:
 Identity added: /home/jean-pierre/.ssh/id_dsa (/home/jean-pierre/.ssh/id_dsa)
-</code></pre>
-
-<p>Well done. To do after each reboot.</p>
-
+</code></pre><p>Well done. To do after each reboot.</p>
 <p>You can now disable password authentication and login using pubkey authentication.</p>
 ]]></content>
         </item>
@@ -283,64 +189,37 @@ Identity added: /home/jean-pierre/.ssh/id_dsa (/home/jean-pierre/.ssh/id_dsa)
             
             <guid>https://blog.mathevet.xyz/posts/manage-your-iptables-rules-properly/</guid>
             <description>Debian based I regularly see sysadmins saving their iptables rules in an init script. It works, but it&amp;rsquo;s not the most elegant way to do it. I prefer personally to save the existing rules with the iptables-save command. This command sends the result on the standard output, so let&amp;rsquo;s redirect it to a file.
-# iptables-save &amp;gt; /etc/iptables  Interesting option: -c displays how many times the rule has been applied (on bytes and on packets).</description>
-            <content type="html"><![CDATA[
-
-<h2 id="debian-based">Debian based</h2>
-
+# iptables-save &amp;gt; /etc/iptables Interesting option: -c displays how many times the rule has been applied (on bytes and on packets).</description>
+            <content type="html"><![CDATA[<h2 id="debian-based">Debian based</h2>
 <p>I regularly see sysadmins saving their iptables rules in an init script. It works, but it&rsquo;s not the most elegant way to do it. I prefer personally to save the existing rules with the iptables-save command. This command sends the result on the standard output, so let&rsquo;s redirect it to a file.</p>
-
 <pre><code># iptables-save &gt; /etc/iptables
-</code></pre>
-
-<p>Interesting option: -c displays how many times the rule has been applied (on bytes and on packets).</p>
-
+</code></pre><p>Interesting option: -c displays how many times the rule has been applied (on bytes and on packets).</p>
 <p>In order to load the rules, simply use the iptables-restore command with the previously saved file in the standard input:</p>
-
 <pre><code># iptables-restore &lt; /etc/iptables
-</code></pre>
-
-<p>Add -c to take the counters in account (if you saved them, bien sur). If any rules are already loaded, you don&rsquo;t even have to flush them, the command does it for you by default (-n to keep them).</p>
-
+</code></pre><p>Add -c to take the counters in account (if you saved them, bien sur). If any rules are already loaded, you don&rsquo;t even have to flush them, the command does it for you by default (-n to keep them).</p>
 <p>To automatically restore the rules on startup, we could create an init script. I prefer to launch the restore directly from the network interface, as a pre-up command. It allows to avoid any forgetting when you flush your rules, then bring your interface up. Moreover, you gain the ability to create dedicated rules for each interfaces. If your rules are independent from your interfaces, you can still launch the restore as a pre-up command for the local loop.</p>
-
 <p>/etc/network/interfaces</p>
-
 <pre><code>iface eth0 inet static
     pre-up iptables-restore &lt; /etc/iptables
     address 543.454.233.42
     netmask 255.255.255.0
     gateway 543.454.233.254
 auto eth0
-</code></pre>
-
-<p>For those who have seen: yes, I&rsquo;ve invented a new class of IP addresses.</p>
-
+</code></pre><p>For those who have seen: yes, I&rsquo;ve invented a new class of IP addresses.</p>
 <h2 id="red-hat-based">Red Hat based</h2>
-
 <p>Same principle, but the way to do it is slightly different. To save the rules, you can use the iptables service:</p>
-
 <pre><code># service iptables save
-</code></pre>
-
-<p>The rules are saved in the /etc/sysconfig/iptables file by default. This file is read when the iptables service is launched.</p>
-
+</code></pre><p>The rules are saved in the /etc/sysconfig/iptables file by default. This file is read when the iptables service is launched.</p>
 <h2 id="avoid-locking-out-debian-only">Avoid locking out (Debian only)</h2>
-
 <p>Be honest. Who has never been locked out when modifying firewall policies or rules. I must say that it happened to me. The failure in all its splendour.</p>
-
 <p>In order to avoid this, there is a simple tool: iptables-apply. This command will apply the rules file given as a parameter, then ask for the user confirmation. If the user doesn&rsquo;t answer before the timeout, iptables-apply undoes the change.</p>
-
 <pre><code># iptables-apply /etc/iptables
 [ ok ] Stopping authentication failure monitor: fail2ban.
 Applying new ruleset... done.
 Can you establish NEW connections to the machine? (y/N) apparently not...
 Timeout. Something happened (or did not). Better play it safe...
 Reverting to old ruleset... done.
-</code></pre>
-
-<p>Convenient, isn&rsquo;t it?</p>
-
+</code></pre><p>Convenient, isn&rsquo;t it?</p>
 <p>If you do know others good practices concerning the managenent of iptables rules, feel free to share them in the comments.</p>
 ]]></content>
         </item>
@@ -353,15 +232,11 @@ Reverting to old ruleset... done.
             <guid>https://blog.mathevet.xyz/posts/presentation-getting-started-with-puppet/</guid>
             <description>Here is a prensetation about Puppet, written by me. It briefly discusses the configuration managers, before looking in more detail Puppet, its installation based on Debian, its initial configuration and its declarative language. This medium is intended for beginners in configuration management, who want to discover Puppet.
 This support is made available under a Creative Commons BY licence.
-Download &amp;ldquo;Getting started with Puppet&amp;rdquo; in PDF.
-  Getting started with Puppet  from jeyg</description>
+Download &amp;ldquo;Getting started with Puppet&amp;rdquo; in PDF.</description>
             <content type="html"><![CDATA[<p>Here is a prensetation about Puppet, written by me. It briefly discusses the configuration managers, before looking in more detail Puppet, its installation based on Debian, its initial configuration and its declarative language. This medium is intended for beginners in  configuration management, who want to discover Puppet.</p>
-
-<p>This support is made available under a <a href="https://creativecommons.org/licenses/by/3.0/deed.en" target="_blank">Creative Commons BY</a> licence.</p>
-
+<p>This support is made available under a <a href="https://creativecommons.org/licenses/by/3.0/deed.en">Creative Commons BY</a> licence.</p>
 <p><a href="/pdf/Getting-started-with-Puppet.pdf">Download &ldquo;Getting started with Puppet&rdquo; in PDF.</a></p>
-
-<p><iframe src="//www.slideshare.net/slideshow/embed_code/key/IWRYfblcaByacK" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/jeyg/getting-started-with-puppet-14581014" title="Getting started with Puppet" target="_blank">Getting started with Puppet</a> </strong> from <strong><a href="https://www.slideshare.net/jeyg" target="_blank">jeyg</a></strong> </div></p>
+<!-- raw HTML omitted -->
 ]]></content>
         </item>
         
@@ -373,100 +248,62 @@ Download &amp;ldquo;Getting started with Puppet&amp;rdquo; in PDF.
             <guid>https://blog.mathevet.xyz/posts/dive.into-git/</guid>
             <description>Git is a decentralized system control system (VCS) created by Linus Torvalds. This is a very powerful and popular tool. It is used for the Linux kernel development (and many other famous projects). It is so appreciated that the kernel developers are now wondering how they survived without it when it did not exist.
 With so much praise, I wanted to test this tool. It&amp;rsquo;s not difficult to tame, however, the way it works is a bit different than other VCS (especially SVN, that I had already used), mainly because of the decentralization that characterizes Git.</description>
-            <content type="html"><![CDATA[
-
-<p>Git is a decentralized system control system (VCS) created by Linus Torvalds. This is a very powerful and popular tool. It is used for the Linux kernel development (and many other famous projects). It is so appreciated that the kernel developers are now wondering how they survived without it when it did not exist.</p>
-
+            <content type="html"><![CDATA[<p>Git is a decentralized system control system (VCS) created by Linus Torvalds. This is a very powerful and popular tool. It is used for the Linux kernel development (and many other famous projects). It is so appreciated that the kernel developers are now wondering how they survived without it when it did not exist.</p>
 <p>With so much praise, I wanted to test this tool. It&rsquo;s not difficult to tame, however, the way it works is a bit different than other VCS (especially SVN, that I had already used), mainly because of the decentralization that characterizes Git.</p>
-
 <p>Indeed, while most management software versions require a central server to which everyone connects to send and receive changes, Git allows each user to have a local repository that can synchronize with other users. Moreover, it&rsquo;s completely possible to combine this decentralization with a master server, in order to have a repository that everybody can reach, just like classic centralized VCS.</p>
-
 <h1 id="understanding-git">Understanding Git</h1>
-
 <p>Git allows to take snapshots of your project files. Specify which files to back up, and then perform the backup (this is called a commit). When you commit, Git writes a manifest describing how your files look like at this moment. This allows not to save the whole directory each time.</p>
-
 <p>Here&rsquo;s how to use Git basically.</p>
-
 <h1 id="create-and-retrieve-repositories">Create and retrieve repositories</h1>
-
 <p>The first thing to do to use Git is to have a Git repository. Two ways: either create or retrieve it.</p>
-
-<p>**Create a repository: <span style="font-size: large;">git init</span></p>
-
+<p>**Create a repository: <!-- raw HTML omitted -->git init<!-- raw HTML omitted --></p>
 <p>To create a repository, simply run the command <strong>git init</strong> in the desired directory.</p>
-
 <pre><code>$ cd fake-project
 $ ls
 README hello.sh
 $ git init
 Initialized empty Git repository in ~/fake-project/.git/
-</code></pre>
-
-<p><strong>Get a repository: <span style="font-size: large;">git clone</span></strong></p>
-
+</code></pre><p><strong>Get a repository: <!-- raw HTML omitted -->git clone<!-- raw HTML omitted --></strong></p>
 <p>You can get a Git repository via the Internet, with the command <strong>git clone [URL]</strong>. This means that you copy the files from the repository locally, but also the history of commits, branches, etc..</p>
-
 <pre><code>$ git clone git://github.com/octocat/Hello-World.git
-</code></pre>
-
-<h1 id="managing-snapshots">Managing Snapshots</h1>
-
+</code></pre><h1 id="managing-snapshots">Managing Snapshots</h1>
 <p>Before discussing the commands, you should first understand that a file can have four states:</p>
-
 <ul>
-<li><p><strong>Unversioned</strong></p>
-
-<p>Git ignores this file.</p></li>
-
-<li><p><strong>In Staging area</strong></p>
-
-<p>The file or file changes will be saved in the next commit.</p></li>
-
-<li><p><strong>Revised</strong></p>
-
-<p>The file has changed since the last commit, but it is not in the staging area, and therefore will not be updated in the next commit.</p></li>
-
-<li><p><strong>Committed</strong></p>
-
-<p>The file is saved and has not been modified since.</p></li>
+<li>
+<p><strong>Unversioned</strong></p>
+<p>Git ignores this file.</p>
+</li>
+<li>
+<p><strong>In Staging area</strong></p>
+<p>The file or file changes will be saved in the next commit.</p>
+</li>
+<li>
+<p><strong>Revised</strong></p>
+<p>The file has changed since the last commit, but it is not in the staging area, and therefore will not be updated in the next commit.</p>
+</li>
+<li>
+<p><strong>Committed</strong></p>
+<p>The file is saved and has not been modified since.</p>
+</li>
 </ul>
-
 <p>In summary, we will use <strong><em>git add</em></strong> to put one or more files in the staging area, <em><strong>git status</strong></em> and <em><strong>git diff</strong></em> to see the state and what changes have been made (or not) to files, and finally <em><strong>git commit</strong></em> to save.</p>
-
-<p><strong>Add files in the <em>staging area</em>: <span style="font-size: large;">git add</span></strong></p>
-
+<p><strong>Add files in the <em>staging area</em>: <!-- raw HTML omitted -->git add<!-- raw HTML omitted --></strong></p>
 <p>Let&rsquo;s return to our <em>fake-project</em> example. A <em><strong>git status</strong></em> shows us the files state of the repository.</p>
-
 <pre><code>$ git status -s
 ?? README
 ?? hello.sh
-</code></pre>
-
-<p>Question marks indicate that the files are not versioned. To put them in the staging area, we use <em><strong>git add</strong></em>.</p>
-
+</code></pre><p>Question marks indicate that the files are not versioned. To put them in the staging area, we use <em><strong>git add</strong></em>.</p>
 <pre><code>$ git add README hello.sh
-</code></pre>
-
-<p>or</p>
-
+</code></pre><p>or</p>
 <pre><code>$ git add .
-</code></pre>
-
-<p>to add all the files from the repository (recursive mode).</p>
-
+</code></pre><p>to add all the files from the repository (recursive mode).</p>
 <p>A <em>git status</em> confirms that the files are ready to be committed:</p>
-
 <pre><code>$ git status -s
 A  README
 A  hello.sh
-</code></pre>
-
-<p>An important thing to understand: when the files will be committed, they will be in the state they were when the last <em>git add</em> was performed. So, if a file changes after <em>git add</em>, these changes will not be included in the Git snapshot. We should launch a <em>git add</em> again to save the latest file version.</p>
-
-<p><strong>See the files state of the repository: <span style="font-size: large;">git status</span></strong></p>
-
+</code></pre><p>An important thing to understand: when the files will be committed, they will be in the state they were when the last <em>git add</em> was performed. So, if a file changes after <em>git add</em>, these changes will not be included in the Git snapshot. We should launch a <em>git add</em> again to save the latest file version.</p>
+<p><strong>See the files state of the repository: <!-- raw HTML omitted -->git status<!-- raw HTML omitted --></strong></p>
 <p>As we saw earlier, <em><strong>git status</strong></em> shows whether the files are ready to be committed, have been modified or deleted.</p>
-
 <pre><code>$ vim README
 $ git status
 # On branch master
@@ -485,19 +322,12 @@ $ git status
 #
 # modified: README
 #
-</code></pre>
-
-<p>or with -s, for a shorter output:</p>
-
+</code></pre><p>or with -s, for a shorter output:</p>
 <pre><code>$ git status -s
 AM README
 A  hello.sh
-</code></pre>
-
-<p><strong>View differences : <span style="font-size: large;">git diff</span></strong></p>
-
+</code></pre><p><strong>View differences : <!-- raw HTML omitted -->git diff<!-- raw HTML omitted --></strong></p>
 <p>The <em><strong>git diff</strong></em> command can be used in several ways. Without parameters, <em><strong>git diff</strong></em> gives the difference between what is in staging area and what have been changed afterwards.</p>
-
 <pre><code>$ vim README
 $ git status -s
 AM README
@@ -510,10 +340,7 @@ index 8b13789..6a4238f 100644
 @@ -1 +1 @@
 -
 +blablabla
-</code></pre>
-
-<p>The <em><strong>&ndash;cached</strong></em> parameter shows the changes made when moved to the staging area.</p>
-
+</code></pre><p>The <em><strong>&ndash;cached</strong></em> parameter shows the changes made when moved to the staging area.</p>
 <pre><code>$ git status -s
 AM README
 A hello.sh
@@ -531,20 +358,12 @@ index 0000000..6a4238f
 diff --git a/hello.sh b/hello.sh
 new file mode 100644
 index 0000000..e69de29
-</code></pre>
-
-<p>The <em><strong>git diff HEAD</strong></em> command allows to know all the changes since the last commit, when the file is in staging area or simply modified.</p>
-
-<p><strong>Create a snapshot of the <em>staging area</em>: <span style="font-size: large;">git commit</span></strong></p>
-
+</code></pre><p>The <em><strong>git diff HEAD</strong></em> command allows to know all the changes since the last commit, when the file is in staging area or simply modified.</p>
+<p><strong>Create a snapshot of the <em>staging area</em>: <!-- raw HTML omitted -->git commit<!-- raw HTML omitted --></strong></p>
 <p>Now that we have our files in staging area, we can save them using the <em><strong>git commit</strong></em> command. Before that, we give our name and mail, they will be recorded during the commit.</p>
-
 <pre><code>$ git config --global user.name 'Your Name'
 $ git config --global user.email you@yourdomain.com
-</code></pre>
-
-<p>We can now commit. We provide a message which describes the commit with the <em><strong>-m</strong></em> option.</p>
-
+</code></pre><p>We can now commit. We provide a message which describes the commit with the <em><strong>-m</strong></em> option.</p>
 <pre><code>$ git status -s
 A README
 A hello.sh
@@ -553,37 +372,21 @@ $ git commit -m 'my first commit'
 1 files changed, 1 insertions(+), 0 deletions(-)
 create mode 100644 README
 create mode 100644 hello.sh
-</code></pre>
-
-<p>And that&rsquo;s that! The staging area have been saved and cleaned. A <em><strong>git status</strong></em> confirms it.</p>
-
+</code></pre><p>And that&rsquo;s that! The staging area have been saved and cleaned. A <em><strong>git status</strong></em> confirms it.</p>
 <pre><code>$ git status
 # On branch master
 nothing to commit (working directory clean)
-</code></pre>
-
-<p>A little diagram that summarizes what happened:</p>
-
-<p><img src="/img/git1.png" alt="" title="git-commit-1" /></p>
-
+</code></pre><p>A little diagram that summarizes what happened:</p>
+<p><img src="/img/git1.png" alt="" title="git-commit-1"></p>
 <p>A <em><strong>git commit -a</strong></em> allows you to commit all modified or deleted files without going through the <em>git add</em> step. This command does not commit new unversioned files, you need to add them at least once in staging area with <em>git add</em> in order to directly commit later.</p>
-
 <pre><code>$ vim README
 $ commit -am 'My second commit'
 [master 8151463] My second commit
 1 files changed, 2 insertions(+), 0 deletions(-)
-</code></pre>
-
-<p>This way, we skip the &ldquo;staging step&rdquo; to jump directly to the snapshot.</p>
-
-<p><img src="/img/git2.png" alt="" title="git-commit-1" /></p>
-
-<p style="text-align: left;">
-  <strong>Undo: <span style="font-size: large;">git reset HEAD</span></strong>
-</p>
-
+</code></pre><p>This way, we skip the &ldquo;staging step&rdquo; to jump directly to the snapshot.</p>
+<p><img src="/img/git2.png" alt="" title="git-commit-1"></p>
+<!-- raw HTML omitted -->
 <p>It is possible to remove a file from the staging area with the <em><strong>git reset HEAD</strong></em> command.</p>
-
 <pre><code>$ git status -s
 M README
 $ git add README
@@ -592,14 +395,9 @@ M README
 $ git reset HEAD -- README
 Unstaged changes after reset:
 M README
-</code></pre>
-
-<p>To cancel the last commit: <em><strong>git reset HEAD^</strong></em></p>
-
-<p><strong>Manage files: <span style="font-size: large;">git rm et git mv</span></strong></p>
-
+</code></pre><p>To cancel the last commit: <em><strong>git reset HEAD^</strong></em></p>
+<p><strong>Manage files: <!-- raw HTML omitted -->git rm et git mv<!-- raw HTML omitted --></strong></p>
 <p>The git rm command allows to delete a file from your Git repository. The file is literally removed from the working directory the index. The &ndash;cached option allows to delete the file from the index only. The file will become unversioned, and therefore, will no longer be managed by Git.</p>
-
 <pre><code>$ git rm --cached README
 rm 'README'
 $ ls
@@ -613,36 +411,20 @@ $ git commit -m 'bye README'
 delete mode 100644 README
 $ git status -s
 ?? README
-</code></pre>
-
-<p><em><strong>git mv</strong></em> renames a file and updates the Git index accordingly.</p>
-
+</code></pre><p><em><strong>git mv</strong></em> renames a file and updates the Git index accordingly.</p>
 <pre><code>$ git mv oldname newname
-</code></pre>
-
-<p>is the same as</p>
-
+</code></pre><p>is the same as</p>
 <pre><code>$ mv oldname newname
 $ git add newname
 $ git rm oldname
-</code></pre>
-
-<h1 id="branches">Branches</h1>
-
+</code></pre><h1 id="branches">Branches</h1>
 <p>We approach a big strength of Git: its branches management. Forget most of the nightmares of others VCS, branches are here quite simple to manage. For those who do not know the principle, branches allow you to create ramifications of your project. Imagine you want to add feature to your project. Commit the changes directly in the core branch will make your software unstable until you have not completed the development of this new feature. To work around this problem, you can create a test branch, which will be a copy of your main branch, then make and test your changes without altering the main branch. Once the testing branch seems stable, you can merge the code with your main branch.</p>
-
-<p><span style="font-size: large;"><strong><span style="font-size: small;">Branches management</span> git branch and git checkout</strong></span></p>
-
+<p><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted -->Branches management<!-- raw HTML omitted --> git branch and git checkout<!-- raw HTML omitted --><!-- raw HTML omitted --></p>
 <p>Let&rsquo;s start by making an inventory: <em><strong>git branch</strong></em> to find out on which branch we are working:</p>
-
 <pre><code>$ git branch
 * master
-</code></pre>
-
-<p>We have a branch called <em>master</em>. It&rsquo;s preceded by a star, which means that we currently use it. It was created by default by <em>git init</em>.</p>
-
+</code></pre><p>We have a branch called <em>master</em>. It&rsquo;s preceded by a star, which means that we currently use it. It was created by default by <em>git init</em>.</p>
 <p>Let&rsquo;s create a branch with <em><strong>git branch [name]</strong></em>, and then move on this new one with <em><strong>git checkout [name]</strong></em>.</p>
-
 <pre><code>$ git branch testing
 $ git branch
 * master
@@ -652,33 +434,22 @@ Switched to branch 'testing'
 $ git branch
 master
 * testing
-</code></pre>
-
-<blockquote>
+</code></pre><blockquote>
 <p>There is a command that combines the branch creation and the move: <em><strong>git checkout -b [name]</strong></em></p>
 </blockquote>
-
 <p>The testing branch has been created. This is a copy of the last commit to the master branch. Although identical so far, our branches are now separated: all commit on one will not be passed to the other.</p>
-
 <p>To delete a branch, <em><strong>git branch -d [name]</strong></em>.</p>
-
 <blockquote>
 <p>You can&rsquo;t delete a branch if you&rsquo;re currently on it.</p>
 </blockquote>
-
 <pre><code>$ git branch
 * master
 testing
 $ git branch -d testing
 Deleted branch testing (was a870e51).
-</code></pre>
-
-<p><strong>Merge branches: <span style="font-size: large;">git merge</span></strong></p>
-
+</code></pre><p><strong>Merge branches: <!-- raw HTML omitted -->git merge<!-- raw HTML omitted --></strong></p>
 <p>Branches are isolated, which allows you to make changes to one without affecting the other. What if we decide to incorporate changes from one branch into another? This is what we do with <strong>git merge [branch]</strong>, which allows to merge the current branch with a specified branch.</p>
-
 <p>An example where we create a file that we commit in the testing branch, before merge it in the master branch:</p>
-
 <pre><code>$ git branch
 * master
 $ git checkout -b testing
@@ -703,14 +474,9 @@ Updating a870e51..e49b586
 Fast-forward
 0 files changed, 0 insertions(+), 0 deletions(-)
 create mode 100644 trololo
-</code></pre>
-
-<p>Most of the time, Git merges your branches without any problem. But, if the same block of code in a file is changed on the two branches, it will cause a conflict. In this case, we have to resolve this conflict by hand, in the file. Once done, a <em><strong>git add</strong></em> followed by a <em><strong>git commit</strong></em> will be needed before repeating the <em><strong>git merge</strong></em>.</p>
-
-<p><strong>Branch informations : <span style="font-size: large;">git log</span></strong></p>
-
+</code></pre><p>Most of the time, Git merges your branches without any problem. But, if the same block of code in a file is changed on the two branches, it will cause a conflict. In this case, we have to resolve this conflict by hand, in the file. Once done, a <em><strong>git add</strong></em> followed by a <em><strong>git commit</strong></em> will be needed before repeating the <em><strong>git merge</strong></em>.</p>
+<p><strong>Branch informations : <!-- raw HTML omitted -->git log<!-- raw HTML omitted --></strong></p>
 <p>To trace the history of commits and merge a branch, we have <em><strong>git log</strong></em>.</p>
-
 <pre><code>$ git log
 commit e49b586f5cd44e053f3491094e484c160cd3b052
 Author: jmathevet
@@ -723,16 +489,10 @@ Author: jmathevet
 Date: Wed Aug 16 18:59:31 2011 +0200
 
 bye README
-</code></pre>
-
-<h1 id="project-sharing">Project sharing</h1>
-
+</code></pre><h1 id="project-sharing">Project sharing</h1>
 <p>As already mentioned, Git is based on a decentralized architecture. Thus, any Git repository can be both client and server, which is very useful when working offline. That said, it is also interesting to have a Git repository accessible by a team in order to have a common basis, which everyone can retrieve and modify locally, to finally pass the changes to the common repository.</p>
-
-<p><strong>Manage repository aliases : <span style="font-size: large;">git remote</span></strong></p>
-
+<p><strong>Manage repository aliases : <!-- raw HTML omitted -->git remote<!-- raw HTML omitted --></strong></p>
 <p>In order to not to type the repository URL each time we need to access it, Git has an alias system. <em><strong>git remote</strong></em> displays the list of saved Git repositories for a repository. By default, if you cloned yours, an <em>orgin</em> alias has been automatically created. <em><strong>git remote add [alias] [URL]</strong></em> is used to add an alias, <em><strong>git remote rm [alias]</strong></em> to remove.</p>
-
 <pre><code>$ git clone http://android.git.kernel.org/platform/external/iptables
 Cloning into iptables...
 remote: Counting objects: 617, done.
@@ -746,43 +506,28 @@ origin
 $ git remote -v
 origin http://android.git.kernel.org/platform/external/iptables (fetch)
 origin http://android.git.kernel.org/platform/external/iptables (push)
-</code></pre>
-
-<pre><code>$ git remote add bob git://github.com/bob
+</code></pre><pre><code>$ git remote add bob git://github.com/bob
 $ git remote
 bob
 origin
-</code></pre>
-
-<pre><code>$ git remote -v
+</code></pre><pre><code>$ git remote -v
 bob git://github.com/bob (fetch)
 bob git://github.com/bob (push)
 origin http://android.git.kernel.org/platform/external/iptables (fetch)
 origin http://android.git.kernel.org/platform/external/iptables (push)
-</code></pre>
-
-<pre><code>$ git remote rm bob
+</code></pre><pre><code>$ git remote rm bob
 $ git remote
 origin
-</code></pre>
-
-<p><strong>Update local branches from the remote repository: <span style="font-size: large;">git fetch, git pull</span></strong></p>
-
+</code></pre><p><strong>Update local branches from the remote repository: <!-- raw HTML omitted -->git fetch, git pull<!-- raw HTML omitted --></strong></p>
 <p>You have cloned a repository, you can commit anything you want locally. Meanwhile, a developer commits a new feature on the remote repository. Your work is not lost: you can now get the changes via a <em><strong>git fetch [alias]</strong></em>, and then merge via a <em><strong>git merge [alias]/[branch]</strong></em>. The <em><strong>git pull [alias]</strong></em> command allows to go faster: it performs a <em>fetch</em> followed immediately by a <em>merge</em>.</p>
-
-<p><strong>Send your branches to the remote repository: <span style="font-size: large;">git push</span></strong></p>
-
+<p><strong>Send your branches to the remote repository: <!-- raw HTML omitted -->git push<!-- raw HTML omitted --></strong></p>
 <p>Conversely, to send branches to the remote repository, use the <em><strong>git push [alias] [branche]</strong></em> command. If the branch you are trying to send already exists on the remote server, it will be updated, if it does not exist, it will be created.</p>
-
 <h1 id="wrap-up">Wrap-up</h1>
-
 <p>We just finished our Git discovery. I hope I gave you&rsquo;ll want to get started. For my part, I am fully satisfied to have lost a few hours to get familiar with this software. I think it would be now very difficult for me to use again a classic centralized CVS like SVN, Git is so convenient!</p>
-
 <p>Some resources to go further:</p>
-
 <ul>
 <li>The Pro Git Book</li>
-<li><a href="http://www-cs-students.stanford.edu/~blynn/gitmagic/intl/fr/ch01.html" target="_blank">Git Magic</a></li>
+<li><a href="http://www-cs-students.stanford.edu/~blynn/gitmagic/intl/fr/ch01.html">Git Magic</a></li>
 </ul>
 ]]></content>
         </item>

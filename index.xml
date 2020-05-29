@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Jeremy Mathevet</title>
@@ -57,7 +57,7 @@ We&amp;rsquo;re going to create a key pair from our client, a public and a priva
       
       <guid>https://blog.mathevet.xyz/posts/manage-your-iptables-rules-properly/</guid>
       <description>Debian based I regularly see sysadmins saving their iptables rules in an init script. It works, but it&amp;rsquo;s not the most elegant way to do it. I prefer personally to save the existing rules with the iptables-save command. This command sends the result on the standard output, so let&amp;rsquo;s redirect it to a file.
-# iptables-save &amp;gt; /etc/iptables  Interesting option: -c displays how many times the rule has been applied (on bytes and on packets).</description>
+# iptables-save &amp;gt; /etc/iptables Interesting option: -c displays how many times the rule has been applied (on bytes and on packets).</description>
     </item>
     
     <item>
@@ -68,8 +68,7 @@ We&amp;rsquo;re going to create a key pair from our client, a public and a priva
       <guid>https://blog.mathevet.xyz/posts/presentation-getting-started-with-puppet/</guid>
       <description>Here is a prensetation about Puppet, written by me. It briefly discusses the configuration managers, before looking in more detail Puppet, its installation based on Debian, its initial configuration and its declarative language. This medium is intended for beginners in configuration management, who want to discover Puppet.
 This support is made available under a Creative Commons BY licence.
-Download &amp;ldquo;Getting started with Puppet&amp;rdquo; in PDF.
-  Getting started with Puppet  from jeyg</description>
+Download &amp;ldquo;Getting started with Puppet&amp;rdquo; in PDF.</description>
     </item>
     
     <item>
