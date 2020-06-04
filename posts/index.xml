@@ -36,7 +36,8 @@ There is also an nginx reverse proxy, getting Let&rsquo;s Encrypt certs and forw
 <li>22000, syncthing sync protocol.</li>
 <li>443, nginx reverse proxy entrypoint.</li>
 </ul>
-<p>Syncthing &amp; Filestash bind mount the host folder containing the files to sync and access.</p>
+<p>Syncthing binds mount the host folder containing the files to sync.<br>
+Filestash can reach the files via SFTP.</p>
 <p><img src="/img/sync-architecture.png" alt="arch"></p>
 <p>The file structure I&rsquo;m using, for reference:</p>
 <pre><code>.
