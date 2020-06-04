@@ -6,8 +6,189 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-uk</language>
         <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-        <lastBuildDate>Wed, 06 May 2020 11:23:32 +0800</lastBuildDate>
+        <lastBuildDate>Mon, 01 Jun 2020 20:33:03 +0800</lastBuildDate>
         <atom:link href="https://blog.mathevet.xyz/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>Syncthing &amp; Filestash</title>
+            <link>https://blog.mathevet.xyz/posts/syncthing-and-filestash/</link>
+            <pubDate>Mon, 01 Jun 2020 20:33:03 +0800</pubDate>
+            
+            <guid>https://blog.mathevet.xyz/posts/syncthing-and-filestash/</guid>
+            <description>I&amp;rsquo;ve been using Nextcloud (formerly ownCloud) for years. I truly loved it and saw its evolution since very early stage.
+However, the scope of this project dramatically changed over time.
+What used to be a simple self-hosted dropbox PHP page has become a big collaborative platform regrouping many applications: files, groupware, visioconference, and so on.
+This is still an amazing project, but I have to admit it quite drifted out of my requirements.</description>
+            <content type="html"><![CDATA[<p><img src="/img/butwhy.jpg" alt="but why"></p>
+<p>I&rsquo;ve been using Nextcloud (formerly ownCloud) for years. I truly loved it and saw its evolution since very early stage.<br>
+However, the scope of this project dramatically changed over time.<br>
+What used to be a simple self-hosted dropbox PHP page has become a big collaborative platform regrouping many applications: files, groupware, visioconference, and so on.<br>
+This is still an amazing project, but I have to admit it quite drifted out of my requirements. All I need is a self-hosted files sync software with a web UI to get the files.
+Nothing more. Also, if PHP was the way to go 10 years ago, there are some cooler tech nowadays.</p>
+<h2 id="thats-the-plan">That&rsquo;s the plan</h2>
+<p>I&rsquo;m now using <a href="https://syncthing.net">Syncthing</a> &amp; <a href="https://www.filestash.app">Filestash</a>.<br>
+Because life is better with containers, everything is dockerized.<br>
+Syncthing is in charge of syncing files across all our devices.<br>
+Filestash is the frontend to access, manage and share files.<br>
+There is also an nginx reverse proxy, getting Let&rsquo;s Encrypt certs and forwarding to filestash.</p>
+<p>Ports exposed to public:</p>
+<ul>
+<li>22000, syncthing sync protocol.</li>
+<li>443, nginx reverse proxy entrypoint.</li>
+</ul>
+<p>Syncthing &amp; Filestash bind mount the host folder containing the files to sync and access.</p>
+<p><img src="/img/sync-architecture.png" alt="arch"></p>
+<p>The file structure I&rsquo;m using, for reference:</p>
+<pre><code>.
+├── filestash
+│   ├── docker-compose.yml
+│   └── state
+├── letsencrypt
+│   ├── config
+│   └── docker-compose.yml
+└── syncthing
+    ├── config
+    └── docker-compose.yml
+</code></pre><h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>docker</li>
+<li>docker-compose</li>
+</ul>
+<h2 id="syncthing">Syncthing</h2>
+<p>Syncthing&rsquo;s docke-compose:</p>
+<pre><code>---
+version: &quot;2&quot;
+services:
+  syncthing:
+    image: syncthing/syncthing
+    container_name: syncthing
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - GUID=1000
+    ports:
+      - 127.0.0.1:8384:8384
+      - 22000:22000
+    volumes:
+      - /mnt/files:/var/syncthing
+      - ./config:/var/syncthing/config
+</code></pre><pre><code>docker-compose up -d
+</code></pre><p>Note the <code>127.0.0.1:8384:8384</code> port mapping: we expose the 8384 port to the host localhost only. So we&rsquo;ll need to port forward with SSH.
+That&rsquo;s because an admin UI is exposed to this port without any authentication by default. You probably don&rsquo;t want to expose that publicly.
+Alternatively, you can change to <code>8384:8384</code>, which will expose to <code>0.0.0.0:8384</code>, and setup authentication on the UI right away.
+I prefer to stick with the local UI and SSH tunnel.
+The SSH tunnel command for reference:</p>
+<pre><code>ssh -L 8384:localhost:8384 john.doe@example.com
+</code></pre><p>In order to synchronize files, we need at least a second syncthing instance.
+It could be an Android phone (there is a syncthing app on the Play Store), Mac or PC.
+Then, we can go to <a href="https://localhost:8384">https://localhost:8384</a> on each machine and <a href="https://docs.syncthing.net/intro/getting-started.html#configuring">follow the guide</a>.</p>
+<p>And that&rsquo;s pretty much it.</p>
+<h2 id="filestash">Filestash</h2>
+<p>I&rsquo;ve got synchronized files across devices, great!<br>
+Now it&rsquo;s time to setup a way to browse my data remotely.<br>
+One of the easiest and maybe underrated way could be to use SFTP. There are plenty of clients that allow to remotely access to your files, either from a computer or a phone.
+This is cool but I love how convenient the Nextcloud web UI was.<br>
+In that case, Filestash is a good candidate.</p>
+<p>Same here, I use docker &amp; docker-compose (that&rsquo;s actually the official way of installing filestash).<br>
+First we need to create a docker network. It will be useful later.</p>
+<pre><code>docker network create docker_network
+</code></pre><p>Then, the filestash docker-compose config:</p>
+<pre><code>---
+version: &quot;2&quot;
+networks:
+  docker_network:
+    external: true
+services:
+  filestash:
+    image: machines/filestash
+    container_name: filestash
+    restart: unless-stopped
+    environment:
+      - APPLICATION_URL=filestash.example.com
+      - ONLYOFFICE_URL=http://onlyoffice
+#    volumes:
+#       - ./state:/app/data/state
+    networks:
+       - docker_network
+  onlyoffice:
+    container_name: filestash_oods
+    image: onlyoffice/documentserver
+    restart: always
+    networks:
+       - docker_network
+</code></pre><pre><code>docker-compose up -d
+</code></pre><p>At this point, filestash is up and running in the docker network, but not reachable from public.</p>
+<h2 id="nginx--lets-encrypt">Nginx + Let&rsquo;s Encrypt</h2>
+<p>Time to setup the reverse proxy with letsencrypt.
+The docker-compose file:</p>
+<pre><code>---
+version: &quot;2&quot;
+networks:
+  docker_network:
+    external: true
+services:
+  letsencrypt:
+    image: linuxserver/letsencrypt
+    container_name: letsencrypt
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+      - URL=example.com
+      - SUBDOMAINS=filestash
+      - VALIDATION=http
+    volumes:
+      - ./letsencrypt/config/filestash.subdomain.conf:/config/nginx/proxy-confs/filestash.subdomain.conf
+    ports:
+      - 443:443
+      - 80:80
+    restart: unless-stopped
+    networks:
+       - docker_network
+</code></pre><p>The <code>filestash.subdomain.conf</code> file:</p>
+<pre><code>server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+
+    server_name filestash.*;
+
+    include /config/nginx/ssl.conf;
+
+    client_max_body_size 0;
+
+    location / {
+
+        include /config/nginx/proxy.conf;
+        resolver 127.0.0.11 valid=30s ipv6=off;
+        set $upstream_app filestash;
+        set $upstream_port 8334;
+        set $upstream_proto http;
+
+        add_header Strict-Transport-Security &quot;max-age=31536000; includeSubDomains&quot; always;
+
+        proxy_pass $upstream_proto://$upstream_app:$upstream_port;
+    }
+}
+</code></pre><p>We&rsquo;re good to go!</p>
+<pre><code>docker-compose up -d
+</code></pre><p>After a few minutes, <code>filestash.example.com</code> will get its certificate (if you own the domain and configured the zone properly).
+Filestash can now be accessed via https with a browser.
+There is <a href="https://www.filestash.app/docs/install-and-upgrade/#installation">a couple of config steps</a> on the UI, quite straighforward.
+To access the local files, the trick is to use SFTP.
+I strongly recommend to use pubkey authentication rather than a password. Just input the pubkey into the SFTP password field (yes that&rsquo;s quite unusal).</p>
+<h2 id="wrap-up">Wrap-up</h2>
+<p>And here we are, a pretty good self-hosted file hosting service.
+I didn&rsquo;t get through all the setup details, but I tried to sum up the major steps.<br>
+After several weeks of usage I am very happy with this setup.
+The performances are much better than Nextcloud. The gain can be felt both in term of sync speed or file browsing experience.<br>
+Syncthing is blazing fast and I allow fine tune sycnrhonisations between many devices.<br>
+Filestash is fast, intuitive and mobile friendly. It&rsquo;s actually a PWA, so you can install it on your device and it will mimic a mobile app.</p>
+<p>As a result I have even been able to downgrade my remote instance size, dividing the number of cores and memory (and bill!) by two, with no performance hit.</p>
+<p><img src="/img/hahayes.jpg" alt="hahayes"></p>
+]]></content>
+        </item>
         
         <item>
             <title>Create Your Own VPN in the Cloud</title>
