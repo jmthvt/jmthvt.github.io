@@ -65,7 +65,7 @@ We&amp;rsquo;re going to create a key pair from our client, a public and a priva
       
       <guid>https://blog.mathevet.xyz/posts/manage-your-iptables-rules-properly/</guid>
       <description>Debian based I regularly see sysadmins saving their iptables rules in an init script. It works, but it&amp;rsquo;s not the most elegant way to do it. I prefer personally to save the existing rules with the iptables-save command. This command sends the result on the standard output, so let&amp;rsquo;s redirect it to a file.
-# iptables-save &amp;gt; /etc/iptables Interesting option: -c displays how many times the rule has been applied (on bytes and on packets).</description>
+iptables-save &amp;gt; /etc/iptables Interesting option: -c displays how many times the rule has been applied (on bytes and on packets).</description>
     </item>
     
     <item>

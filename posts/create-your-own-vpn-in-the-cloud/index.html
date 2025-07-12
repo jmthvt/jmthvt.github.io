@@ -167,40 +167,40 @@ Well, it&rsquo;s true we don&rsquo;t <em>really</em> need Kubernetes here. But s
 <li>If you&rsquo;re using an organisation, you&rsquo;ll have to submit the org ID.</li>
 </ul>
 <p>OK, once you&rsquo;ve cloned the repo:</p>
-<pre tabindex="0"><code>cd terraform/
-terraform init
-terraform plan
-terraform apply
-</code></pre><p>After a moment, the ownvpn project and the infra should be provisionned.</p>
-<pre tabindex="0"><code>Apply complete! Resources: 30 added, 0 changed, 0 destroyed.
-</code></pre><h2 id="set-up-openvpn-on-kubernetes-with-helm">Set up OpenVPN on Kubernetes with Helm</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cd terraform/
+</span></span><span style="display:flex;"><span>terraform init
+</span></span><span style="display:flex;"><span>terraform plan
+</span></span><span style="display:flex;"><span>terraform apply
+</span></span></code></pre></div><p>After a moment, the ownvpn project and the infra should be provisionned.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-hcl" data-lang="hcl"><span style="display:flex;"><span><span style="color:#66d9ef">Apply</span> <span style="color:#66d9ef">complete</span><span style="color:#960050;background-color:#1e0010">!</span> <span style="color:#66d9ef">Resources</span><span style="color:#960050;background-color:#1e0010">:</span> <span style="color:#ae81ff">30</span> <span style="color:#66d9ef">added</span>, <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">changed</span>, <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">destroyed</span>.
+</span></span></code></pre></div><h2 id="set-up-openvpn-on-kubernetes-with-helm">Set up OpenVPN on Kubernetes with Helm</h2>
 <p>Let&rsquo;s list the projects and switch to the new owvpn project.</p>
-<pre tabindex="0"><code>gcloud projects list
-gcloud config set project &lt;PROJECT_ID&gt;
-</code></pre><p>Let&rsquo;s jump onto the Kubernetes cluster:</p>
-<pre tabindex="0"><code>gcloud container clusters get-credentials gke-1 --region us-central1
-</code></pre><p>Quick check that we can indeed reach the Kubernetes API:</p>
-<pre tabindex="0"><code>kubectl get nodes
-NAME                                        STATUS   ROLES    AGE   VERSION
-gke-gke-1-default-node-pool-fda1c71d-79dt   Ready    &lt;none&gt;   10m   v1.15.11-gke.11
-</code></pre><p>Looks good, so let&rsquo;s add the helm stable repo and install the <a href="https://github.com/helm/charts/tree/master/stable/openvpn">OpenVPN chart</a>:</p>
-<pre tabindex="0"><code>helm repo add stable http://storage.googleapis.com/kubernetes-charts
-helm install openvpn stable/openvpn --set resources.requests.cpu=100m --set ipForwardInitContainer=true
-</code></pre><p>We have to lower the CPU request otherwise the pod couldn&rsquo;t spin up on our super small node.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>gcloud projects list
+</span></span><span style="display:flex;"><span>gcloud config set project &lt;PROJECT_ID&gt;
+</span></span></code></pre></div><p>Let&rsquo;s jump onto the Kubernetes cluster:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>gcloud container clusters get-credentials gke-1 --region us-central1
+</span></span></code></pre></div><p>Quick check that we can indeed reach the Kubernetes API:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>kubectl get nodes
+</span></span><span style="display:flex;"><span>NAME                                        STATUS   ROLES    AGE   VERSION
+</span></span><span style="display:flex;"><span>gke-gke-1-default-node-pool-fda1c71d-79dt   Ready    &lt;none&gt;   10m   v1.15.11-gke.11
+</span></span></code></pre></div><p>Looks good, so let&rsquo;s add the helm stable repo and install the <a href="https://github.com/helm/charts/tree/master/stable/openvpn">OpenVPN chart</a>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>helm repo add stable https://storage.googleapis.com/kubernetes-charts
+</span></span><span style="display:flex;"><span>helm install openvpn stable/openvpn --set resources.requests.cpu<span style="color:#f92672">=</span>100m --set ipForwardInitContainer<span style="color:#f92672">=</span>true
+</span></span></code></pre></div><p>We have to lower the CPU request otherwise the pod couldn&rsquo;t spin up on our super small node.
 Once the chart is installed, wait a few more minutes to allow OpenVPN to generate certs/keys and the load balancer to be ready.</p>
 <p>Then, run the following in a shell:</p>
-<pre tabindex="0"><code>POD_NAME=$(kubectl get pods --namespace &#34;default&#34; -l &#34;app=openvpn,release=openvpn&#34; -o jsonpath=&#39;{ .items[0].metadata.name }&#39;)
-SERVICE_NAME=$(kubectl get svc --namespace &#34;default&#34; -l &#34;app=openvpn,release=openvpn&#34; -o jsonpath=&#39;{ .items[0].metadata.name }&#39;)
-SERVICE_IP=$(kubectl get svc --namespace &#34;default&#34; &#34;$SERVICE_NAME&#34; -o go-template=&#39;{{ range $k, $v := (index .status.loadBalancer.ingress 0)}}{{ $v }}{{end}}&#39;)
-KEY_NAME=kubeVPN
-kubectl --namespace &#34;default&#34; exec -it &#34;$POD_NAME&#34; /etc/openvpn/setup/newClientCert.sh &#34;$KEY_NAME&#34; &#34;$SERVICE_IP&#34;
-kubectl --namespace &#34;default&#34; exec -it &#34;$POD_NAME&#34; cat &#34;/etc/openvpn/certs/pki/$KEY_NAME.ovpn&#34; &gt; &#34;$KEY_NAME.ovpn&#34;
-</code></pre><p>You can now import the <code>kubeVPN.opvn</code> file in your OpenVPN client and connect!</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>POD_NAME<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>kubectl get pods --namespace <span style="color:#e6db74">&#34;default&#34;</span> -l <span style="color:#e6db74">&#34;app=openvpn,release=openvpn&#34;</span> -o jsonpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;{ .items[0].metadata.name }&#39;</span><span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>SERVICE_NAME<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>kubectl get svc --namespace <span style="color:#e6db74">&#34;default&#34;</span> -l <span style="color:#e6db74">&#34;app=openvpn,release=openvpn&#34;</span> -o jsonpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;{ .items[0].metadata.name }&#39;</span><span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>SERVICE_IP<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>kubectl get svc --namespace <span style="color:#e6db74">&#34;default&#34;</span> <span style="color:#e6db74">&#34;</span>$SERVICE_NAME<span style="color:#e6db74">&#34;</span> -o go-template<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;{{ range $k, $v := (index .status.loadBalancer.ingress 0)}}{{ $v }}{{end}}&#39;</span><span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>KEY_NAME<span style="color:#f92672">=</span>kubeVPN
+</span></span><span style="display:flex;"><span>kubectl --namespace <span style="color:#e6db74">&#34;default&#34;</span> exec -it <span style="color:#e6db74">&#34;</span>$POD_NAME<span style="color:#e6db74">&#34;</span> /etc/openvpn/setup/newClientCert.sh <span style="color:#e6db74">&#34;</span>$KEY_NAME<span style="color:#e6db74">&#34;</span> <span style="color:#e6db74">&#34;</span>$SERVICE_IP<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>kubectl --namespace <span style="color:#e6db74">&#34;default&#34;</span> exec -it <span style="color:#e6db74">&#34;</span>$POD_NAME<span style="color:#e6db74">&#34;</span> cat <span style="color:#e6db74">&#34;/etc/openvpn/certs/pki/</span>$KEY_NAME<span style="color:#e6db74">.ovpn&#34;</span> &gt; <span style="color:#e6db74">&#34;</span>$KEY_NAME<span style="color:#e6db74">.ovpn&#34;</span>
+</span></span></code></pre></div><p>You can now import the <code>kubeVPN.opvn</code> file in your OpenVPN client and connect!</p>
 <h2 id="wrap-up">Wrap-up</h2>
 <p>While it&rsquo;s been quite straightforward to get our own VPN in the cloud, it took quite some time to spin up. I haven&rsquo;t timed properly, but it took easily 10-15mn overall, mostly waiting for the infrastructure. If we want to gain some time next time, we could just downscale the node group to 0 instead of destroying the whole infra. Since the GKE cluster is free, we would end up paying nothing until we scale up the node pool again.</p>
 <p>Otherwise, do not forget to destroy the infra:</p>
-<pre tabindex="0"><code>terraform destroy
-</code></pre><p>I&rsquo;m well aware that a lot of things could be streamlined and enhanced to get the VPN up and running quicker. I might (or might not) improve things in the future, in which case I would ipdate this post. I also don&rsquo;t really know how much this will cost me. Due to my low usage I expect it to be very low, but due to how public cloud bill everything, it&rsquo;s quite tricky to estimate.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>terraform destroy
+</span></span></code></pre></div><p>I&rsquo;m well aware that a lot of things could be streamlined and enhanced to get the VPN up and running quicker. I might (or might not) improve things in the future, in which case I would ipdate this post. I also don&rsquo;t really know how much this will cost me. Due to my low usage I expect it to be very low, but due to how public cloud bill everything, it&rsquo;s quite tricky to estimate.</p>
 <p>It&rsquo;s pretty cool to be able to get this working though, that was fun!</p>
 
       </div>

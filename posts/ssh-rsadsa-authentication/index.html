@@ -148,19 +148,19 @@ We&rsquo;re going to create a key pair from our client, a public and a private. 
 <blockquote>
 <p>/etc/ssh/sshd_config</p>
 </blockquote>
-<pre tabindex="0"><code>RSAAuthentication yes
-PubkeyAuthentication yes
-</code></pre><p>Then we have the creation of the key pair on the client. The following comnands must be launched as the user you want to be on the server.</p>
-<pre tabindex="0"><code>$ ssh-keygen -t rsa
-Generating public/private rsa key pair.
-Enter file in which to save the key (/home/jean-pierre/.ssh/id_rsa):
-Enter passphrase (empty for no passphrase):
-Enter same passphrase again:
-Your identification has been saved in /home/jean-pierre/.ssh/id_rsa.
-Your public key has been saved in /home/jean-pierre/.ssh/id_rsa.pub.
-The key fingerprint is:
-5d:c9:d4:c6:3a:8d:0b:10:33:32:9c:53:55:a1:d0:61 jean-pierre@velo
-</code></pre><p>You can generate DSA keys using -t dsa.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>RSAAuthentication yes
+</span></span><span style="display:flex;"><span>PubkeyAuthentication yes
+</span></span></code></pre></div><p>Then we have the creation of the key pair on the client. The following comnands must be launched as the user you want to be on the server.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ ssh-keygen -t rsa
+</span></span><span style="display:flex;"><span>Generating public/private rsa key pair.
+</span></span><span style="display:flex;"><span>Enter file in which to save the key <span style="color:#f92672">(</span>/home/jean-pierre/.ssh/id_rsa<span style="color:#f92672">)</span>:
+</span></span><span style="display:flex;"><span>Enter passphrase <span style="color:#f92672">(</span>empty <span style="color:#66d9ef">for</span> no passphrase<span style="color:#f92672">)</span>:
+</span></span><span style="display:flex;"><span>Enter same passphrase again:
+</span></span><span style="display:flex;"><span>Your identification has been saved in /home/jean-pierre/.ssh/id_rsa.
+</span></span><span style="display:flex;"><span>Your public key has been saved in /home/jean-pierre/.ssh/id_rsa.pub.
+</span></span><span style="display:flex;"><span>The key fingerprint is:
+</span></span><span style="display:flex;"><span>5d:c9:d4:c6:3a:8d:0b:10:33:32:9c:53:55:a1:d0:61 jean-pierre@velo
+</span></span></code></pre></div><p>You can generate DSA keys using -t dsa.</p>
 <p>I recommend to enter a passphrase: it is used to encrypt (symmetric encryption) the private key, which adds an additional security layer.</p>
 <p>We now just need to send the public key, either on your own if you can, or contact the server administrator. If you have the hand on the server, there are two ways to do it:</p>
 <ul>
@@ -168,14 +168,14 @@ The key fingerprint is:
 <li>Manual copy</li>
 </ul>
 <p>ssh-copy-id, which must be launched from the client, copies the public key specified as parameter (-i) into the <strong>~/.ssh/authorized_keys</strong> file on the server.</p>
-<pre tabindex="0"><code>$ ssh-copy-id -i id_rsa.pub [user@]host
-</code></pre><p>After that, you should be able to connect via the public key. If you didn&rsquo;t type any passphrase during the keys generation, no password will be asked. Otherwise, the passprhrase of the private key will be needed. Typing this passphrase at each conenction can be unpleasant. Fortunately, here comes the SSH agent, which will keep the key in memory for you.</p>
-<pre tabindex="0"><code>$ ssh-agent
-</code></pre><p>ssh-agent displays environment vairables you have to declare. So here you go. Then:</p>
-<pre tabindex="0"><code>$ ssh-add
-Enter passphrase for /home/jean-pierre/.ssh/id_dsa:
-Identity added: /home/jean-pierre/.ssh/id_dsa (/home/jean-pierre/.ssh/id_dsa)
-</code></pre><p>Well done. To do after each reboot.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ ssh-copy-id -i id_rsa.pub <span style="color:#f92672">[</span>user@<span style="color:#f92672">]</span>host
+</span></span></code></pre></div><p>After that, you should be able to connect via the public key. If you didn&rsquo;t type any passphrase during the keys generation, no password will be asked. Otherwise, the passprhrase of the private key will be needed. Typing this passphrase at each conenction can be unpleasant. Fortunately, here comes the SSH agent, which will keep the key in memory for you.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ ssh-agent
+</span></span></code></pre></div><p>ssh-agent displays environment vairables you have to declare. So here you go. Then:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ ssh-add
+</span></span><span style="display:flex;"><span>Enter passphrase <span style="color:#66d9ef">for</span> /home/jean-pierre/.ssh/id_dsa:
+</span></span><span style="display:flex;"><span>Identity added: /home/jean-pierre/.ssh/id_dsa <span style="color:#f92672">(</span>/home/jean-pierre/.ssh/id_dsa<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>Well done. To do after each reboot.</p>
 <p>You can now disable password authentication and login using pubkey authentication.</p>
 
       </div>
