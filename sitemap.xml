@@ -1,144 +1,88 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
   <url>
     <loc>https://blog.mathevet.xyz/</loc>
     <lastmod>2020-06-05T19:43:03+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://blog.mathevet.xyz/posts/</loc>
     <lastmod>2020-06-05T19:43:03+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://blog.mathevet.xyz/posts/syncthing-and-filestash/</loc>
     <lastmod>2020-06-05T19:43:03+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://blog.mathevet.xyz/posts/create-your-own-vpn-in-the-cloud/</loc>
     <lastmod>2020-05-06T11:23:32+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://blog.mathevet.xyz/tags/gcp/</loc>
     <lastmod>2020-05-06T11:23:32+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://blog.mathevet.xyz/tags/gke/</loc>
     <lastmod>2020-05-06T11:23:32+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://blog.mathevet.xyz/tags/helm/</loc>
     <lastmod>2020-05-06T11:23:32+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://blog.mathevet.xyz/tags/openvpn/</loc>
     <lastmod>2020-05-06T11:23:32+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://blog.mathevet.xyz/tags/</loc>
     <lastmod>2020-05-06T11:23:32+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://blog.mathevet.xyz/tags/terraform/</loc>
     <lastmod>2020-05-06T11:23:32+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://blog.mathevet.xyz/tags/chrome-os/</loc>
     <lastmod>2020-04-28T11:11:28+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://blog.mathevet.xyz/posts/chrome-os-crostini/</loc>
     <lastmod>2020-04-28T11:11:28+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://blog.mathevet.xyz/tags/crostini/</loc>
     <lastmod>2020-04-28T11:11:28+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://blog.mathevet.xyz/tags/linux/</loc>
     <lastmod>2020-04-28T11:11:28+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://blog.mathevet.xyz/tags/openssh/</loc>
     <lastmod>2015-05-26T19:49:58+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://blog.mathevet.xyz/tags/proxy/</loc>
     <lastmod>2015-05-26T19:49:58+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://blog.mathevet.xyz/tags/putty/</loc>
     <lastmod>2015-05-26T19:49:58+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://blog.mathevet.xyz/posts/socks-proxy-via-an-ssh-tunnel/</loc>
     <lastmod>2015-05-26T19:49:58+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://blog.mathevet.xyz/tags/ssh/</loc>
     <lastmod>2015-05-26T19:49:58+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://blog.mathevet.xyz/tags/security/</loc>
     <lastmod>2014-02-07T12:53:24+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://blog.mathevet.xyz/posts/ssh-rsadsa-authentication/</loc>
     <lastmod>2014-02-07T12:53:24+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://blog.mathevet.xyz/tags/iptables/</loc>
     <lastmod>2013-11-25T15:53:55+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://blog.mathevet.xyz/posts/manage-your-iptables-rules-properly/</loc>
     <lastmod>2013-11-25T15:53:55+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://blog.mathevet.xyz/tags/configuration-management/</loc>
     <lastmod>2012-10-04T00:50:57+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://blog.mathevet.xyz/posts/presentation-getting-started-with-puppet/</loc>
     <lastmod>2012-10-04T00:50:57+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://blog.mathevet.xyz/posts/dive.into-git/</loc>
     <lastmod>2011-08-18T17:01:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://blog.mathevet.xyz/tags/git/</loc>
     <lastmod>2011-08-18T17:01:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://blog.mathevet.xyz/categories/</loc>
   </url>
-  
 </urlset>

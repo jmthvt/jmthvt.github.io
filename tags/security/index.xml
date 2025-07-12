@@ -7,11 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-uk</language>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-    <lastBuildDate>Fri, 07 Feb 2014 12:53:24 +0000</lastBuildDate>
-    
-	<atom:link href="https://blog.mathevet.xyz/tags/security/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Fri, 07 Feb 2014 12:53:24 +0000</lastBuildDate><atom:link href="https://blog.mathevet.xyz/tags/security/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>SSH: RSA/DSA authentication</title>
       <link>https://blog.mathevet.xyz/posts/ssh-rsadsa-authentication/</link>

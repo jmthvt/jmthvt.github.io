@@ -41,7 +41,7 @@ There is also an nginx reverse proxy, getting Let&rsquo;s Encrypt certs and forw
 Filestash loads its frontend onto the browser. The frontend has an SFTP client that can be used to get the files.</p>
 <p><img src="/img/sync-architecture.png" alt="arch"></p>
 <p>The file structure I&rsquo;m using, for reference:</p>
-<pre><code>.
+<pre tabindex="0"><code>.
 ├── filestash
 │   ├── docker-compose.yml
 │   └── state
@@ -58,8 +58,8 @@ Filestash loads its frontend onto the browser. The frontend has an SFTP client t
 </ul>
 <h2 id="syncthing">Syncthing</h2>
 <p>Syncthing&rsquo;s docke-compose:</p>
-<pre><code>---
-version: &quot;2&quot;
+<pre tabindex="0"><code>---
+version: &#34;2&#34;
 services:
   syncthing:
     image: syncthing/syncthing
@@ -74,13 +74,13 @@ services:
     volumes:
       - /mnt/files:/var/syncthing
       - ./config:/var/syncthing/config
-</code></pre><pre><code>docker-compose up -d
+</code></pre><pre tabindex="0"><code>docker-compose up -d
 </code></pre><p>Note the <code>127.0.0.1:8384:8384</code> port mapping: we expose the 8384 port to the host localhost only. So we&rsquo;ll need to port forward with SSH.
 That&rsquo;s because an admin UI is exposed to this port without any authentication by default. You probably don&rsquo;t want to expose that publicly.
 Alternatively, you can change to <code>8384:8384</code>, which will expose to <code>0.0.0.0:8384</code>, and setup authentication on the UI right away.
 I prefer to stick with the local UI and SSH tunnel.
 The SSH tunnel command for reference:</p>
-<pre><code>ssh -L 8384:localhost:8384 john.doe@example.com
+<pre tabindex="0"><code>ssh -L 8384:localhost:8384 john.doe@example.com
 </code></pre><p>In order to synchronize files, we need at least a second syncthing instance.
 It could be an Android phone (there is a syncthing app on the Play Store), Mac or PC.
 Then, we can go to <a href="https://localhost:8384">https://localhost:8384</a> on each machine and <a href="https://docs.syncthing.net/intro/getting-started.html#configuring">follow the guide</a>.</p>
@@ -93,10 +93,10 @@ This is cool but I love how convenient the Nextcloud web UI was.<br>
 In that case, Filestash is a good candidate.</p>
 <p>Same here, I use docker &amp; docker-compose (that&rsquo;s actually the official way of installing filestash).<br>
 First we need to create a docker network. It will be useful later.</p>
-<pre><code>docker network create docker_network
+<pre tabindex="0"><code>docker network create docker_network
 </code></pre><p>Then, the filestash docker-compose config:</p>
-<pre><code>---
-version: &quot;2&quot;
+<pre tabindex="0"><code>---
+version: &#34;2&#34;
 networks:
   docker_network:
     external: true
@@ -118,13 +118,13 @@ services:
     restart: always
     networks:
        - docker_network
-</code></pre><pre><code>docker-compose up -d
+</code></pre><pre tabindex="0"><code>docker-compose up -d
 </code></pre><p>At this point, filestash is up and running in the docker network, but not reachable from public.</p>
 <h2 id="nginx--lets-encrypt">Nginx + Let&rsquo;s Encrypt</h2>
 <p>Time to setup the reverse proxy with letsencrypt.
 The docker-compose file:</p>
-<pre><code>---
-version: &quot;2&quot;
+<pre tabindex="0"><code>---
+version: &#34;2&#34;
 networks:
   docker_network:
     external: true
@@ -150,7 +150,7 @@ services:
     networks:
        - docker_network
 </code></pre><p>The <code>filestash.subdomain.conf</code> file:</p>
-<pre><code>server {
+<pre tabindex="0"><code>server {
     listen 443 ssl;
     listen [::]:443 ssl;
 
@@ -168,13 +168,13 @@ services:
         set $upstream_port 8334;
         set $upstream_proto http;
 
-        add_header Strict-Transport-Security &quot;max-age=31536000; includeSubDomains&quot; always;
+        add_header Strict-Transport-Security &#34;max-age=31536000; includeSubDomains&#34; always;
 
         proxy_pass $upstream_proto://$upstream_app:$upstream_port;
     }
 }
 </code></pre><p>We&rsquo;re good to go!</p>
-<pre><code>docker-compose up -d
+<pre tabindex="0"><code>docker-compose up -d
 </code></pre><p>After a few minutes, <code>filestash.example.com</code> will get its certificate (if you own the domain and configured the zone properly).
 Filestash can now be accessed via https with a browser.
 There is <a href="https://www.filestash.app/docs/install-and-upgrade/#installation">a couple of config steps</a> on the UI, quite straighforward.
@@ -182,7 +182,7 @@ To access the local files, the trick is to use SFTP.
 I strongly recommend to use pubkey authentication rather than a password. Just input the pubkey into the SFTP password field (yes that&rsquo;s quite unusal).</p>
 <h2 id="wrap-up">Wrap-up</h2>
 <p>And here we are, a pretty good self-hosted file hosting service.
-I didn&rsquo;t get through all the setup details, but I tried to sum up the major steps.<br>
+I didn&rsquo;t get through all the setup details, but I tried to sum up the major steps. <br>
 After several weeks of usage I am very happy with this setup.
 The performances are much better than Nextcloud. The gain can be felt both in term of sync speed or file browsing experience.<br>
 Syncthing is blazing fast and I allow fine tune sycnrhonisations between many devices.<br>
@@ -230,39 +230,39 @@ Well, it&rsquo;s true we don&rsquo;t <em>really</em> need Kubernetes here. But s
 <li>If you&rsquo;re using an organisation, you&rsquo;ll have to submit the org ID.</li>
 </ul>
 <p>OK, once you&rsquo;ve cloned the repo:</p>
-<pre><code>cd terraform/
+<pre tabindex="0"><code>cd terraform/
 terraform init
 terraform plan
 terraform apply
 </code></pre><p>After a moment, the ownvpn project and the infra should be provisionned.</p>
-<pre><code>Apply complete! Resources: 30 added, 0 changed, 0 destroyed.
+<pre tabindex="0"><code>Apply complete! Resources: 30 added, 0 changed, 0 destroyed.
 </code></pre><h2 id="set-up-openvpn-on-kubernetes-with-helm">Set up OpenVPN on Kubernetes with Helm</h2>
 <p>Let&rsquo;s list the projects and switch to the new owvpn project.</p>
-<pre><code>gcloud projects list
+<pre tabindex="0"><code>gcloud projects list
 gcloud config set project &lt;PROJECT_ID&gt;
 </code></pre><p>Let&rsquo;s jump onto the Kubernetes cluster:</p>
-<pre><code>gcloud container clusters get-credentials gke-1 --region us-central1
+<pre tabindex="0"><code>gcloud container clusters get-credentials gke-1 --region us-central1
 </code></pre><p>Quick check that we can indeed reach the Kubernetes API:</p>
-<pre><code>kubectl get nodes
+<pre tabindex="0"><code>kubectl get nodes
 NAME                                        STATUS   ROLES    AGE   VERSION
 gke-gke-1-default-node-pool-fda1c71d-79dt   Ready    &lt;none&gt;   10m   v1.15.11-gke.11
 </code></pre><p>Looks good, so let&rsquo;s add the helm stable repo and install the <a href="https://github.com/helm/charts/tree/master/stable/openvpn">OpenVPN chart</a>:</p>
-<pre><code>helm repo add stable http://storage.googleapis.com/kubernetes-charts
+<pre tabindex="0"><code>helm repo add stable http://storage.googleapis.com/kubernetes-charts
 helm install openvpn stable/openvpn --set resources.requests.cpu=100m --set ipForwardInitContainer=true
 </code></pre><p>We have to lower the CPU request otherwise the pod couldn&rsquo;t spin up on our super small node.
 Once the chart is installed, wait a few more minutes to allow OpenVPN to generate certs/keys and the load balancer to be ready.</p>
 <p>Then, run the following in a shell:</p>
-<pre><code>POD_NAME=$(kubectl get pods --namespace &quot;default&quot; -l &quot;app=openvpn,release=openvpn&quot; -o jsonpath='{ .items[0].metadata.name }')
-SERVICE_NAME=$(kubectl get svc --namespace &quot;default&quot; -l &quot;app=openvpn,release=openvpn&quot; -o jsonpath='{ .items[0].metadata.name }')
-SERVICE_IP=$(kubectl get svc --namespace &quot;default&quot; &quot;$SERVICE_NAME&quot; -o go-template='{{ range $k, $v := (index .status.loadBalancer.ingress 0)}}{{ $v }}{{end}}')
+<pre tabindex="0"><code>POD_NAME=$(kubectl get pods --namespace &#34;default&#34; -l &#34;app=openvpn,release=openvpn&#34; -o jsonpath=&#39;{ .items[0].metadata.name }&#39;)
+SERVICE_NAME=$(kubectl get svc --namespace &#34;default&#34; -l &#34;app=openvpn,release=openvpn&#34; -o jsonpath=&#39;{ .items[0].metadata.name }&#39;)
+SERVICE_IP=$(kubectl get svc --namespace &#34;default&#34; &#34;$SERVICE_NAME&#34; -o go-template=&#39;{{ range $k, $v := (index .status.loadBalancer.ingress 0)}}{{ $v }}{{end}}&#39;)
 KEY_NAME=kubeVPN
-kubectl --namespace &quot;default&quot; exec -it &quot;$POD_NAME&quot; /etc/openvpn/setup/newClientCert.sh &quot;$KEY_NAME&quot; &quot;$SERVICE_IP&quot;
-kubectl --namespace &quot;default&quot; exec -it &quot;$POD_NAME&quot; cat &quot;/etc/openvpn/certs/pki/$KEY_NAME.ovpn&quot; &gt; &quot;$KEY_NAME.ovpn&quot;
+kubectl --namespace &#34;default&#34; exec -it &#34;$POD_NAME&#34; /etc/openvpn/setup/newClientCert.sh &#34;$KEY_NAME&#34; &#34;$SERVICE_IP&#34;
+kubectl --namespace &#34;default&#34; exec -it &#34;$POD_NAME&#34; cat &#34;/etc/openvpn/certs/pki/$KEY_NAME.ovpn&#34; &gt; &#34;$KEY_NAME.ovpn&#34;
 </code></pre><p>You can now import the <code>kubeVPN.opvn</code> file in your OpenVPN client and connect!</p>
 <h2 id="wrap-up">Wrap-up</h2>
 <p>While it&rsquo;s been quite straightforward to get our own VPN in the cloud, it took quite some time to spin up. I haven&rsquo;t timed properly, but it took easily 10-15mn overall, mostly waiting for the infrastructure. If we want to gain some time next time, we could just downscale the node group to 0 instead of destroying the whole infra. Since the GKE cluster is free, we would end up paying nothing until we scale up the node pool again.</p>
 <p>Otherwise, do not forget to destroy the infra:</p>
-<pre><code>terraform destroy
+<pre tabindex="0"><code>terraform destroy
 </code></pre><p>I&rsquo;m well aware that a lot of things could be streamlined and enhanced to get the VPN up and running quicker. I might (or might not) improve things in the future, in which case I would ipdate this post. I also don&rsquo;t really know how much this will cost me. Due to my low usage I expect it to be very low, but due to how public cloud bill everything, it&rsquo;s quite tricky to estimate.</p>
 <p>It&rsquo;s pretty cool to be able to get this working though, that was fun!</p>
 ]]></content>
@@ -303,7 +303,7 @@ kubectl --namespace &quot;default&quot; exec -it &quot;$POD_NAME&quot; cat &quot
 You can communicate via port 22? Do you have an SSH server that could access the content you want?</description>
             <content type="html"><![CDATA[<p>You are behind a restrictive firewall and you aspire to more freedom? You need to access an Intranet website located in a different environment than yours? You are far from your home country, and can&rsquo;t live one minute more without your favourite TV shows, that you can&rsquo;t watch because of the localisation restrictions?</p>
 <p>You can communicate via port 22? Do you have an SSH server that could access the content you want? Then, you can use an SSH client as a SOCKS proxy and redirect the requests via an SSH tunnel. From Linux, connect like this:</p>
-<pre><code>$ ssh -D 1080 user@host
+<pre tabindex="0"><code>$ ssh -D 1080 user@host
 </code></pre><p>If you are on Windows, you can use Putty. Enter the IP address (or the name) of your remote host, then go to Connection &gt; SSH &gt; Tunnels and reproduce this:</p>
 <p><img src="/img/putty-socks1.png" alt="putty-socks1"></p>
 <p>Click on Add.</p>
@@ -333,10 +333,10 @@ We&amp;rsquo;re going to create a key pair from our client, a public and a priva
 <blockquote>
 <p>/etc/ssh/sshd_config</p>
 </blockquote>
-<pre><code>RSAAuthentication yes
+<pre tabindex="0"><code>RSAAuthentication yes
 PubkeyAuthentication yes
 </code></pre><p>Then we have the creation of the key pair on the client. The following comnands must be launched as the user you want to be on the server.</p>
-<pre><code>$ ssh-keygen -t rsa
+<pre tabindex="0"><code>$ ssh-keygen -t rsa
 Generating public/private rsa key pair.
 Enter file in which to save the key (/home/jean-pierre/.ssh/id_rsa):
 Enter passphrase (empty for no passphrase):
@@ -353,11 +353,11 @@ The key fingerprint is:
 <li>Manual copy</li>
 </ul>
 <p>ssh-copy-id, which must be launched from the client, copies the public key specified as parameter (-i) into the <strong>~/.ssh/authorized_keys</strong> file on the server.</p>
-<pre><code>$ ssh-copy-id -i id_rsa.pub [user@]host
+<pre tabindex="0"><code>$ ssh-copy-id -i id_rsa.pub [user@]host
 </code></pre><p>After that, you should be able to connect via the public key. If you didn&rsquo;t type any passphrase during the keys generation, no password will be asked. Otherwise, the passprhrase of the private key will be needed. Typing this passphrase at each conenction can be unpleasant. Fortunately, here comes the SSH agent, which will keep the key in memory for you.</p>
-<pre><code>$ ssh-agent
+<pre tabindex="0"><code>$ ssh-agent
 </code></pre><p>ssh-agent displays environment vairables you have to declare. So here you go. Then:</p>
-<pre><code>$ ssh-add
+<pre tabindex="0"><code>$ ssh-add
 Enter passphrase for /home/jean-pierre/.ssh/id_dsa:
 Identity added: /home/jean-pierre/.ssh/id_dsa (/home/jean-pierre/.ssh/id_dsa)
 </code></pre><p>Well done. To do after each reboot.</p>
@@ -375,14 +375,14 @@ Identity added: /home/jean-pierre/.ssh/id_dsa (/home/jean-pierre/.ssh/id_dsa)
 # iptables-save &amp;gt; /etc/iptables Interesting option: -c displays how many times the rule has been applied (on bytes and on packets).</description>
             <content type="html"><![CDATA[<h2 id="debian-based">Debian based</h2>
 <p>I regularly see sysadmins saving their iptables rules in an init script. It works, but it&rsquo;s not the most elegant way to do it. I prefer personally to save the existing rules with the iptables-save command. This command sends the result on the standard output, so let&rsquo;s redirect it to a file.</p>
-<pre><code># iptables-save &gt; /etc/iptables
+<pre tabindex="0"><code># iptables-save &gt; /etc/iptables
 </code></pre><p>Interesting option: -c displays how many times the rule has been applied (on bytes and on packets).</p>
 <p>In order to load the rules, simply use the iptables-restore command with the previously saved file in the standard input:</p>
-<pre><code># iptables-restore &lt; /etc/iptables
+<pre tabindex="0"><code># iptables-restore &lt; /etc/iptables
 </code></pre><p>Add -c to take the counters in account (if you saved them, bien sur). If any rules are already loaded, you don&rsquo;t even have to flush them, the command does it for you by default (-n to keep them).</p>
 <p>To automatically restore the rules on startup, we could create an init script. I prefer to launch the restore directly from the network interface, as a pre-up command. It allows to avoid any forgetting when you flush your rules, then bring your interface up. Moreover, you gain the ability to create dedicated rules for each interfaces. If your rules are independent from your interfaces, you can still launch the restore as a pre-up command for the local loop.</p>
 <p>/etc/network/interfaces</p>
-<pre><code>iface eth0 inet static
+<pre tabindex="0"><code>iface eth0 inet static
     pre-up iptables-restore &lt; /etc/iptables
     address 543.454.233.42
     netmask 255.255.255.0
@@ -391,12 +391,12 @@ auto eth0
 </code></pre><p>For those who have seen: yes, I&rsquo;ve invented a new class of IP addresses.</p>
 <h2 id="red-hat-based">Red Hat based</h2>
 <p>Same principle, but the way to do it is slightly different. To save the rules, you can use the iptables service:</p>
-<pre><code># service iptables save
+<pre tabindex="0"><code># service iptables save
 </code></pre><p>The rules are saved in the /etc/sysconfig/iptables file by default. This file is read when the iptables service is launched.</p>
 <h2 id="avoid-locking-out-debian-only">Avoid locking out (Debian only)</h2>
 <p>Be honest. Who has never been locked out when modifying firewall policies or rules. I must say that it happened to me. The failure in all its splendour.</p>
 <p>In order to avoid this, there is a simple tool: iptables-apply. This command will apply the rules file given as a parameter, then ask for the user confirmation. If the user doesn&rsquo;t answer before the timeout, iptables-apply undoes the change.</p>
-<pre><code># iptables-apply /etc/iptables
+<pre tabindex="0"><code># iptables-apply /etc/iptables
 [ ok ] Stopping authentication failure monitor: fail2ban.
 Applying new ruleset... done.
 Can you establish NEW connections to the machine? (y/N) apparently not...
@@ -441,14 +441,14 @@ With so much praise, I wanted to test this tool. It&amp;rsquo;s not difficult to
 <p>The first thing to do to use Git is to have a Git repository. Two ways: either create or retrieve it.</p>
 <p>**Create a repository: <!-- raw HTML omitted -->git init<!-- raw HTML omitted --></p>
 <p>To create a repository, simply run the command <strong>git init</strong> in the desired directory.</p>
-<pre><code>$ cd fake-project
+<pre tabindex="0"><code>$ cd fake-project
 $ ls
 README hello.sh
 $ git init
 Initialized empty Git repository in ~/fake-project/.git/
 </code></pre><p><strong>Get a repository: <!-- raw HTML omitted -->git clone<!-- raw HTML omitted --></strong></p>
 <p>You can get a Git repository via the Internet, with the command <strong>git clone [URL]</strong>. This means that you copy the files from the repository locally, but also the history of commits, branches, etc..</p>
-<pre><code>$ git clone git://github.com/octocat/Hello-World.git
+<pre tabindex="0"><code>$ git clone git://github.com/octocat/Hello-World.git
 </code></pre><h1 id="managing-snapshots">Managing Snapshots</h1>
 <p>Before discussing the commands, you should first understand that a file can have four states:</p>
 <ul>
@@ -472,46 +472,46 @@ Initialized empty Git repository in ~/fake-project/.git/
 <p>In summary, we will use <strong><em>git add</em></strong> to put one or more files in the staging area, <em><strong>git status</strong></em> and <em><strong>git diff</strong></em> to see the state and what changes have been made (or not) to files, and finally <em><strong>git commit</strong></em> to save.</p>
 <p><strong>Add files in the <em>staging area</em>: <!-- raw HTML omitted -->git add<!-- raw HTML omitted --></strong></p>
 <p>Let&rsquo;s return to our <em>fake-project</em> example. A <em><strong>git status</strong></em> shows us the files state of the repository.</p>
-<pre><code>$ git status -s
+<pre tabindex="0"><code>$ git status -s
 ?? README
 ?? hello.sh
 </code></pre><p>Question marks indicate that the files are not versioned. To put them in the staging area, we use <em><strong>git add</strong></em>.</p>
-<pre><code>$ git add README hello.sh
+<pre tabindex="0"><code>$ git add README hello.sh
 </code></pre><p>or</p>
-<pre><code>$ git add .
+<pre tabindex="0"><code>$ git add .
 </code></pre><p>to add all the files from the repository (recursive mode).</p>
 <p>A <em>git status</em> confirms that the files are ready to be committed:</p>
-<pre><code>$ git status -s
+<pre tabindex="0"><code>$ git status -s
 A  README
 A  hello.sh
 </code></pre><p>An important thing to understand: when the files will be committed, they will be in the state they were when the last <em>git add</em> was performed. So, if a file changes after <em>git add</em>, these changes will not be included in the Git snapshot. We should launch a <em>git add</em> again to save the latest file version.</p>
 <p><strong>See the files state of the repository: <!-- raw HTML omitted -->git status<!-- raw HTML omitted --></strong></p>
 <p>As we saw earlier, <em><strong>git status</strong></em> shows whether the files are ready to be committed, have been modified or deleted.</p>
-<pre><code>$ vim README
+<pre tabindex="0"><code>$ vim README
 $ git status
 # On branch master
 #
 # Initial commit
 #
 # Changes to be committed:
-# (use &quot;git rm --cached ...&quot; to unstage)
+# (use &#34;git rm --cached ...&#34; to unstage)
 #
 # new file: README
 # new file: hello.sh
 #
 # Changed but not updated:
-# (use &quot;git add ...&quot; to update what will be committed)
-# (use &quot;git checkout -- ...&quot; to discard changes in working directory)
+# (use &#34;git add ...&#34; to update what will be committed)
+# (use &#34;git checkout -- ...&#34; to discard changes in working directory)
 #
 # modified: README
 #
 </code></pre><p>or with -s, for a shorter output:</p>
-<pre><code>$ git status -s
+<pre tabindex="0"><code>$ git status -s
 AM README
 A  hello.sh
 </code></pre><p><strong>View differences : <!-- raw HTML omitted -->git diff<!-- raw HTML omitted --></strong></p>
 <p>The <em><strong>git diff</strong></em> command can be used in several ways. Without parameters, <em><strong>git diff</strong></em> gives the difference between what is in staging area and what have been changed afterwards.</p>
-<pre><code>$ vim README
+<pre tabindex="0"><code>$ vim README
 $ git status -s
 AM README
 A hello.sh
@@ -524,7 +524,7 @@ index 8b13789..6a4238f 100644
 -
 +blablabla
 </code></pre><p>The <em><strong>&ndash;cached</strong></em> parameter shows the changes made when moved to the staging area.</p>
-<pre><code>$ git status -s
+<pre tabindex="0"><code>$ git status -s
 AM README
 A hello.sh
 $ git add .
@@ -544,33 +544,33 @@ index 0000000..e69de29
 </code></pre><p>The <em><strong>git diff HEAD</strong></em> command allows to know all the changes since the last commit, when the file is in staging area or simply modified.</p>
 <p><strong>Create a snapshot of the <em>staging area</em>: <!-- raw HTML omitted -->git commit<!-- raw HTML omitted --></strong></p>
 <p>Now that we have our files in staging area, we can save them using the <em><strong>git commit</strong></em> command. Before that, we give our name and mail, they will be recorded during the commit.</p>
-<pre><code>$ git config --global user.name 'Your Name'
+<pre tabindex="0"><code>$ git config --global user.name &#39;Your Name&#39;
 $ git config --global user.email you@yourdomain.com
 </code></pre><p>We can now commit. We provide a message which describes the commit with the <em><strong>-m</strong></em> option.</p>
-<pre><code>$ git status -s
+<pre tabindex="0"><code>$ git status -s
 A README
 A hello.sh
-$ git commit -m 'my first commit'
+$ git commit -m &#39;my first commit&#39;
 [master (root-commit) cba1144] my first commit
 1 files changed, 1 insertions(+), 0 deletions(-)
 create mode 100644 README
 create mode 100644 hello.sh
 </code></pre><p>And that&rsquo;s that! The staging area have been saved and cleaned. A <em><strong>git status</strong></em> confirms it.</p>
-<pre><code>$ git status
+<pre tabindex="0"><code>$ git status
 # On branch master
 nothing to commit (working directory clean)
 </code></pre><p>A little diagram that summarizes what happened:</p>
 <p><img src="/img/git1.png" alt="" title="git-commit-1"></p>
 <p>A <em><strong>git commit -a</strong></em> allows you to commit all modified or deleted files without going through the <em>git add</em> step. This command does not commit new unversioned files, you need to add them at least once in staging area with <em>git add</em> in order to directly commit later.</p>
-<pre><code>$ vim README
-$ commit -am 'My second commit'
+<pre tabindex="0"><code>$ vim README
+$ commit -am &#39;My second commit&#39;
 [master 8151463] My second commit
 1 files changed, 2 insertions(+), 0 deletions(-)
 </code></pre><p>This way, we skip the &ldquo;staging step&rdquo; to jump directly to the snapshot.</p>
 <p><img src="/img/git2.png" alt="" title="git-commit-1"></p>
 <!-- raw HTML omitted -->
 <p>It is possible to remove a file from the staging area with the <em><strong>git reset HEAD</strong></em> command.</p>
-<pre><code>$ git status -s
+<pre tabindex="0"><code>$ git status -s
 M README
 $ git add README
 $ git status -s
@@ -581,39 +581,39 @@ M README
 </code></pre><p>To cancel the last commit: <em><strong>git reset HEAD^</strong></em></p>
 <p><strong>Manage files: <!-- raw HTML omitted -->git rm et git mv<!-- raw HTML omitted --></strong></p>
 <p>The git rm command allows to delete a file from your Git repository. The file is literally removed from the working directory the index. The &ndash;cached option allows to delete the file from the index only. The file will become unversioned, and therefore, will no longer be managed by Git.</p>
-<pre><code>$ git rm --cached README
-rm 'README'
+<pre tabindex="0"><code>$ git rm --cached README
+rm &#39;README&#39;
 $ ls
 hello.sh README
 git status -s
 D README
 ?? README
-$ git commit -m 'bye README'
+$ git commit -m &#39;bye README&#39;
 [master a870e51] bye README
 0 files changed, 0 insertions(+), 0 deletions(-)
 delete mode 100644 README
 $ git status -s
 ?? README
 </code></pre><p><em><strong>git mv</strong></em> renames a file and updates the Git index accordingly.</p>
-<pre><code>$ git mv oldname newname
+<pre tabindex="0"><code>$ git mv oldname newname
 </code></pre><p>is the same as</p>
-<pre><code>$ mv oldname newname
+<pre tabindex="0"><code>$ mv oldname newname
 $ git add newname
 $ git rm oldname
 </code></pre><h1 id="branches">Branches</h1>
 <p>We approach a big strength of Git: its branches management. Forget most of the nightmares of others VCS, branches are here quite simple to manage. For those who do not know the principle, branches allow you to create ramifications of your project. Imagine you want to add feature to your project. Commit the changes directly in the core branch will make your software unstable until you have not completed the development of this new feature. To work around this problem, you can create a test branch, which will be a copy of your main branch, then make and test your changes without altering the main branch. Once the testing branch seems stable, you can merge the code with your main branch.</p>
 <p><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted -->Branches management<!-- raw HTML omitted --> git branch and git checkout<!-- raw HTML omitted --><!-- raw HTML omitted --></p>
 <p>Let&rsquo;s start by making an inventory: <em><strong>git branch</strong></em> to find out on which branch we are working:</p>
-<pre><code>$ git branch
+<pre tabindex="0"><code>$ git branch
 * master
 </code></pre><p>We have a branch called <em>master</em>. It&rsquo;s preceded by a star, which means that we currently use it. It was created by default by <em>git init</em>.</p>
 <p>Let&rsquo;s create a branch with <em><strong>git branch [name]</strong></em>, and then move on this new one with <em><strong>git checkout [name]</strong></em>.</p>
-<pre><code>$ git branch testing
+<pre tabindex="0"><code>$ git branch testing
 $ git branch
 * master
 testing
 $ git checkout testing
-Switched to branch 'testing'
+Switched to branch &#39;testing&#39;
 $ git branch
 master
 * testing
@@ -625,7 +625,7 @@ master
 <blockquote>
 <p>You can&rsquo;t delete a branch if you&rsquo;re currently on it.</p>
 </blockquote>
-<pre><code>$ git branch
+<pre tabindex="0"><code>$ git branch
 * master
 testing
 $ git branch -d testing
@@ -633,10 +633,10 @@ Deleted branch testing (was a870e51).
 </code></pre><p><strong>Merge branches: <!-- raw HTML omitted -->git merge<!-- raw HTML omitted --></strong></p>
 <p>Branches are isolated, which allows you to make changes to one without affecting the other. What if we decide to incorporate changes from one branch into another? This is what we do with <strong>git merge [branch]</strong>, which allows to merge the current branch with a specified branch.</p>
 <p>An example where we create a file that we commit in the testing branch, before merge it in the master branch:</p>
-<pre><code>$ git branch
+<pre tabindex="0"><code>$ git branch
 * master
 $ git checkout -b testing
-Switched to a new branch 'testing'
+Switched to a new branch &#39;testing&#39;
 $ ls
 hello.sh README
 $ git branch
@@ -644,14 +644,14 @@ master
 * testing
 $ touch trololo
 $ git add trololo
-$ git commit -m 'trololo commit'
+$ git commit -m &#39;trololo commit&#39;
 [testing e49b586] trololo commit
 0 files changed, 0 insertions(+), 0 deletions(-)
 create mode 100644 trololo
 $ ls
 hello.sh README trololo
 $ git checkout master
-Switched to branch 'master'
+Switched to branch &#39;master&#39;
 $ git merge testing
 Updating a870e51..e49b586
 Fast-forward
@@ -660,7 +660,7 @@ create mode 100644 trololo
 </code></pre><p>Most of the time, Git merges your branches without any problem. But, if the same block of code in a file is changed on the two branches, it will cause a conflict. In this case, we have to resolve this conflict by hand, in the file. Once done, a <em><strong>git add</strong></em> followed by a <em><strong>git commit</strong></em> will be needed before repeating the <em><strong>git merge</strong></em>.</p>
 <p><strong>Branch informations : <!-- raw HTML omitted -->git log<!-- raw HTML omitted --></strong></p>
 <p>To trace the history of commits and merge a branch, we have <em><strong>git log</strong></em>.</p>
-<pre><code>$ git log
+<pre tabindex="0"><code>$ git log
 commit e49b586f5cd44e053f3491094e484c160cd3b052
 Author: jmathevet
 Date: Wed Aug 16 20:00:14 2011 +0200
@@ -676,7 +676,7 @@ bye README
 <p>As already mentioned, Git is based on a decentralized architecture. Thus, any Git repository can be both client and server, which is very useful when working offline. That said, it is also interesting to have a Git repository accessible by a team in order to have a common basis, which everyone can retrieve and modify locally, to finally pass the changes to the common repository.</p>
 <p><strong>Manage repository aliases : <!-- raw HTML omitted -->git remote<!-- raw HTML omitted --></strong></p>
 <p>In order to not to type the repository URL each time we need to access it, Git has an alias system. <em><strong>git remote</strong></em> displays the list of saved Git repositories for a repository. By default, if you cloned yours, an <em>orgin</em> alias has been automatically created. <em><strong>git remote add [alias] [URL]</strong></em> is used to add an alias, <em><strong>git remote rm [alias]</strong></em> to remove.</p>
-<pre><code>$ git clone http://android.git.kernel.org/platform/external/iptables
+<pre tabindex="0"><code>$ git clone http://android.git.kernel.org/platform/external/iptables
 Cloning into iptables...
 remote: Counting objects: 617, done.
 remote: Compressing objects: 100% (347/347), done.
@@ -689,16 +689,16 @@ origin
 $ git remote -v
 origin http://android.git.kernel.org/platform/external/iptables (fetch)
 origin http://android.git.kernel.org/platform/external/iptables (push)
-</code></pre><pre><code>$ git remote add bob git://github.com/bob
+</code></pre><pre tabindex="0"><code>$ git remote add bob git://github.com/bob
 $ git remote
 bob
 origin
-</code></pre><pre><code>$ git remote -v
+</code></pre><pre tabindex="0"><code>$ git remote -v
 bob git://github.com/bob (fetch)
 bob git://github.com/bob (push)
 origin http://android.git.kernel.org/platform/external/iptables (fetch)
 origin http://android.git.kernel.org/platform/external/iptables (push)
-</code></pre><pre><code>$ git remote rm bob
+</code></pre><pre tabindex="0"><code>$ git remote rm bob
 $ git remote
 origin
 </code></pre><p><strong>Update local branches from the remote repository: <!-- raw HTML omitted -->git fetch, git pull<!-- raw HTML omitted --></strong></p>
